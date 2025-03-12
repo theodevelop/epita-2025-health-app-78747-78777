@@ -1,0 +1,22 @@
+﻿@model HealthApp.MVC.Models.ManageRolesViewModel
+
+@{
+    ViewData["Title"] = "Gérer les rôles de l'utilisateur";
+}
+
+<h1>Modifier le rôle de @Model.Email</h1>
+
+<form asp-action="ManageRoles" method="post">
+    <input type="hidden" name="id" value="@Model.UserId" />
+
+    <select name="role" class="form-control">
+        @foreach (var role in Model.Roles)
+        {
+            <option value="@role" selected="@(Model.UserRoles.Contains(role) ? "selected" : null)">
+                @role
+            </option>
+        }
+    </select>
+
+    <button type="submit" class="btn btn-success mt-2">Mettre à jour</button>
+</form>

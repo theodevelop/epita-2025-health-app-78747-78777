@@ -1,13 +1,19 @@
 ﻿@{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Dashboard Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Bienvenue dans l’espace administrateur</h1>
-<p>Gérez les patients, docteurs et rendez-vous ici.</p>
+<div class="container">
+    <h2 class="mt-4">Dashboard Administration</h2>
+    <p>Bienvenue dans l'interface d'administration. À partir d'ici, vous pourrez gérer les utilisateurs, les rendez-vous et bien plus encore.</p>
 
-<ul>
-    <li><a href="/Patients">Gérer les Patients</a></li>
-    <li><a href="/Doctors">Gérer les Docteurs</a></li>
-    <li><a href="/Appointments">Gérer les Rendez-vous</a></li>
-    <li><a href="/Admin/Users">Gérer les Utilisateurs</a></li>
-</ul>
+    <!-- Vous pouvez ajouter ici des liens vers d'autres actions ou des résumés statistiques -->
+    <ul class="list-group mt-4">
+        <li class="list-group-item"><a href="@Url.Action("ManageUsers", "Admin")">Gérer les utilisateurs</a></li>
+        <li class="list-group-item"><a href="@Url.Action("ViewAppointments", "Admin")">Voir tous les rendez-vous</a></li>
+        <li class="list-group-item"><a href="@Url.Action("ManageSchedules", "Admin")">Gérer les horaires des médecins</a></li>
+        <li class="list-group-item"><a href="@Url.Action("GenerateReports", "Admin")">Générer des rapports</a></li>
+        <li class="list-group-item"><a href="@Url.Action("SystemLogs", "Admin")">Voir les logs système</a></li>
+        <li class="list-group-item"><a href="@Url.Action("SendNotification", "Admin")">Envoyer une notification</a></li>
+    </ul>
+</div>

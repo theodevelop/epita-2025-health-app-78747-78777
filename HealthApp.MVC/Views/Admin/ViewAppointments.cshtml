@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HealthApp.MVC.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Tous les rendez-vous";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2 class="mt-4">Tous les rendez-vous</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Patient</th>
+                <th>Médecin</th>
+                <th>Statut</th>
+                <th>Raison</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        @if (appointment.Patient != null)
+                        {
+                            @appointment.Patient.FirstName @appointment.Patient.LastName
+                        }
+                    </td>
+                    <td>
+                        @if (appointment.Doctor != null)
+                        {
+                            @appointment.Doctor.FirstName @appointment.Doctor.LastName
+                        }
+                    </td>
+                    <td>@appointment.Status</td>
+                    <td>@appointment.Reason</td>
+                    <td>
+                        <!-- Par exemple, un bouton pour annuler le rendez-vous -->
+                        <a asp-controller="Admin" asp-action="CancelAppointment" asp-route-id="@appointment.Id" class="btn btn-sm btn-danger">Annuler</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

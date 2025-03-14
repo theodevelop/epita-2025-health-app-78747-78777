@@ -8,6 +8,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.custom-html {
+    min-height: 100%;
+}
+
 .custom-container {
     position: relative;
     max-width: 430px;
@@ -197,8 +201,9 @@
         box-shadow: none;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        max-width: 400px;
+        justify-content: normal;
+        max-width: none;
+        width: auto;
     }
 
     .custom-navbar .navbar-brand {
@@ -265,19 +270,10 @@
         }
 
 /* Footer personnalisé */
-.custom-footer {
-    background-color: #fff;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px 0;
-    text-align: center;
-    margin-top: 20px;
-}
-
-    .custom-footer p {
-        margin: 0;
-        color: #777;
-        font-size: 14px;
-    }
+/*.footer {
+    bottom: 0;
+    position: relative;
+}*/
 
 .div-body {
     display: flex;
@@ -308,3 +304,106 @@
         padding: 0;
         margin: 0;
     }
+
+/*.content {
+    margin-top: 20px;
+    padding: 20px;
+}*/
+
+/* ===============================
+   Styles pour la page d'accueil
+   =============================== */
+
+/* Bannière d'accueil */
+.homepage-banner {
+    background: url('/images/background.jpg') no-repeat top center;
+    background-size: cover;
+    padding: 200px 0;
+    text-align: center;
+    color: #fff;
+}
+
+    .homepage-banner h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .homepage-banner p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+    }
+
+    .homepage-banner .btn {
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 15px 30px;
+        background-color: #4070f4;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .homepage-banner .btn:hover {
+            background-color: #265df2;
+        }
+
+/* Contenu de la page */
+.homepage-content {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+    .homepage-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: #4070f4;
+    }
+
+/* Section des services */
+.services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.service {
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    transition: transform 0.3s ease;
+}
+
+    .service:hover {
+        transform: translateY(-5px);
+    }
+
+    .service img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .service h3 {
+        margin: 20px 0 10px;
+        font-size: 1.8rem;
+        color: #4070f4;
+    }
+
+    .service p {
+        padding: 0 20px 20px;
+        font-size: 1rem;
+        color: #666;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .services {
+        flex-direction: column;
+        align-items: center;
+    }
+}

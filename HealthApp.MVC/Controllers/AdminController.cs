@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+using HealthApp.MVC.Data; // Assurez-vous que le namespace du contexte est correct
 using HealthApp.MVC.Models;
-
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HealthApp.MVC.Controllers
 {
@@ -12,74 +13,36 @@ namespace HealthApp.MVC.Controllers
     public class AdminController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _context;
 
-        public AdminController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<IdentityUser> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
-        }
-
-        // Liste des utilisateurs
-        public async Task<IActionResult> Users()
-        {
-            var users = _userManager.Users;
-            return View(users);
-        }
-
-        // Modifie le rôle d'un utilisateur
-        [HttpGet("Admin/ManageRoles/{id}")]
-        public async Task<IActionResult> ManageRoles(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return NotFound("L'ID de l'utilisateur est manquant.");
-            }
-
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound("Utilisateur introuvable.");
-            }
-
-            var roles = await _roleManager.Roles.ToListAsync();
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            var model = new ManageRolesViewModel
-            {
-                UserId = user.Id,
-                Email = user.Email,
-                Roles = roles.Select(r => r.Name).ToList(),
-                UserRoles = userRoles.ToList()
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ManageRoles(string id, string role)
-        {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
-            {
-                return BadRequest("L'ID ou le rôle est manquant.");
-            }
-
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound("Utilisateur introuvable.");
-            }
-
-            var currentRoles = await _userManager.GetRolesAsync(user);
-            await _userManager.RemoveFromRolesAsync(user, currentRoles);
-            await _userManager.AddToRoleAsync(user, role);
-
-            return RedirectToAction("Users");
+            _context = context;
         }
 
         public IActionResult Index()
         {
             return View();
         }
+
+        public async Task<IActionResult> ManageUsers()
+        {
+            // Récupère la liste de tous les utilisateurs
+            var users = _userManager.Users.ToList();
+            return View(users);
+        }
+
+        public async Task<IActionResult> ViewAppointments()
+        {
+            // Récupère les rendez-vous en incluant les informations du patient et du médecin
+            var appointments = await _context.Appointments
+                .Include(a => a.Patient)
+                .Include(a => a.Doctor)
+                .ToListAsync();
+            return View(appointments);
+        }
+
+        // Vous pourrez ajouter d'autres actions pour annuler, éditer, etc.
     }
 }

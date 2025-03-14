@@ -1,0 +1,66 @@
+﻿@page
+@model HealthApp.MVC.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Registration";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+<div class="div-body-register">
+    <div class="custom-container">
+        <div class="custom-forms-register">
+            <div class="custom-form signup">
+                <span class="custom-title">Registration</span>
+                <!-- Affichage des messages d'erreur (par exemple, email déjà utilisé) -->
+                <div class="custom-validation-summary" asp-validation-summary="All"></div>
+                <form method="post">
+                    <div class="custom-input-field">
+                        <input asp-for="Input.FirstName" placeholder="Enter your first name" required />
+                        <i class="uil uil-user icon"></i>
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="custom-input-field">
+                        <input asp-for="Input.LastName" placeholder="Enter your last name" required />
+                        <i class="uil uil-user icon"></i>
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="custom-input-field">
+                        <input asp-for="Input.Birthdate" type="date" placeholder="Enter your birthdate" required />
+                        <i class="uil uil-calendar-alt icon"></i>
+                        <span asp-validation-for="Input.Birthdate" class="text-danger"></span>
+                    </div>
+                    <div class="custom-input-field">
+                        <input asp-for="Input.Email" placeholder="Enter your email" required />
+                        <i class="uil uil-envelope icon"></i>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="custom-input-field">
+                        <input asp-for="Input.Password" class="password" placeholder="Create a password" type="password" required />
+                        <i class="uil uil-lock icon"></i>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="custom-input-field">
+                        <input asp-for="Input.ConfirmPassword" class="password" placeholder="Confirm your password" type="password" required />
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    
+                    @* <div class="custom-checkbox-text"> *@
+                    @*     <div class="custom-checkbox-content"> *@
+                    @*         <input type="checkbox" id="termCon" /> *@
+                    @*         <label for="termCon" class="custom-text">I accepted all terms and conditions</label> *@
+                    @*     </div> *@
+                    @* </div> *@
+                    <div class="custom-input-field custom-button">
+                        <input type="submit" value="Register" />
+                    </div>
+                </form>
+                <div class="login-signup">
+                    <span class="custom-text">
+                        Already a member?
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Sign In Now</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

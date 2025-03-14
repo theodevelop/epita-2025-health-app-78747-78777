@@ -17,12 +17,14 @@ namespace HealthApp.MVC.Models
         public string LastName { get; set; }
 
         [Required]
+        public DateTime Birthdate { get; set; }
+
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Phone]
-        public string Phone { get; set; }
-
         public ICollection<Appointment> Appointments { get; set; }
+
+        public string IdentityUserId { get; set; }
     }
 }

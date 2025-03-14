@@ -104,6 +104,9 @@ namespace HealthApp.MVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("Birthdate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -113,13 +116,13 @@ namespace HealthApp.MVC.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("IdentityUserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

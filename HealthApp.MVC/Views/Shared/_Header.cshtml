@@ -1,0 +1,21 @@
+﻿<header class="custom-header">
+        <nav class="custom-navbar">
+        <div class="custom-container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <!-- Vous pouvez ajouter un logo si souhaité -->
+                    Hospital Plus
+                </a>
+                <ul class="nav custom-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-login">
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+</header>

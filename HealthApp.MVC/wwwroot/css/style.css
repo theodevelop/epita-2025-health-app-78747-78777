@@ -1,0 +1,295 @@
+﻿/* ===== Google Font Import - Poformsins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.custom-container {
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 0 20px;
+}
+
+    .custom-container .custom-forms {
+        display: flex;
+        align-items: center;
+        height: 460px;
+        width: 200%;
+        transition: height 0.2s ease;
+    }
+
+    .custom-container .custom-forms-register {
+        display: flex;
+        align-items: center;
+        height: 720px;
+        width: 200%;
+        transition: height 0.2s ease;
+    }
+
+    .custom-container .custom-form {
+        width: 50%;
+        padding: 30px;
+        background-color: #fff;
+        transition: margin-left 0.18s ease;
+    }
+
+    .custom-container.active .login {
+        margin-left: -50%;
+        opacity: 0;
+        transition: margin-left 0.18s ease, opacity 0.15s ease;
+    }
+
+    .custom-container.active .signup {
+        opacity: 1;
+        transition: opacity 0.2s ease;
+    }
+
+    .custom-container.active .forms {
+        height: 600px;
+    }
+
+    .custom-container .custom-form .custom-title {
+        position: relative;
+        font-size: 27px;
+        font-weight: 600;
+    }
+
+.custom-form .custom-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #4070f4;
+    border-radius: 25px;
+}
+
+.custom-form .custom-input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.custom-input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+    .custom-input-field input:is(:focus, :valid) {
+        border-bottom-color: #4070f4;
+    }
+
+.custom-input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.custom-input-field input:is(:focus, :valid) ~ i {
+    color: #4070f4;
+}
+
+.custom-input-field i.icon {
+    left: 0;
+}
+
+.custom-input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.custom-form .custom-checkbox-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.custom-checkbox-text .custom-checkbox-content {
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox-content input {
+    margin-right: 10px;
+    accent-color: #4070f4;
+}
+
+.custom-form .custom-text {
+    color: #333;
+    font-size: 14px;
+}
+
+.custom-form a.custom-text {
+    color: #4070f4;
+    text-decoration: none;
+}
+
+.custom-form a:hover {
+    text-decoration: underline;
+}
+
+.custom-form .custom-button {
+    margin-top: 35px;
+}
+
+    .custom-form .custom-button input {
+        border: none;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        border-radius: 6px;
+        background-color: #4070f4;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+.custom-button input:hover {
+    background-color: #265df2;
+}
+
+.custom-form .login-signup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+/* Header personnalisé */
+.custom-header {
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    padding: 10px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.custom-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .custom-navbar .custom-container {
+        box-shadow: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 400px;
+    }
+
+    .custom-navbar .navbar-brand {
+        font-size: 24px;
+        font-weight: 600;
+        color: #4070f4;
+        text-decoration: none;
+    }
+
+.custom-nav {
+    list-style: none;
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+    .custom-nav .nav-item {
+        margin-right: 15px;
+    }
+
+    .custom-nav .nav-link {
+        font-size: 16px;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .custom-nav .nav-link:hover {
+            color: #4070f4;
+        }
+
+.navbar-login {
+    display: flex;
+}
+
+    .navbar-login ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        list-style: none
+    }
+
+        .navbar-login ul li {
+            padding: 10px;
+            transition: color 0.3s ease;
+        }
+
+    .navbar-login .nav-link {
+        font-size: 16px;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .navbar-login .nav-link:hover {
+            color: #4070f4;
+        }
+
+        .login-signup .custom-text .nav-link {
+            padding: 0;
+            display: inline-flex;
+        }
+
+/* Footer personnalisé */
+.custom-footer {
+    background-color: #fff;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .custom-footer p {
+        margin: 0;
+        color: #777;
+        font-size: 14px;
+    }
+
+.div-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #4070f4;
+}
+
+.div-body-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 139vh;
+    background-color: #4070f4;
+}

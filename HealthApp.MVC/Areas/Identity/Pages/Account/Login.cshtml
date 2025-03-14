@@ -1,0 +1,44 @@
+﻿@page
+@model HealthApp.MVC.Areas.Identity.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Connexion";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+<div class="div-body">
+    <div class="custom-container">
+        <div class="custom-forms">
+            <div class="custom-form login">
+                <span class="custom-title">Login</span>
+                <form method="post">
+                    <div class="custom-input-field">
+                        <input asp-for="Input.Email" placeholder="Enter your email" required />
+                        <i class="uil uil-envelope icon"></i>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="custom-input-field">
+                        <input asp-for="Input.Password" class="password" placeholder="Enter your password" type="password" required />
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="custom-checkbox-text">
+                        <div class="checkbox-content">
+                            <input asp-for="Input.RememberMe" id="logCheck" type="checkbox" />
+                            <label for="logCheck" class="custom-text">Remember me</label>
+                        </div>
+                        <a href="#" class="custom-text">Forgot password?</a>
+                    </div>
+                    <div class="custom-input-field custom-button">
+                        <input type="submit" value="Login" />
+                    </div>
+                </form>
+                <div class="login-signup">
+                    <span class="custom-text">
+                        Not a member?
+                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Sign Up Now</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 html {
   font-size: 14px;
 }
@@ -20,3 +22,87 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Style général de la page d'authentification */
+.auth-wrapper {
+    background: url('/images/background.jpg') no-repeat center center fixed; /* Remplacez par le chemin de votre image */
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Conteneur pour centrer la carte */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+}
+
+/* Carte de connexion/inscription */
+.auth-card {
+    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Titre de la carte */
+.auth-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Styles de formulaire */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    width: 100%;
+}
+
+/* Bouton personnalisé */
+.btn-auth {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: #4a77d4; /* Couleur d'exemple */
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-auth:hover {
+        background-color: #3b5eaa;
+    }
+
+/* Pied de page de la carte */
+.auth-footer {
+    text-align: center;
+    margin-top: 15px;
+}
+
+    .auth-footer a {
+        color: #4a77d4;
+        text-decoration: none;
+    }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }

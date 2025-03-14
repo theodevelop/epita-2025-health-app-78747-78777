@@ -9,6 +9,7 @@
         <div class="custom-forms">
             <div class="custom-form login">
                 <span class="custom-title">Login</span>
+                <div class="custom-validation-summary" asp-validation-summary="All"></div>
                 <form method="post">
                     <div class="custom-input-field">
                         <input asp-for="Input.Email" placeholder="Enter your email" required />

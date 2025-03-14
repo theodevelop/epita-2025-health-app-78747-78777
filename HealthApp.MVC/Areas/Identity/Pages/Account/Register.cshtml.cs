@@ -91,7 +91,6 @@ namespace HealthApp.MVC.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
-            [Remote(action: "CheckEmail", controller: "Account", ErrorMessage = "This email address is already in use.")]
             public string Email { get; set; }
 
 

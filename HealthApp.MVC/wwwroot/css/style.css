@@ -232,6 +232,7 @@
 
 .navbar-login {
     display: flex;
+    padding-right: 20px;
 }
 
     .navbar-login ul {
@@ -282,7 +283,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 84vh;
     background-color: #4070f4;
 }
 
@@ -290,6 +291,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 139vh;
+    height: 123vh;
     background-color: #4070f4;
 }
+
+.custom-validation-summary {
+    margin-top: 10px; /* Espace au-dessus de la liste d'erreurs */
+    margin-bottom: -28px; /* Espace en dessous */
+    padding: 5px;
+    font-size: 14px;
+    color: #d9534f; /* Couleur typique pour les erreurs */
+}
+
+    .custom-validation-summary ul {
+        list-style: none; /* Supprime les puces */
+        padding: 0;
+        margin: 0;
+    }

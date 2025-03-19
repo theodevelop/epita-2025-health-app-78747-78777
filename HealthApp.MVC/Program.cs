@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using HealthApp.MVC.Data;
+using HealthApp.MVC.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Add Identity with roles
-builder.Services.AddDefaultIdentity<IdentityUser>(options => {
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     options.SignIn.RequireConfirmedAccount = true;
     options.User.RequireUniqueEmail = true;
 })
@@ -41,7 +42,7 @@ using (var scope = app.Services.CreateScope())
 
 using (var scope = app.Services.CreateScope())
 {
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     string adminEmail = "admin@hospital.com";
@@ -55,11 +56,14 @@ using (var scope = app.Services.CreateScope())
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {
-        adminUser = new IdentityUser
+        adminUser = new ApplicationUser
         {
             UserName = adminEmail,
             Email = adminEmail,
-            EmailConfirmed = true
+            EmailConfirmed = true,
+            FirstName = "Admin",
+            LastName = "Admin",
+            RoleType = "Admin"
         };
 
         var result = await userManager.CreateAsync(adminUser, adminPassword);

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HealthApp.MVC.Models.Doctor>
+﻿@model IEnumerable<HealthApp.MVC.Models.Entities.Doctor>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,9 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Phone) *@
+            @* </th> *@
             <th></th>
         </tr>
     </thead>
@@ -39,9 +39,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
+            @* <td> *@
+            @*     @Html.DisplayFor(modelItem => item.Phone) *@
+            @* </td> *@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

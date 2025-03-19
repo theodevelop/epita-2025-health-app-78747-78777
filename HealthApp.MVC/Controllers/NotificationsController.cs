@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HealthApp.MVC.Data;
 using HealthApp.MVC.Models;
+using HealthApp.MVC.Models.Domain;
 
 namespace HealthApp.MVC.Controllers
 {
@@ -34,7 +35,7 @@ namespace HealthApp.MVC.Controllers
             }
 
             var notification = await _context.Notifications
-                .FirstOrDefaultAsync(m => m.NotificationId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (notification == null)
             {
                 return NotFound();
@@ -88,7 +89,7 @@ namespace HealthApp.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("NotificationId,Message,DateSent,IsSent")] Notification notification)
         {
-            if (id != notification.NotificationId)
+            if (id != notification.Id)
             {
                 return NotFound();
             }
@@ -102,7 +103,7 @@ namespace HealthApp.MVC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NotificationExists(notification.NotificationId))
+                    if (!NotificationExists(notification.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +126,7 @@ namespace HealthApp.MVC.Controllers
             }
 
             var notification = await _context.Notifications
-                .FirstOrDefaultAsync(m => m.NotificationId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (notification == null)
             {
                 return NotFound();
@@ -151,7 +152,7 @@ namespace HealthApp.MVC.Controllers
 
         private bool NotificationExists(int id)
         {
-            return _context.Notifications.Any(e => e.NotificationId == id);
+            return _context.Notifications.Any(e => e.Id == id);
         }
     }
 }

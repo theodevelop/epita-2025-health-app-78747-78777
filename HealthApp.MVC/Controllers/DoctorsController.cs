@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HealthApp.MVC.Data;
 using HealthApp.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using HealthApp.MVC.Models.Entities;
 
 namespace HealthApp.MVC.Controllers
 {

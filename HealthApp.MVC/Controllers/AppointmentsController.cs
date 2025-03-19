@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HealthApp.MVC.Data;
-using HealthApp.MVC.Models;
+using HealthApp.MVC.Models.Domain;
 
 namespace HealthApp.MVC.Controllers
 {

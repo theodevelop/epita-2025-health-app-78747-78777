@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using HealthApp.MVC.Models.Entities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HealthApp.MVC.Models
+namespace HealthApp.MVC.Models.Domain
 {
     public enum AppointmentStatus
     {
-        Pending,    // En attente d'approbation
-        Approved,   // Approuvé par le médecin
-        Rejected,   // Rejeté par le médecin
-        Cancelled,  // Annulé par le patient
-        Completed   // Terminé
+        Pending,
+        Approved,
+        Rejected,
+        Cancelled,
+        Completed
     }
+
 
     public class Appointment
     {
@@ -30,8 +32,9 @@ namespace HealthApp.MVC.Models
 
         [Required]
         public AppointmentStatus Status { get; set; }
-        
+
         [Required]
+        [StringLength(500)]
         public string Reason { get; set; }
     }
 }

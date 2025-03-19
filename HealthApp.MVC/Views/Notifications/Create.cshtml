@@ -1,4 +1,4 @@
-﻿@model HealthApp.MVC.Models.Notification
+﻿@model HealthApp.MVC.Models.Domain.Notification
 
 @{
     ViewData["Title"] = "Create";
@@ -13,9 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
-                <span asp-validation-for="Message" class="text-danger"></span>
+                <label asp-for="Content" class="control-label"></label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateSent" class="control-label"></label>

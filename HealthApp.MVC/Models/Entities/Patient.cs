@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using HealthApp.MVC.Models.Domain;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace HealthApp.MVC.Models
+namespace HealthApp.MVC.Models.Entities
 {
-    public class Doctor
+    public class Patient
     {
         [Key]
         public int Id { get; set; }
@@ -16,16 +18,20 @@ namespace HealthApp.MVC.Models
         [StringLength(20)]
         public string LastName { get; set; }
 
-        //[Required]
-        //public ICollection<Specialization> Specializations { get; set; }
+        [Required]
+        public DateTime Birthdate { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Phone]
-        public string Phone { get; set; }
+        //[Required]
+        //[Phone]
+        //public string Phone { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+
+        public string IdentityUserId { get; set; }
+        public ApplicationUser IdentityUser { get; set; }
     }
 }

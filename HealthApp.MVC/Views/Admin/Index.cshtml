@@ -1,132 +1,142 @@
 ﻿@model HealthApp.MVC.ViewModels.Admin.DashboardViewModel
 
 @{
-    ViewData["Title"] = "Dashboard Admin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    // ViewData["Title"] = "Dashboard Admin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
 
-<div class="mb-4">
-    <h1 class="fw-bold">Dashboard Administrateur</h1>
-    <p class="text-muted">Bienvenue sur votre tableau de bord, Admin !</p>
-</div>
+<!-- Main Dashboard Section -->
+<section class="dashboard">
+    <h1>Dashboard</h1>
 
-<!-- Cartes de statistiques principales -->
-<div class="row g-4">
-    <!-- Patients -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center">
-                <div class="mb-3">
-                    <i class="fas fa-user-friends fa-2x text-primary"></i>
-                </div>
-                <h5 class="card-title">Patients</h5>
-                <p class="fs-4 fw-bold">@Model.TotalPatients</p>
+    <!-- Row of Stats Cards -->
+    <div class="stats-cards">
+        <div class="card patients">
+            <div class="card-text">
+                <h3>Patients</h3>
+                <p>@Model.TotalPatients</p>
+            </div>
+        </div>
+        <div class="card doctors">
+            <div class="card-text">
+                <h3>Doctors</h3>
+                <p>@Model.TotalDoctors</p>
+            </div>
+        </div>
+        <div class="card appointments">
+            <div class="card-text">
+                <h3>Appointments</h3>
+                <p>@Model.TotalAppointments</p>
             </div>
         </div>
     </div>
 
-    <!-- Médecins -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center">
-                <div class="mb-3">
-                    <i class="fas fa-user-md fa-2x text-success"></i>
-                </div>
-                <h5 class="card-title">Médecins</h5>
-                <p class="fs-4 fw-bold">@Model.TotalDoctors</p>
-            </div>
-        </div>
+    <!-- Example Analytics / Chart Area -->
+    <div class="analytics-overview" style="margin-top: 2rem;">
+        <h3>Appointments Overview</h3>
+        <!-- Canvas for Chart.js -->
+        <canvas id="appointmentsChart"></canvas>
     </div>
 
-    <!-- Rendez-vous -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center">
-                <div class="mb-3">
-                    <i class="fas fa-calendar-check fa-2x text-warning"></i>
-                </div>
-                <h5 class="card-title">Rendez-vous</h5>
-                <p class="fs-4 fw-bold">@Model.TotalAppointments</p>
-            </div>
-        </div>
+    <!-- Recent Notifications -->
+    <div class="recent-activity" style="margin-top: 2rem;">
+        <h3>Recent Notifications</h3>
+        <ul>
+            @if (Model.Notifications != null && Model.Notifications.Any())
+            {
+                foreach (var notification in Model.Notifications)
+                {
+                    <li>
+                        <strong>@notification.Title</strong> - @notification.Content
+                        <span>(@notification.DateSent.ToString("dd/MM/yyyy HH:mm"))</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li>No recent notifications</li>
+            }
+        </ul>
     </div>
 
-    <!-- Notifications -->
-    <div class="col-lg-3 col-md-6">
-        <div class="card shadow-sm border-0">
-            <div class="card-body text-center">
-                <div class="mb-3">
-                    <i class="fas fa-bell fa-2x text-danger"></i>
-                </div>
-                <h5 class="card-title">Notifications</h5>
-                <p class="fs-4 fw-bold">@Model.Notifications.Count</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Détails des rendez-vous -->
-<div class="mt-5">
-    <h4 class="mb-3">Détails des rendez-vous</h4>
-    <div class="row g-3">
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 text-center">
-                <div class="card-body">
-                    <h6 class="text-muted">En attente</h6>
-                    <p class="fs-5 fw-bold">@Model.PendingAppointments</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 text-center">
-                <div class="card-body">
-                    <h6 class="text-muted">Approuvés</h6>
-                    <p class="fs-5 fw-bold">@Model.ApprovedAppointments</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 text-center">
-                <div class="card-body">
-                    <h6 class="text-muted">Annulés</h6>
-                    <p class="fs-5 fw-bold">@Model.CancelledAppointments</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm border-0 text-center">
-                <div class="card-body">
-                    <h6 class="text-muted">Terminés</h6>
-                    <p class="fs-5 fw-bold">@Model.CompletedAppointments</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Dernières notifications -->
-<div class="mt-5">
-    <h4 class="mb-3">Dernières notifications</h4>
-    <div class="table-responsive">
-        <table class="table align-middle table-hover">
-            <thead class="table-light">
+    <!-- Recent Appointments Example -->
+    <div class="recent-orders" style="margin-top: 2rem;">
+        <h3>Recent Appointments</h3>
+        <table>
+            <thead>
                 <tr>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Contenu</th>
-                    <th scope="col">Date</th>
+                    <th>#</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var notification in Model.Notifications)
+                @if (Model.RecentAppointments != null && Model.RecentAppointments.Any())
+                {
+                    foreach (var appt in Model.RecentAppointments)
+                    {
+                        <tr>
+                            <td>#@appt.Id</td>
+                            <td>@appt.Patient.FirstName @appt.Patient.LastName</td>
+                            <td>@appt.Doctor.FirstName @appt.Doctor.LastName</td>
+                            <td>@appt.Date.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>@appt.Status</td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@notification.Title</td>
-                        <td>@notification.Content</td>
-                        <td>@notification.DateSent.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td colspan="5">No recent appointments</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-</div>
+
+
+    <!-- Another section for recent notifications or charts -->
+    @* <div class="recent-activity" style="margin-top:2rem;"> *@
+    @*     <h3>Recent Notifications</h3> *@
+    @*     <ul> *@
+    @*         @foreach (var notification in Model.Notifications) *@
+    @*         { *@
+    @*             <li> *@
+    @*                 <strong>@notification.Title</strong> - @notification.Content *@
+    @*                 <span>(@notification.DateSent.ToString("dd/MM/yyyy HH:mm"))</span> *@
+    @*             </li> *@
+    @*         } *@
+    @*     </ul> *@
+    @* </div> *@
+</section>
+
+
+<!-- Scripts Section: Chart.js Example -->
+@section Scripts {
+    <!-- Make sure Chart.js is referenced. You can also serve it locally if preferred. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Example chart using appointments data by month
+        var ctx = document.getElementById('appointmentsChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar', // or 'line'
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Appointments',
+                    // Replace these sample values with dynamic data from your ViewModel
+                    data: [@Model.JanCount, @Model.FebCount, @Model.MarCount, @Model.AprCount],
+                    backgroundColor: '#4070f4'
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+}

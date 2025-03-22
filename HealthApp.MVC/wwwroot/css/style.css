@@ -20,16 +20,21 @@
     --box-shadow-default: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-body {
-    font-family: Poppins;
+* {
+    font-family: "Poppins";
+}
+
+html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 .container {
     position: relative;
     max-width: 430px;
     width: 100%;
-    background: #fff;
+    background: var(--white);
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -54,6 +59,7 @@ body {
 
     .navbar .container {
         box-shadow: none;
+        max-width: 700px;
         display: flex;
         align-items: center;
         justify-content: normal;
@@ -64,7 +70,7 @@ body {
     .navbar .navbar-brand {
         font-size: 24px;
         font-weight: 600;
-        color: #4070f4;
+        color: var(--blue);
         text-decoration: none;
         margin-right: 1rem;
     }
@@ -92,7 +98,7 @@ body {
     }
 
         .nav .nav-link:hover {
-            color: #4070f4;
+            color: var(--blue-hover);
         }
 
 .navbar-login {
@@ -122,6 +128,14 @@ body {
 
         .navbar-login .nav-link:hover {
             color: var(--blue-hover);
+        }
+
+        .navbar-login .nav-link {
+            background: none;
+            box-shadow: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
         }
 
 .login-signup .custom-text .nav-link {
@@ -201,3 +215,624 @@ body {
         text-align: center;
     }
 }
+
+
+/* =========================
+   Section Hero (Bannière)
+   ========================= */
+.hero-section {
+    background: url('/images/background.jpg') no-repeat top center;
+    background-size: cover;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-section .container {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+.hero-btn {
+    display: inline-block;
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .hero-btn:hover {
+        background-color: var(--blue-hover);
+    }
+
+/* =========================
+   Section des fonctionnalités
+   ========================= */
+.features-section {
+    background-color: #f9f9f9;
+    padding: 60px 0;
+    text-align: center;
+}
+    
+    .features-section .container {
+        max-width: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    .features-section h2 {
+        margin-bottom: 40px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* espace entre les .feature */
+}
+
+.feature {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+    .feature h3 {
+        margin-bottom: 15px;
+        color: #4070f4;
+        font-size: 1.2rem;
+    }
+
+    .feature p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+/* =========================
+   Section CTA
+   ========================= */
+.cta-section {
+    background: #4070f4;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+    .cta-section .container {
+        background-color: transparent;
+        box-shadow: none;
+        max-width: none;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .cta-section p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+.cta-btn {
+    display: inline-block;
+    background-color: #fff;
+    color: #4070f4;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .cta-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+
+/* LOGIN / REGISTER CONTENT */
+.div-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 84vh;
+    background-color: #4070f4;
+}
+
+.div-body-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 123vh;
+    background-color: #4070f4;
+}
+
+.validation-summary {
+    margin-top: 10px; /* Espace au-dessus de la liste d'erreurs */
+    margin-bottom: -28px; /* Espace en dessous */
+    padding: 5px;
+    font-size: 14px;
+    color: #d9534f; /* Couleur typique pour les erreurs */
+}
+
+    .validation-summary ul {
+        list-style: none; /* Supprime les puces */
+        padding: 0;
+        margin: 0;
+    }
+
+.div-body .container .forms {
+    display: flex;
+    align-items: center;
+    height: 460px;
+    width: 200%;
+    transition: height 0.2s ease;
+}
+
+.div-body .container .forms-register {
+    display: flex;
+    align-items: center;
+    height: 720px;
+    width: 200%;
+    transition: height 0.2s ease;
+}
+
+.div-body .container .form {
+    width: 50%;
+    padding: 30px;
+    background-color: #fff;
+    transition: margin-left 0.18s ease;
+}
+
+.div-body .container.active .login {
+    margin-left: -50%;
+    opacity: 0;
+    transition: margin-left 0.18s ease, opacity 0.15s ease;
+}
+
+.div-body .container.active .signup {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.div-body .container.active .forms {
+    height: 600px;
+}
+
+.div-body .container .form .title {
+    position: relative;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.form .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #4070f4;
+    border-radius: 25px;
+}
+
+.form .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+    .input-field input:is(:focus, :valid) {
+        border-bottom-color: #4070f4;
+    }
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid) ~ i {
+    color: #4070f4;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.form .checkbox-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.checkbox-text .checkbox-content {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-content input {
+    margin-right: 10px;
+    accent-color: #4070f4;
+}
+
+.form .text {
+    color: #333;
+    font-size: 14px;
+}
+
+.form a.text {
+    color: #4070f4;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form .button {
+    margin-top: 35px;
+}
+
+    .form .button input {
+        border: none;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        border-radius: 6px;
+        background-color: #4070f4;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+.button input:hover {
+    background-color: #265df2;
+}
+
+.form .login-signup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+
+/* ============== Dashboard Container ============== */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ============== Sidebar ============== */
+    .dashboard-sidebar {
+        width: 220px;
+        background-color: #1b1b1b;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .dashboard-sidebar .sidebar-brand {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+            .dashboard-sidebar .sidebar-brand h2 {
+                font-size: 1.4rem;
+                color: #fff;
+            }
+
+        .dashboard-sidebar .sidebar-menu ul {
+            list-style: none;
+        }
+
+            .dashboard-sidebar .sidebar-menu ul li a {
+                display: flex;
+                padding: 0.8rem 1.2rem;
+                color: #ccc;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+                .dashboard-sidebar .sidebar-menu ul li a i {
+                    margin-right: 0.5rem; /* space between icon and text */
+                    font-size: 1.2rem; /* adjust icon size */
+                    vertical-align: middle;
+                }
+
+                .dashboard-sidebar .sidebar-menu ul li a:hover,
+                .dashboard-sidebar .sidebar-menu ul li a.active {
+                    background-color: #333;
+                    color: #fff;
+                }
+
+            .dashboard-sidebar .sidebar-menu ul li form {
+                display: flex;
+                padding: 0.8rem 1.2rem;
+                color: #ccc;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+            .dashboard-sidebar .sidebar-menu ul li button {
+                border: none;
+                background: none;
+                cursor: pointer;
+                color: #ccc;
+            }
+
+                .dashboard-sidebar .sidebar-menu ul li button i {
+                    margin-right: 0.1rem; /* space between icon and text */
+                    font-size: 1.2rem; /* adjust icon size */
+                    vertical-align: middle;
+                    color: #ccc;
+                }
+
+                .dashboard-sidebar .sidebar-menu ul li button span {
+                    color: #ccc;
+                    font-size: 16px;
+                }
+
+                .dashboard-sidebar .sidebar-menu ul li form:hover,
+                .dashboard-sidebar .sidebar-menu ul li form.active {
+                    background-color: #333;
+                    
+                }
+
+                    .dashboard-sidebar .sidebar-menu ul li form:hover i,
+                    .dashboard-sidebar .sidebar-menu ul li form:hover span {
+                        color: #d73535;
+                    }
+
+                    .dashboard-sidebar .sidebar-menu ul li form.active i,
+                    .dashboard-sidebar .sidebar-menu ul li form.active span {
+                        color: #d73535;
+                    }
+
+
+                    /* ============== Dashboard Wrapper ============== */
+                    .dashboard-wrapper {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+
+/* ============== Main Content & Summary ============== */
+.dashboard-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden; /* ensures the layout doesn't break if content overflows */
+    background-color: #f1f1fb;
+}
+
+    .dashboard-content .main-content {
+        flex: 3;
+        padding: 1.3rem 2rem 2rem 2rem;
+        overflow-y: auto;
+    }
+
+    .dashboard-content .summary-panel {
+        flex: 1;
+        background-color: #f9f8fd;
+        padding: 1.6rem 2rem 2rem 2rem;
+        border-left: 1px solid #eee;
+    }
+
+        .dashboard-content .summary-panel h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+/* ============== Summary Card ============== */
+    .dashboard-content .summary-card {
+        background-color: #4070f4;
+        color: #fff;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dashboard-content .summary-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .dashboard-content .summary-value {
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+/* ============== Summary Sections ============== */
+    .dashboard-content .summary-section {
+        margin-bottom: 1.5rem;
+    }
+
+        .dashboard-content .summary-section h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-content .summary-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            .dashboard-content .summary-section ul li {
+                padding: 0.3rem 0;
+                color: #666;
+            }
+
+/* ============== Cards / Stats Example (Optional) ============== */
+/* If you have stats cards in your main content, you can style them here */
+    .dashboard-content .stats-cards {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+        .dashboard-content .stats-cards .card {
+            flex: 1;
+            position: relative;
+            height: 100px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--blue) 0%, #4e3dbb 100%), url('/images/patients-bg.svg');
+            background-blend-mode: multiply;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 5px;
+        }
+            .dashboard-content .stats-cards .card .card-text {
+                margin-right: 20px;
+                text-align: right;
+                color: #333;
+            }
+
+                .dashboard-content .stats-cards .card .card-text h3 {
+                    font-size: 1rem;
+                    margin-bottom: 0.5rem;
+                    font-weight: 500;
+                    opacity: 0.95;
+                }
+
+                .dashboard-content .stats-cards .card .card-text p {
+                    font-size: 1.8rem;
+                    font-weight: 600;
+                }
+
+            .dashboard-content .stats-cards .card .patients {
+
+            }
+
+            .dashboard-content .stats-cards .card .doctors {
+
+            }
+
+            .dashboard-content .stats-cards .card .appointments {
+
+            }
+
+
+/* ============== Responsive Layout ============== */
+@media (max-width: 992px) {
+    .dashboard-sidebar {
+        position: fixed;
+        left: -220px;
+        transition: left 0.3s ease;
+    }
+
+        .dashboard-sidebar.sidebar-open {
+            left: 0;
+        }
+
+    .dashboard-header {
+        padding: 1rem;
+    }
+
+    .dashboard-content {
+        flex-direction: column;
+    }
+
+        .dashboard-content .main-content, .summary-panel {
+            width: 100%;
+            flex: none;
+            border-left: none;
+            border-top: 1px solid #eee;
+        }
+
+        .dashboard-content .summary-panel {
+            padding: 1rem;
+        }
+}
+
+
+.table-users {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+    .table-users thead {
+        background-color: #f0f0f0;
+    }
+
+    .table-users th, .table-users td {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+    }

@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using HealthApp.MVC.Data;
 using HealthApp.MVC.Models.Domain;
-using HealthApp.MVC.ViewModels;
-using System.Linq;
 using HealthApp.MVC.ViewModels.Admin;
+using Microsoft.AspNetCore.Identity;
+using HealthApp.MVC.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace HealthApp.MVC.Controllers
@@ -13,10 +14,14 @@ namespace HealthApp.MVC.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -37,6 +42,12 @@ namespace HealthApp.MVC.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> Users()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return View(users);
         }
 
         //public AdminController(ApplicationDbContext context)

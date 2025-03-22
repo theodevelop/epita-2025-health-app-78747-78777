@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using HealthApp.MVC.Models.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    Layout = null;
+    string firstName = "";
+    string lastName = "";
+    if (SignInManager.IsSignedIn(User))
+    {
+        var currentUser = await UserManager.GetUserAsync(User);
+        firstName = currentUser?.FirstName ?? User.Identity?.Name;
+        lastName = currentUser?.LastName ?? "";
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/uicons-solid-rounded.css" />
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar (Left Navigation) -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-brand">
+                <h2>@lastName @firstName</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index"><i class="fi fi-sr-home"></i><span>Home</span></a></li>
+                    <li><a asp-controller="Admin" asp-action="Index" class="active"><i class="fi fi-sr-dashboard-panel"></i><span>Dashboard</span></a></li>
+                    <li><a asp-controller="Doctors" asp-action="Index"><i class="fi fi-sr-user-md"></i><span>Doctors</span></a></li>
+                    <li><a asp-controller="Patients" asp-action="Index"><i class=" fi-sr-user-injured"></i><span>Patients</span></a></li>
+                    <li><a asp-controller="Appointments" asp-action="Index"><i class="fi fi-sr-calendar-days"></i><span>Appointments</span></a></li>
+                    <li><a asp-controller="Reports" asp-action="Index"><i class="fi fi-sr-file-medical-alt"></i><span>Reports</span></a></li>
+                    <li><a asp-controller="Notifications" asp-action="Index"><i class="fi fi-sr-bell-notification-social-media"></i><span>Notifications</span></a></li>
+                    <li>
+                        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="">
+                                <i class="fi fi-sr-leave"></i>
+                                <span>Log out</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+            <!-- Main Content & Summary -->
+            <div class="dashboard-content">
+                <!-- Main content area (left) -->
+                <main class="main-content">
+                    @RenderBody()
+                </main>
+
+                <!-- Summary panel (right) -->
+                <aside class="summary-panel">
+                    <h3>Summary</h3>
+                    <div class="summary-card">
+                        <span class="summary-label">Your Balance</span>
+                        <span class="summary-value">$10,632.00</span>
+                    </div>
+
+                    <div class="summary-section">
+                        <h4>Activity</h4>
+                        <ul>
+                            <li>Withdraw Earnings</li>
+                            <li>Paying Website Tax</li>
+                        </ul>
+                    </div>
+
+                    <div class="summary-section">
+                        <h4>Top Categories</h4>
+                        <ul>
+                            <li>Footwear</li>
+                            <li>Accessories</li>
+                            <li>Health</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/script.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

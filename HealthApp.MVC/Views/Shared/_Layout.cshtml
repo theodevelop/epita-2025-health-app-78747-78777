@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en" class="custom-html">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,15 +14,11 @@
 <body>
     @await Html.PartialAsync("_Header")
 
-    <div class="content">
-            @RenderBody()
-    </div>
+    <main class="main-content">
+        @RenderBody()
+    </main>
 
-    <footer class="footer">
-        <div class="container">
-            &copy; 2025 - Hospital Plus - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @await Html.PartialAsync("_Footer")
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

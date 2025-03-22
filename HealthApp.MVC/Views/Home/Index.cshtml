@@ -2,26 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="homepage-banner">
-    <h1>Bienvenue sur Hospital Plus</h1>
-    <p>Votre système de gestion hospitalier de confiance.</p>
-    <a href="/Appointments" class="btn btn-primary">Prendre un rendez-vous</a>
-</div>
-
-<div class="homepage-content">
-    <h2>Nos Services</h2>
-    <div class="services">
-        <div class="service">
-            <h3>Consultations</h3>
-            <p>Des consultations spécialisées à votre service.</p>
-        </div>
-        <div class="service">
-            <h3>Prise en charge rapide</h3>
-            <p>Des soins rapides et efficaces.</p>
-        </div>
-        <div class="service">
-            <h3>Suivi personnalisé</h3>
-            <p>Un suivi personnalisé pour chaque patient.</p>
-        </div>
+<!-- Section Hero -->
+<div class="hero-section">
+    <div class="hero-content container">
+        <h1>Welcome to Hospital Plus</h1>
+        <p>Your solution for easily booking medical appointments online.</p>
+        <a asp-area="Identity" asp-page="/Account/Login" class="btn hero-btn">Make an appointment</a>
     </div>
 </div>
+
+<!-- Section des fonctionnalités -->
+<section class="features-section">
+    <div class="container">
+        <h2>Our services</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Quick Appointment Booking</h3>
+                <p>Book your consultations in just a few clicks.</p>
+            </div>
+            <div class="feature">
+                <h3>Automatic notifications</h3>
+                <p>Receive alerts so you never miss an appointment.</p>
+            </div>
+            <div class="feature">
+                <h3>List of Qualified Doctors</h3>
+                <p>Choose from a wide range of specialists.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section CTA (Appel à l'action) -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Ready to get started?</h2>
+        <p>Register now and book your first appointment.</p>
+        <a asp-area="Identity" asp-page="/Account/Register" class="btn cta-btn">Registration</a>
+    </div>
+</section>

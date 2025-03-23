@@ -749,8 +749,6 @@ html, body {
             position: relative;
             height: 100px;
             border-radius: 16px;
-            background: linear-gradient(135deg, var(--blue) 0%, #4e3dbb 100%), url('/images/patients-bg.svg');
-            background-blend-mode: multiply;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -759,34 +757,46 @@ html, body {
             padding: 5px;
         }
             .dashboard-content .stats-cards .card .card-text {
-                margin-right: 20px;
-                text-align: right;
-                color: #333;
+/*                margin-right: 20px;*/
+/*                text-align: right;*/
+                color: #fff;
+                padding-left: 20px;
             }
 
                 .dashboard-content .stats-cards .card .card-text h3 {
-                    font-size: 1rem;
-                    margin-bottom: 0.5rem;
-                    font-weight: 500;
+                    font-size: 1.1rem;
+/*                    margin-bottom: 0.3rem;*/
+                    font-weight: 600;
                     opacity: 0.95;
                 }
 
                 .dashboard-content .stats-cards .card .card-text p {
-                    font-size: 1.8rem;
+                    font-size: 1.1rem;
                     font-weight: 600;
+                    position: relative;
+                    left: 10px;
                 }
 
-            .dashboard-content .stats-cards .card .patients {
+        .dashboard-content .stats-cards .patients {
+            background: url("/images/patients-background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
-            }
+        .dashboard-content .stats-cards .doctors {
+            background: url("/images/doctors-background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
-            .dashboard-content .stats-cards .card .doctors {
-
-            }
-
-            .dashboard-content .stats-cards .card .appointments {
-
-            }
+        .dashboard-content .stats-cards .appointments {
+            background: url("/images/appointments-background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+/*            background-size: cover;*/
+        }
 
 
 /* ============== Responsive Layout ============== */

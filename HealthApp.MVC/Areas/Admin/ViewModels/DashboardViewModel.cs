@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using HealthApp.MVC.Models.Domain;
 
-namespace HealthApp.MVC.ViewModels.Admin
+namespace HealthApp.MVC.Areas.Admin.ViewModels
 {
     public class DashboardViewModel
     {
@@ -28,8 +28,5 @@ namespace HealthApp.MVC.ViewModels.Admin
         public int OctCount { get; set; }
         public int NovCount { get; set; }
         public int DecCount { get; set; }
-
-
-
     }
 }

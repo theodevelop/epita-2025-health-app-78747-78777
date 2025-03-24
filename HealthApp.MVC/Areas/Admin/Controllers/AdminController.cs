@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using HealthApp.MVC.Data;
 using HealthApp.MVC.Models.Domain;
-using HealthApp.MVC.ViewModels.Admin;
+using HealthApp.MVC.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using HealthApp.MVC.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace HealthApp.MVC.Controllers
+namespace HealthApp.MVC.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
@@ -50,49 +51,19 @@ namespace HealthApp.MVC.Controllers
             return View(users);
         }
 
-        //public AdminController(ApplicationDbContext context)
-        //{
-        //    _context = context;
-        //}
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-        //public IActionResult Users()
-        //{
-        //    var users = _context.Users.ToList();
-        //    return View(users);
-        //}
-        //public IActionResult UserRoles(string id)
-        //{
-        //    var user = _context.Users.FirstOrDefault(u => u.Id == id);
-        //    var userRoles = _context.UserRoles.Where(ur => ur.UserId == id).ToList();
-        //    var roles = _context.Roles.ToList();
-        //    var viewModel = new UserRolesViewModel
-        //    {
-        //        User = user,
-        //        UserRoles = userRoles,
-        //        Roles = roles
-        //    };
-        //    return View(viewModel);
-        //}
-        //public IActionResult AddRole(string userId, string roleId)
-        //{
-        //    var userRole = new IdentityUserRole<string>
-        //    {
-        //        UserId = userId,
-        //        RoleId = roleId
-        //    };
-        //    _context.UserRoles.Add(userRole);
-        //    _context.SaveChanges();
-        //    return RedirectToAction("UserRoles", new { id = userId });
-        //}
-        //public IActionResult RemoveRole(string userId, string roleId)
-        //{
-        //    var userRole = _context.UserRoles.FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
-        //    _context.UserRoles.Remove(userRole);
-        //    _context.SaveChanges();
-        //    return RedirectToAction("UserRoles", new { id = userId });
-        //}
+        public IActionResult Doctors(string searchTerm)
+        {
+            var doctors = _context.Doctors.Include(d => d.Specializations).ToList();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                doctors = doctors.Where(d => d.FirstName.Contains(searchTerm) ||
+                                               d.LastName.Contains(searchTerm) ||
+                                               d.Specializations.Any(s => s.Type.ToString().Contains(searchTerm)))
+                                   .ToList();
+            }
+
+            return View(doctors);
+        }
     }
 }

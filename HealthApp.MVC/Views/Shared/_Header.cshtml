@@ -2,7 +2,6 @@
         <nav class="navbar">
         <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <!-- Vous pouvez ajouter un logo si souhaité -->
                     Hospital Plus
                 </a>
                 <ul class="nav">
@@ -15,7 +14,7 @@
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
+                            <a class="nav-link"  asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
                         </li>
                     }
                 </ul>

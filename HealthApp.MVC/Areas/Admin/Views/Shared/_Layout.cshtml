@@ -10,7 +10,7 @@
     if (SignInManager.IsSignedIn(User))
     {
         var currentUser = await UserManager.GetUserAsync(User);
-        firstName = currentUser?.FirstName ?? User.Identity?.Name;
+        firstName = currentUser?.FirstName ?? "";
         lastName = currentUser?.LastName ?? "";
     }
 }
@@ -33,13 +33,48 @@
             </div>
             <nav class="sidebar-menu">
                 <ul>
-                    <li><a asp-controller="Home" asp-action="Index"><i class="fi fi-sr-home"></i><span>Home</span></a></li>
-                    <li><a asp-controller="Admin" asp-action="Index" class="active"><i class="fi fi-sr-dashboard-panel"></i><span>Dashboard</span></a></li>
-                    <li><a asp-controller="Doctors" asp-action="Index"><i class="fi fi-sr-user-md"></i><span>Doctors</span></a></li>
-                    <li><a asp-controller="Patients" asp-action="Index"><i class=" fi-sr-user-injured"></i><span>Patients</span></a></li>
-                    <li><a asp-controller="Appointments" asp-action="Index"><i class="fi fi-sr-calendar-days"></i><span>Appointments</span></a></li>
-                    <li><a asp-controller="Reports" asp-action="Index"><i class="fi fi-sr-file-medical-alt"></i><span>Reports</span></a></li>
-                    <li><a asp-controller="Notifications" asp-action="Index"><i class="fi fi-sr-bell-notification-social-media"></i><span>Notifications</span></a></li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <i class="fi fi-sr-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Admin" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                            <i class="fi fi-sr-dashboard-panel"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Doctors" asp-action="Index" class="@(ViewContext.RouteData.Values["Area"].ToString() == "Admin" && ViewContext.RouteData.Values["controller"].ToString() == "Doctors" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                            <i class="fi fi-sr-user-md"></i>
+                            <span>Doctors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Patients" asp-action="Index">
+                            <i class=" fi-sr-user-injured"></i>
+                            <span>Patients</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Appointments" asp-action="Index">
+                            <i class="fi fi-sr-calendar-days"></i>
+                            <span>Appointments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Reports" asp-action="Index">
+                            <i class="fi fi-sr-file-medical-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="Notifications" asp-action="Index">
+                            <i class="fi fi-sr-bell-notification-social-media"></i>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
                     <li>
                         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                             <button type="submit" class="">

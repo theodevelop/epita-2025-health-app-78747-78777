@@ -29,5 +29,8 @@ namespace HealthApp.MVC.Models.Entities
         public ICollection<Specialization> Specializations { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+
+        // public string IdentityUserId { get; set; }
+        // public ApplicationUser IdentityUser { get; set; }
     }
 }

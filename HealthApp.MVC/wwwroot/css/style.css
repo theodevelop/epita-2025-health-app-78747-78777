@@ -7,13 +7,13 @@
     --blue-hover: #265df2;
     --yellow: #ffd607;
     --red: #de1d1d;
+    --red-light: #eb3d3d;
     --green: #50C878;
     --grey-light: #ccc;
     --grey: #666;
     --white: #fff;
     --black: #000;
     --black-light: #131313;
-
     /* Typographie et autres variables */
     --font-base: 'Poppins', sans-serif;
     --border-radius: 6px;
@@ -856,6 +856,10 @@ html, body {
 /* Conteneur global de la page Doctors */
 
 /* En-tête de la page (titre + bouton) */
+.doctors-section {
+    padding-top: 1rem;
+}
+
 .doctors-section .doctors-header {
     display: flex;
     align-items: center;
@@ -960,4 +964,133 @@ html, body {
 
         .doctors-section .doctors-table td a:hover {
             text-decoration: underline;
+        }
+
+
+/* =========================
+   Doctors Create Page
+   ========================= */
+
+.create-doctor-section, .edit-doctor-section {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .create-doctor-section h1, 
+    .edit-doctor-section h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .create-doctor-section .doctor-form .form-group, 
+    .edit-doctor-section .doctor-form .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .create-doctor-section .doctor-form label,
+    .edit-doctor-section .doctor-form label {
+        display: block;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .create-doctor-section .doctor-form .form-control,
+    .edit-doctor-section .doctor-form .form-control {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.2s ease;
+    }
+
+        .create-doctor-section .doctor-form .form-control:focus,
+        .edit-doctor-section .doctor-form .form-control:focus {
+            border-color: var(--blue);
+        }
+
+    .create-doctor-section .doctor-form .specialization-group .form-check,
+    .edit-doctor-section .doctor-form .specialization-group .form-check {
+        display: flex;
+        align-items: center;
+    }
+
+    .create-doctor-section .doctor-form .specialization-group .form-check-input,
+    .edit-doctor-section .doctor-form .specialization-group .form-check-input {
+        margin-right: 0.5rem;
+    }
+
+    .create-doctor-section .doctor-form .specialization-group .form-check label,
+    .edit-doctor-section .doctor-form .specialization-group .form-check label {
+        margin-bottom: 0;
+    }
+
+    .create-doctor-section .doctor-form .btn.btn-primary,
+    .edit-doctor-section .doctor-form .btn.btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        background-color: var(--blue);
+        color: var(--white);
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+
+        .create-doctor-section .doctor-form .btn.btn-primary:hover,
+        .edit-doctor-section .doctor-form .btn.btn-primary:hover {
+            background-color: var(--blue-hover);
+        }
+
+
+.menu-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-button-container {
+    margin: 1.5rem;
+/*    text-align: center;*/
+}
+
+    .back-button-container .btn {
+        background-color: var(--grey-light);
+        color: var(--black);
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 7px 10px 5px 9px;
+    }
+
+        .back-button-container .btn:hover {
+            background-color: var(--grey);
+            color: var(--white);
+        }
+
+    .delete-button-container .btn {
+        width: 35px;
+        height: 35px;
+        background-color: var(--red-light);
+        color: var(--black);
+/*        padding: 0.6rem 1.2rem;*/
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 7px 10px 5px 9px;
+        cursor: pointer;
+    }
+
+        .delete-button-container .btn:hover {
+            background-color: var(--red);
+            color: var(--white);
         }

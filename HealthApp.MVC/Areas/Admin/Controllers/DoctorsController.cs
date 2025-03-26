@@ -5,6 +5,9 @@ using HealthApp.MVC.Data;
 using HealthApp.MVC.Models.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using HealthApp.MVC.Areas.Admin.ViewModels.Doctors;
+using HealthApp.MVC.Areas.Admin.ViewModels;
 
 
 namespace HealthApp.MVC.Areas.Admin.Controllers
@@ -14,148 +17,194 @@ namespace HealthApp.MVC.Areas.Admin.Controllers
     public class DoctorsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DoctorsController(ApplicationDbContext context)
+        public DoctorsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        // Affiche la liste des médecins, avec possibilité de filtrer par nom ou spécialisation
+        // GET: Admin/Doctors
         public async Task<IActionResult> Index(string searchTerm)
         {
-            var doctors = _context.Doctors.Include(d => d.Specializations).AsQueryable();
+            var doctors = _context.Doctors
+                                  .Include(d => d.Specializations)
+                                  .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 doctors = doctors.Where(d => d.FirstName.Contains(searchTerm)
-                    || d.LastName.Contains(searchTerm)
-                    || d.Specializations.Any(s => s.Type.ToString().Contains(searchTerm)));
+                                            || d.LastName.Contains(searchTerm)
+                                            || d.Specializations.Any(s => s.Name.Contains(searchTerm)
+                                                                       || s.Type.ToString().Contains(searchTerm)));
             }
 
             return View(await doctors.ToListAsync());
         }
 
-        // Affiche le formulaire de création d'un nouveau médecin
+        // GET: Admin/Doctors/Create
         public IActionResult Create()
         {
-            // Charge la liste des spécialisations pour la sélection multiple dans la vue
             ViewBag.Specializations = _context.Specializations.ToList();
             return View();
         }
 
-        // Traite la soumission du formulaire de création
+        // POST: Admin/Doctors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Doctor doctor, int[] selectedSpecializationIds)
+        public async Task<IActionResult> Create(DoctorCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (selectedSpecializationIds != null && selectedSpecializationIds.Any())
+                var user = new ApplicationUser
                 {
-                    doctor.Specializations = await _context.Specializations
-                        .Where(s => selectedSpecializationIds.Contains(s.Id))
-                        .ToListAsync();
-                }
-                _context.Add(doctor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            // En cas d'erreur, recharge les spécialisations
-            ViewBag.Specializations = _context.Specializations.ToList();
-            return View(doctor);
-        }
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    EmailConfirmed = true,
+                    RoleType = "Doctor"
+                };
 
-        // Affiche le formulaire d'édition d'un médecin existant
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-            var doctor = await _context.Doctors.Include(d => d.Specializations)
-                                .FirstOrDefaultAsync(d => d.Id == id);
-            if (doctor == null) return NotFound();
-
-            ViewBag.Specializations = _context.Specializations.ToList();
-            return View(doctor);
-        }
-
-        // Traite la soumission du formulaire d'édition
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Doctor doctor, int[] selectedSpecializationIds)
-        {
-            if (id != doctor.Id)
-                return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (result.Succeeded)
                 {
-                    var doctorToUpdate = await _context.Doctors.Include(d => d.Specializations)
-                                            .FirstOrDefaultAsync(d => d.Id == id);
-                    if (doctorToUpdate == null)
-                        return NotFound();
+                    await _userManager.AddToRoleAsync(user, "Doctor");
 
-                    // Mise à jour des champs
-                    doctorToUpdate.FirstName = doctor.FirstName;
-                    doctorToUpdate.LastName = doctor.LastName;
-                    doctorToUpdate.Email = doctor.Email;
-
-                    // Mise à jour des spécialisations
-                    doctorToUpdate.Specializations.Clear();
-                    if (selectedSpecializationIds != null && selectedSpecializationIds.Any())
+                    var doctor = new Doctor
                     {
-                        var specializations = await _context.Specializations
-                            .Where(s => selectedSpecializationIds.Contains(s.Id))
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        IdentityUserId = user.Id,
+                        IdentityUser = user
+                    };
+
+                    if (model.SelectedSpecializationIds != null && model.SelectedSpecializationIds.Any())
+                    {
+                        doctor.Specializations = await _context.Specializations
+                            .Where(s => model.SelectedSpecializationIds.Contains(s.Id))
                             .ToListAsync();
-                        doctorToUpdate.Specializations = specializations;
                     }
-                    _context.Update(doctorToUpdate);
+
+                    _context.Doctors.Add(doctor);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!DoctorExists(doctor.Id))
-                        return NotFound();
-                    else
-                        throw;
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
-                return RedirectToAction(nameof(Index));
             }
+
             ViewBag.Specializations = _context.Specializations.ToList();
-            return View(doctor);
+            return View(model);
         }
 
-        // Affiche la confirmation de suppression d'un médecin
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            var doctor = await _context.Doctors.Include(d => d.Specializations)
+            var doctor = await _context.Doctors
+                                .Include(d => d.Specializations)
                                 .FirstOrDefaultAsync(d => d.Id == id);
             if (doctor == null)
                 return NotFound();
 
-            return View(doctor);
-        }
-
-        // Traite la suppression confirmée
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var doctor = await _context.Doctors.FindAsync(id);
-            if (doctor != null)
+            var viewModel = new DoctorEditViewModel
             {
-                _context.Doctors.Remove(doctor);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index), new { area = "Admin" });
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Email = doctor.Email,
+                SelectedSpecializationIds = doctor.Specializations.Select(s => s.Id).ToArray(),
+                AllSpecializations = await _context.Specializations.ToListAsync()
+            };
+
+            return View(viewModel);
         }
 
-        private bool DoctorExists(int id)
+        // POST: Admin/Doctors/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(DoctorEditViewModel model)
         {
-            return _context.Doctors.Any(e => e.Id == id);
+            if (!ModelState.IsValid)
+            {
+                // Recharge la liste des spécialisations pour la vue
+                model.AllSpecializations = await _context.Specializations.ToListAsync();
+                return View(model);
+            }
+
+            var doctor = await _context.Doctors
+                                .Include(d => d.Specializations)
+                                .FirstOrDefaultAsync(d => d.Id == model.Id);
+            if (doctor == null)
+                return NotFound();
+
+            // Mettre à jour les propriétés du Doctor
+            doctor.FirstName = model.FirstName;
+            doctor.LastName = model.LastName;
+            doctor.Email = model.Email;
+
+            // Mettre à jour les spécialisations
+            doctor.Specializations.Clear();
+            if (model.SelectedSpecializationIds != null && model.SelectedSpecializationIds.Any())
+            {
+                var selectedSpecs = await _context.Specializations
+                    .Where(s => model.SelectedSpecializationIds.Contains(s.Id))
+                    .ToListAsync();
+                doctor.Specializations = selectedSpecs;
+            }
+
+            _context.Update(doctor);
+            await _context.SaveChangesAsync();
+
+            // Mettre à jour le compte ApplicationUser associé si nécessaire
+            if (!string.IsNullOrEmpty(model.NewPassword))
+            {
+                var user = await _userManager.FindByIdAsync(doctor.IdentityUserId);
+                if (user != null)
+                {
+                    // Mettre à jour les informations de base du user
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.Email = model.Email;
+                    user.UserName = model.Email;
+
+                    // Pour changer le mot de passe, nous générons un token et utilisons ResetPasswordAsync
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                        model.AllSpecializations = await _context.Specializations.ToListAsync();
+                        return View(model);
+                    }
+                    await _userManager.UpdateAsync(user);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id); if (doctor == null) { return NotFound(); }
+            _context.Doctors.Remove(doctor); _context.SaveChanges(); return RedirectToAction("Index");
         }
     }
 }

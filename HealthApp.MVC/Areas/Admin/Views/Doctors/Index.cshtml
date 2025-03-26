@@ -44,19 +44,15 @@
                             <td>
                                 @if (doctor.Specializations != null && doctor.Specializations.Any())
                                 {
-                                    @string.Join(", ", doctor.Specializations.Select(s => s.Type.ToString()))
+                                    @string.Join(", ", doctor.Specializations.Select(s => s.Name))
                                 }
                                 else
                                 {
                                     <em>No specialization</em>
                                 }
                             </td>
-                            <td>
-                                <a asp-controller="Doctors" asp-action="Edit" asp-route-id="@doctor.Id">Edit</a> |
-                                <a asp-controller="Doctors" asp-action="Delete" asp-route-id="@doctor.Id"
-                                   onclick="return confirm('Are you sure you want to delete this doctor?');">
-                                    Delete
-                                </a>
+                            <td style="display: flex;/*! align-items: center; */justify-content: center;">
+                                <a asp-controller="Doctors" asp-action="Edit" asp-route-id="@doctor.Id" style="font-size: 20px;"><i class="fi fi-sr-pen-square"></i></a>
                             </td>
                         </tr>
                     }

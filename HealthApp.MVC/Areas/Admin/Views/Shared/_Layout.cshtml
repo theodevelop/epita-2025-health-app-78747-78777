@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-area="Admin" asp-controller="Doctors" asp-action="Index" class="@(ViewContext.RouteData.Values["Area"].ToString() == "Admin" && ViewContext.RouteData.Values["controller"].ToString() == "Doctors" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                        <a asp-area="Admin" asp-controller="Doctors" asp-action="Index" class="@(ViewContext.RouteData.Values["Area"].ToString() == "Admin" && ViewContext.RouteData.Values["controller"].ToString() == "Doctors" ? "active" : "")">
                             <i class="fi fi-sr-user-md"></i>
                             <span>Doctors</span>
                         </a>
@@ -125,7 +125,6 @@
         </div>
     </div>
 
-    <script src="~/js/script.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using HealthApp.MVC.Models.Domain;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HealthApp.MVC.Areas.Admin.ViewModels.Doctors
 {
@@ -19,10 +16,10 @@ namespace HealthApp.MVC.Areas.Admin.ViewModels.Doctors
         [EmailAddress]
         public string Email { get; set; }
 
-        // Holds the IDs of the selected specializations in the form
-        public List<int> SelectedSpecializationIds { get; set; } = new List<int>();
+        [Required]
+        public string Password { get; set; }
 
-        // List of all available specializations to populate the dropdown or multi-select
-        public List<Specialization> Specializations { get; set; } = new List<Specialization>();
+        // Liste des IDs des spécialisations sélectionnées
+        public int[] SelectedSpecializationIds { get; set; }
     }
 }

@@ -1,0 +1,129 @@
+﻿@model HealthApp.MVC.Areas.Admin.ViewModels.DashboardViewModel
+
+@{
+    // ViewData["Title"] = "Dashboard Admin";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<!-- Main Dashboard Section -->
+<section class="dashboard">
+    <h1>Dashboard</h1>
+
+    <!-- Row of Stats Cards -->
+    <div class="stats-cards">
+        <div class="card patients">
+            <div class="card-text">
+                <h3>PATIENTS</h3>
+                <p>@Model.TotalPatients</p>
+            </div>
+        </div>
+        <div class="card doctors">
+            <div class="card-text">
+                <h3>DOCTORS</h3>
+                <p>@Model.TotalDoctors</p>
+            </div>
+        </div>
+        <div class="card appointments">
+            <div class="card-text">
+                <h3>APPOINTMENTS</h3>
+                <p>@Model.TotalAppointments</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Example Analytics / Chart Area -->
+    <div class="analytics-overview" style="margin-top: 2rem;">
+        <h3>Appointments Overview</h3>
+        <!-- Canvas for Chart.js -->
+        <canvas id="appointmentsChart"></canvas>
+    </div>
+
+    <!-- Recent Notifications -->
+    <div class="recent-activity" style="margin-top: 2rem;">
+        <h3>Recent Notifications</h3>
+        <ul>
+            @if (Model.Notifications != null && Model.Notifications.Any())
+            {
+                foreach (var notification in Model.Notifications)
+                {
+                    <li>
+                        <strong>@notification.Title</strong> - @notification.Content
+                        <span>(@notification.DateSent.ToString("dd/MM/yyyy HH:mm"))</span>
+                    </li>
+                }
+            }
+            else
+            {
+                <li>No recent notifications</li>
+            }
+        </ul>
+    </div>
+
+</section>
+
+@section AdminSummary {
+    <aside class="summary-panel">
+        <h3>Quick Actions</h3>
+        <div class="summary-section">
+            <ul>
+                <li>
+                    <a href="@Url.Action("Create", "Doctors", new { area = "Admin" })">
+                        <i class="fas fa-user-md"></i> Add a doctor
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Patients", new { area = "Admin" })">
+                        <i class="fas fa-user-injured"></i> Manage patients
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Appointments", new { area = "Admin" })">
+                        <i class="fas fa-calendar-check"></i> Manage appointments
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Create", "Notifications", new { area = "Admin" })">
+                        <i class="fas fa-calendar-check"></i> Create a notification
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="summary-section">
+            <h3>Recent Notifications</h3>
+            <ul>
+                @* 
+                @foreach (var notif in Model.Notifications.Take(5))
+            {
+                <li>
+                    <strong>@notif.Title</strong>
+                    <span>— @notif.DateSent.ToShortDateString()</span>
+                </li>
+            }
+            *@
+            </ul>
+            <!-- Ajoutez un lien "Voir toutes" si vous le souhaitez -->
+        </div>
+
+        <div class="summary-section">
+            @*
+            <h3>Rendez-vous Urgents</h3>
+        <ul>
+            @foreach (var appt in Model.UpcomingAppointments.Take(5))
+            {
+                <li>
+                    @appt.Date.ToShortDateString()
+                    (Dr. @appt.Doctor.LastName - @appt.Patient.FirstName)
+                </li>
+            }
+
+        </ul>
+        *@
+
+            <!-- Même idée : un lien "Voir tous" si besoin -->
+        </div>
+    </aside>
+}
+
+<!-- Scripts Section: Chart.js Example -->

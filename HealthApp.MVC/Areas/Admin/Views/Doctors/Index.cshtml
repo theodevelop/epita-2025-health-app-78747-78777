@@ -1,0 +1,78 @@
+﻿@model IEnumerable<HealthApp.MVC.Models.Entities.Doctor>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="doctors-section">
+    <!-- En-tête de la page : Titre + Bouton d'ajout -->
+    <div class="doctors-header">
+        <h1>Doctors</h1>
+        <a class="btn-add-doctor" asp-controller="Doctors" asp-action="Create">+ Add New Doctor</a>
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="doctors-search">
+        <form method="get" asp-controller="Doctors" asp-action="Index">
+            <input type="text" name="searchTerm" placeholder="Search by name or specialization"
+                   value="@ViewContext.HttpContext.Request.Query["searchTerm"]" />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Tableau des médecins -->
+    <div class="doctors-table-wrapper">
+        <table class="doctors-table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Specializations</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var doctor in Model)
+                    {
+                        <tr>
+                            <td>@doctor.FirstName</td>
+                            <td>@doctor.LastName</td>
+                            <td>@doctor.Email</td>
+                            <td>
+                                @if (doctor.Specializations != null && doctor.Specializations.Any())
+                                {
+                                    @string.Join(", ", doctor.Specializations.Select(s => s.Name))
+                                }
+                                else
+                                {
+                                    <em>No specialization</em>
+                                }
+                            </td>
+                            <td style="position: relative; display: flex; align-items: center;">
+                                <div class="edit-button-container">
+                                    <a asp-area="Admin" asp-controller="Doctors" asp-action="Edit" asp-route-id="@doctor.Id" class="btn"><i class="fi fi-sr-pencil"></i></a>
+                                </div>
+                                <div class="delete-button-container">
+                                    <form asp-action="Delete" asp-controller="Doctors" method="post" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@doctor.Id" />
+                                        <button type="submit" class="btn" style="border: none; box-shadow: none; top: -1px; position: relative;"><i class="fi fi-sr-trash"></i></button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No doctors found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

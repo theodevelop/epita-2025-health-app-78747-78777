@@ -1,189 +1,49 @@
 ﻿/* ===== Google Font Import - Poformsins ===== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* Variables */
+:root {
+    --blue: #4070f4;
+    --blue-hover: #265df2;
+    --yellow: #ffd607;
+    --red: #de1d1d;
+    --red-light: #eb3d3d;
+    --green: #50C878;
+    --grey-light: #ccc;
+    --grey: #666;
+    --white: #fff;
+    --black: #000;
+    --black-light: #131313;
+    /* Typographie et autres variables */
+    --font-base: 'Poppins', sans-serif;
+    --border-radius: 6px;
+    --box-shadow-default: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
 * {
+    font-family: "Poppins";
+}
+
+html, body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    height: 100%;
 }
 
-.custom-html {
-    min-height: 100%;
-}
-
-.custom-container {
+.container {
     position: relative;
     max-width: 430px;
     width: 100%;
-    background: #fff;
+    background: var(--white);
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     margin: 0 20px;
 }
 
-    .custom-container .custom-forms {
-        display: flex;
-        align-items: center;
-        height: 460px;
-        width: 200%;
-        transition: height 0.2s ease;
-    }
-
-    .custom-container .custom-forms-register {
-        display: flex;
-        align-items: center;
-        height: 720px;
-        width: 200%;
-        transition: height 0.2s ease;
-    }
-
-    .custom-container .custom-form {
-        width: 50%;
-        padding: 30px;
-        background-color: #fff;
-        transition: margin-left 0.18s ease;
-    }
-
-    .custom-container.active .login {
-        margin-left: -50%;
-        opacity: 0;
-        transition: margin-left 0.18s ease, opacity 0.15s ease;
-    }
-
-    .custom-container.active .signup {
-        opacity: 1;
-        transition: opacity 0.2s ease;
-    }
-
-    .custom-container.active .forms {
-        height: 600px;
-    }
-
-    .custom-container .custom-form .custom-title {
-        position: relative;
-        font-size: 27px;
-        font-weight: 600;
-    }
-
-.custom-form .custom-title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 30px;
-    background-color: #4070f4;
-    border-radius: 25px;
-}
-
-.custom-form .custom-input-field {
-    position: relative;
-    height: 50px;
-    width: 100%;
-    margin-top: 30px;
-}
-
-.custom-input-field input {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    padding: 0 35px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border-bottom: 2px solid #ccc;
-    border-top: 2px solid transparent;
-    transition: all 0.2s ease;
-}
-
-    .custom-input-field input:is(:focus, :valid) {
-        border-bottom-color: #4070f4;
-    }
-
-.custom-input-field i {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    font-size: 23px;
-    transition: all 0.2s ease;
-}
-
-.custom-input-field input:is(:focus, :valid) ~ i {
-    color: #4070f4;
-}
-
-.custom-input-field i.icon {
-    left: 0;
-}
-
-.custom-input-field i.showHidePw {
-    right: 0;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.custom-form .custom-checkbox-text {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.custom-checkbox-text .custom-checkbox-content {
-    display: flex;
-    align-items: center;
-}
-
-.custom-checkbox-content input {
-    margin-right: 10px;
-    accent-color: #4070f4;
-}
-
-.custom-form .custom-text {
-    color: #333;
-    font-size: 14px;
-}
-
-.custom-form a.custom-text {
-    color: #4070f4;
-    text-decoration: none;
-}
-
-.custom-form a:hover {
-    text-decoration: underline;
-}
-
-.custom-form .custom-button {
-    margin-top: 35px;
-}
-
-    .custom-form .custom-button input {
-        border: none;
-        color: #fff;
-        font-size: 17px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        border-radius: 6px;
-        background-color: #4070f4;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-.custom-button input:hover {
-    background-color: #265df2;
-}
-
-.custom-form .login-signup {
-    margin-top: 30px;
-    text-align: center;
-}
-
 
 /* Header personnalisé */
-.custom-header {
+.header {
     background-color: #fff;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     padding: 10px 0;
@@ -191,48 +51,54 @@
     z-index: 1;
 }
 
-.custom-navbar {
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-    .custom-navbar .custom-container {
+    .navbar .container {
         box-shadow: none;
+        max-width: 700px;
         display: flex;
         align-items: center;
         justify-content: normal;
-        max-width: none;
-        width: auto;
+        padding-left: .75rem;
+        padding-right: .75rem;
     }
 
-    .custom-navbar .navbar-brand {
+    .navbar .navbar-brand {
         font-size: 24px;
         font-weight: 600;
-        color: #4070f4;
+        color: var(--blue);
         text-decoration: none;
+        margin-right: 1rem;
     }
 
-.custom-nav {
+.nav {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     padding-left: 0;
     margin-bottom: 0;
+    margin-top: 0;
 }
 
-    .custom-nav .nav-item {
+    .nav .nav-item {
         margin-right: 15px;
     }
 
-    .custom-nav .nav-link {
+    .nav .nav-link {
         font-size: 16px;
         color: #333;
         text-decoration: none;
         transition: color 0.3s ease;
+        display: block;
+        padding: .5rem 1rem;
     }
 
-        .custom-nav .nav-link:hover {
-            color: #4070f4;
+        .nav .nav-link:hover {
+            color: var(--blue-hover);
         }
 
 .navbar-login {
@@ -261,20 +127,255 @@
     }
 
         .navbar-login .nav-link:hover {
-            color: #4070f4;
+            color: var(--blue-hover);
         }
 
-        .login-signup .custom-text .nav-link {
-            padding: 0;
-            display: inline-flex;
+        .navbar-login .nav-link {
+            background: none;
+            box-shadow: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
         }
 
-/* Footer personnalisé */
-/*.footer {
-    bottom: 0;
-    position: relative;
-}*/
+.login-signup .custom-text .nav-link {
+    padding: 0;
+    display: inline-flex;
+}
 
+
+
+.footer {
+    background-color: #1b1b1b;
+    color: #f1f1f1;
+    padding: 40px 0;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 0;
+}
+
+    .footer .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        background: transparent;
+    }
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 10px;
+    min-width: 200px;
+}
+
+    .footer-section h2,
+    .footer-section h3 {
+        margin-bottom: 15px;
+    }
+
+    .footer-section p {
+        line-height: 1.6;
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+            .footer-section ul li a {
+                color: #f1f1f1;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .footer-section ul li a:hover {
+                    color: #1b6ec2;
+                }
+
+.footer-bottom {
+    border-top: 1px solid #444;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Responsive pour les petits écrans */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+/* =========================
+   Section Hero (Bannière)
+   ========================= */
+.hero-section {
+    background: url('/images/background.jpg') no-repeat top center;
+    background-size: cover;
+    color: #fff;
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-section .container {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+    .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+.hero-btn {
+    display: inline-block;
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .hero-btn:hover {
+        background-color: var(--blue-hover);
+    }
+
+/* =========================
+   Section des fonctionnalités
+   ========================= */
+.features-section {
+    background-color: #f9f9f9;
+    padding: 60px 0;
+    text-align: center;
+}
+    
+    .features-section .container {
+        max-width: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    .features-section h2 {
+        margin-bottom: 40px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* espace entre les .feature */
+}
+
+.feature {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+    .feature h3 {
+        margin-bottom: 15px;
+        color: #4070f4;
+        font-size: 1.2rem;
+    }
+
+    .feature p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+/* =========================
+   Section CTA
+   ========================= */
+.cta-section {
+    background: #4070f4;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+}
+
+    .cta-section .container {
+        background-color: transparent;
+        box-shadow: none;
+        max-width: none;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .cta-section p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+.cta-btn {
+    display: inline-block;
+    background-color: #fff;
+    color: #4070f4;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .cta-btn:hover {
+        background-color: #f0f0f0;
+    }
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+
+/* LOGIN / REGISTER CONTENT */
 .div-body {
     display: flex;
     justify-content: center;
@@ -291,7 +392,7 @@
     background-color: #4070f4;
 }
 
-.custom-validation-summary {
+.validation-summary {
     margin-top: 10px; /* Espace au-dessus de la liste d'erreurs */
     margin-bottom: -28px; /* Espace en dessous */
     padding: 5px;
@@ -299,111 +400,903 @@
     color: #d9534f; /* Couleur typique pour les erreurs */
 }
 
-    .custom-validation-summary ul {
+    .validation-summary ul {
         list-style: none; /* Supprime les puces */
         padding: 0;
         margin: 0;
     }
 
-/*.content {
-    margin-top: 20px;
-    padding: 20px;
-}*/
-
-/* ===============================
-   Styles pour la page d'accueil
-   =============================== */
-
-/* Bannière d'accueil */
-.homepage-banner {
-    background: url('/images/background.jpg') no-repeat top center;
-    background-size: cover;
-    padding: 200px 0;
-    text-align: center;
-    color: #fff;
+.div-body .container .forms {
+    display: flex;
+    align-items: center;
+    height: 460px;
+    width: 200%;
+    transition: height 0.2s ease;
 }
 
-    .homepage-banner h1 {
-        font-size: 3rem;
-        margin-bottom: 20px;
+.div-body .container .forms-register {
+    display: flex;
+    align-items: center;
+    height: 720px;
+    width: 200%;
+    transition: height 0.2s ease;
+}
+
+.div-body .container .form {
+    width: 50%;
+    padding: 30px;
+    background-color: #fff;
+    transition: margin-left 0.18s ease;
+}
+
+.div-body .container.active .login {
+    margin-left: -50%;
+    opacity: 0;
+    transition: margin-left 0.18s ease, opacity 0.15s ease;
+}
+
+.div-body .container.active .signup {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.div-body .container.active .forms {
+    height: 600px;
+}
+
+.div-body .container .form .title {
+    position: relative;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.form .title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background-color: #4070f4;
+    border-radius: 25px;
+}
+
+.form .input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.input-field input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+    .input-field input:is(:focus, :valid) {
+        border-bottom-color: #4070f4;
     }
 
-    .homepage-banner p {
-        font-size: 1.5rem;
-        margin-bottom: 30px;
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field input:is(:focus, :valid) ~ i {
+    color: #4070f4;
+}
+
+.input-field i.icon {
+    left: 0;
+}
+
+.input-field i.showHidePw {
+    right: 0;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.form .checkbox-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.checkbox-text .checkbox-content {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-content input {
+    margin-right: 10px;
+    accent-color: #4070f4;
+}
+
+.form .text {
+    color: #333;
+    font-size: 14px;
+}
+
+.form a.text {
+    color: #4070f4;
+    text-decoration: none;
+}
+
+.form a:hover {
+    text-decoration: underline;
+}
+
+.form .button {
+    margin-top: 35px;
+}
+
+    .form .button input {
+        border: none;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        border-radius: 6px;
+        background-color: #4070f4;
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
 
-    .homepage-banner .btn {
-        display: inline-block;
-        font-size: 1.2rem;
-        padding: 15px 30px;
+.button input:hover {
+    background-color: #265df2;
+}
+
+.form .login-signup {
+    margin-top: 30px;
+    text-align: center;
+}
+
+
+
+/* ============== Dashboard Container ============== */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ============== Sidebar ============== */
+    .dashboard-sidebar {
+        width: 220px;
+        background-color: #1b1b1b;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .dashboard-sidebar .sidebar-brand {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #333;
+        }
+
+            .dashboard-sidebar .sidebar-brand h2 {
+                font-size: 1.4rem;
+                color: #fff;
+            }
+
+        .dashboard-sidebar .sidebar-menu ul {
+            list-style: none;
+        }
+
+            .dashboard-sidebar .sidebar-menu ul li a {
+                display: flex;
+                padding: 0.8rem 1.2rem;
+                color: #ccc;
+                text-decoration: none;
+/*                transition: background-color 0.3s ease;*/
+            }
+
+                .dashboard-sidebar .sidebar-menu ul li a i {
+                    margin-right: 0.5rem; /* space between icon and text */
+                    font-size: 1.2rem; /* adjust icon size */
+                    vertical-align: middle;
+                }
+
+                .dashboard-sidebar .sidebar-menu ul li a:hover,
+                .dashboard-sidebar .sidebar-menu ul li a.active {
+                    background-color: #333;
+                    color: #fff;
+                }
+
+            .dashboard-sidebar .sidebar-menu ul li form {
+                display: flex;
+                padding: 0.8rem 1.2rem;
+                color: #ccc;
+                text-decoration: none;
+                transition: background-color 0.3s ease;
+            }
+
+            .dashboard-sidebar .sidebar-menu ul li button {
+                border: none;
+                background: none;
+                cursor: pointer;
+                color: #ccc;
+            }
+
+                .dashboard-sidebar .sidebar-menu ul li button i {
+                    margin-right: 0.1rem; /* space between icon and text */
+                    font-size: 1.2rem; /* adjust icon size */
+                    vertical-align: middle;
+                    color: #ccc;
+                }
+
+                .dashboard-sidebar .sidebar-menu ul li button span {
+                    color: #ccc;
+                    font-size: 16px;
+                }
+
+                .dashboard-sidebar .sidebar-menu ul li form:hover,
+                .dashboard-sidebar .sidebar-menu ul li form.active {
+                    background-color: #333;
+                    
+                }
+
+                    .dashboard-sidebar .sidebar-menu ul li form:hover i,
+                    .dashboard-sidebar .sidebar-menu ul li form:hover span {
+                        color: #d73535;
+                    }
+
+                    .dashboard-sidebar .sidebar-menu ul li form.active i,
+                    .dashboard-sidebar .sidebar-menu ul li form.active span {
+                        color: #d73535;
+                    }
+
+
+                    /* ============== Dashboard Wrapper ============== */
+                    .dashboard-wrapper {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+
+/* ============== Main Content & Summary ============== */
+.dashboard-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden; /* ensures the layout doesn't break if content overflows */
+    background-color: #f1f1fb;
+}
+
+    .dashboard-content .main-content {
+        flex: 3;
+        padding: 1.3rem 2rem 2rem 2rem;
+        overflow-y: auto;
+    }
+
+    .dashboard-content .summary-panel {
+        flex: 1;
+        background-color: #f9f8fd;
+        padding: 1.6rem 2rem 2rem 2rem;
+        border-left: 1px solid #eee;
+    }
+
+        .dashboard-content .summary-panel h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+/* ============== Summary Card ============== */
+    .dashboard-content .summary-card {
         background-color: #4070f4;
         color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dashboard-content .summary-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .dashboard-content .summary-value {
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+/* ============== Summary Sections ============== */
+    .dashboard-content .summary-section {
+        margin-bottom: 1.5rem;
+    }
+
+        .dashboard-content .summary-section h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-content .summary-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            .dashboard-content .summary-section ul li {
+                padding: 0.3rem 0;
+                color: #666;
+            }
+
+/* ============== Cards / Stats Example (Optional) ============== */
+/* If you have stats cards in your main content, you can style them here */
+    .dashboard-content .stats-cards {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+        .dashboard-content .stats-cards .card {
+            flex: 1;
+            position: relative;
+            height: 100px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 5px;
+        }
+            .dashboard-content .stats-cards .card .card-text {
+/*                margin-right: 20px;*/
+/*                text-align: right;*/
+                color: #fff;
+                padding-left: 20px;
+            }
+
+                .dashboard-content .stats-cards .card .card-text h3 {
+                    font-size: 1.1rem;
+/*                    margin-bottom: 0.3rem;*/
+                    font-weight: 600;
+                    opacity: 0.95;
+                }
+
+                .dashboard-content .stats-cards .card .card-text p {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    position: relative;
+                    left: 10px;
+                }
+
+        .dashboard-content .stats-cards .patients {
+            background: url("/images/patients-background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .dashboard-content .stats-cards .doctors {
+            background: url("/images/doctors-background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .dashboard-content .stats-cards .appointments {
+            background: url("/images/appointments-background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+/* ============== Responsive Layout ============== */
+@media (max-width: 992px) {
+    .dashboard-sidebar {
+        position: fixed;
+        left: -220px;
+        transition: left 0.3s ease;
+    }
+
+        .dashboard-sidebar.sidebar-open {
+            left: 0;
+        }
+
+    .dashboard-header {
+        padding: 1rem;
+    }
+
+    .dashboard-content {
+        flex-direction: column;
+    }
+
+        .dashboard-content .main-content, .summary-panel {
+            width: 100%;
+            flex: none;
+            border-left: none;
+            border-top: 1px solid #eee;
+        }
+
+        .dashboard-content .summary-panel {
+            padding: 1rem;
+        }
+}
+
+
+.table-users {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+    .table-users thead {
+        background-color: #f0f0f0;
+    }
+
+    .table-users th, .table-users td {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+    }
+
+
+
+/* =========================
+   Doctors Page
+   ========================= */
+
+/* Conteneur global de la page Doctors */
+
+/* En-tête de la page (titre + bouton) */
+.doctors-section {
+    padding-top: 1rem;
+}
+
+.doctors-section .doctors-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+    .doctors-section .doctors-header h1 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: #333;
+    }
+
+.doctors-section .btn-add-doctor {
+    background-color: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+    .doctors-section .btn-add-doctor:hover {
+        background-color: var(--blue-hover);
+    }
+
+/* Barre de recherche */
+.doctors-section .doctors-search {
+    margin-bottom: 1.5rem;
+}
+
+    .doctors-section .doctors-search form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 400px;
+    }
+
+    .doctors-section .doctors-search input[type="text"] {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+        .doctors-section .doctors-search input[type="text"]:focus {
+            border-color: var(--blue);
+        }
+
+    .doctors-section .doctors-search button {
+        background-color: var(--blue);
+        color: var(--white);
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1.2rem;
+        cursor: pointer;
+        font-weight: 500;
         transition: background-color 0.3s ease;
     }
 
-        .homepage-banner .btn:hover {
-            background-color: #265df2;
+        .doctors-section .doctors-search button:hover {
+            background-color: var(--blue-hover);
         }
 
-/* Contenu de la page */
-.homepage-content {
-    padding: 50px 20px;
-    text-align: center;
-    background-color: #f9f9f9;
+/* Tableau */
+.doctors-section .doctors-table-wrapper {
+    overflow-x: auto; /* utile si le tableau est large */
 }
 
-    .homepage-content h2 {
-        font-size: 2.5rem;
-        margin-bottom: 40px;
-        color: #4070f4;
-    }
-
-/* Section des services */
-.services {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 30px;
-}
-
-.service {
-    background: #fff;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+.doctors-section .doctors-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
     overflow: hidden;
-    width: 300px;
-    transition: transform 0.3s ease;
 }
 
-    .service:hover {
-        transform: translateY(-5px);
+    .doctors-section .doctors-table thead {
+        background-color: #f7f7f7;
     }
 
-    .service img {
+    .doctors-section .doctors-table th, .doctors-table td {
+        padding: 0.9rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .doctors-section .doctors-table tbody tr:hover {
+        background-color: #fafafa;
+    }
+
+
+/* =========================
+   Doctors Create Page
+   ========================= */
+
+.create-doctor-section, .edit-doctor-section {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .create-doctor-section h1, 
+    .edit-doctor-section h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .create-doctor-section .doctor-form .form-group, 
+    .edit-doctor-section .doctor-form .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .create-doctor-section .doctor-form label,
+    .edit-doctor-section .doctor-form label {
+        display: block;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .create-doctor-section .doctor-form .form-control,
+    .edit-doctor-section .doctor-form .form-control {
         width: 100%;
-        height: 200px;
-        object-fit: cover;
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.2s ease;
     }
 
-    .service h3 {
-        margin: 20px 0 10px;
-        font-size: 1.8rem;
-        color: #4070f4;
-    }
+        .create-doctor-section .doctor-form .form-control:focus,
+        .edit-doctor-section .doctor-form .form-control:focus {
+            border-color: var(--blue);
+        }
 
-    .service p {
-        padding: 0 20px 20px;
-        font-size: 1rem;
-        color: #666;
-    }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .services {
-        flex-direction: column;
+    .create-doctor-section .doctor-form .specialization-group .form-check,
+    .edit-doctor-section .doctor-form .specialization-group .form-check {
+        display: flex;
         align-items: center;
     }
+
+    .create-doctor-section .doctor-form .specialization-group .form-check-input,
+    .edit-doctor-section .doctor-form .specialization-group .form-check-input {
+        margin-right: 0.5rem;
+    }
+
+    .create-doctor-section .doctor-form .specialization-group .form-check label,
+    .edit-doctor-section .doctor-form .specialization-group .form-check label {
+        margin-bottom: 0;
+    }
+
+    .create-doctor-section .doctor-form .btn.btn-primary,
+    .edit-doctor-section .doctor-form .btn.btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        background-color: var(--blue);
+        color: var(--white);
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-align: center;
+    }
+
+        .create-doctor-section .doctor-form .btn.btn-primary:hover,
+        .edit-doctor-section .doctor-form .btn.btn-primary:hover {
+            background-color: var(--blue-hover);
+        }
+
+
+.menu-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.back-button-container {
+    margin: 1.5rem;
+/*    text-align: center;*/
+}
+
+    .back-button-container .btn {
+        background-color: var(--grey-light);
+        color: var(--black);
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 7px 10px 5px 9px;
+    }
+
+        .back-button-container .btn:hover {
+            background-color: var(--grey);
+            color: var(--white);
+        }
+
+    .edit-button-container .btn {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 7px 10px 5px 9px;
+        margin-right: 0.7rem;
+    }
+
+        .edit-button-container .btn:hover {
+            background-color: var(--blue-hover);
+            color: var(--white);
+        }
+
+    .delete-button-container .btn {
+        width: 35px;
+        height: 35px;
+        background-color: var(--red-light);
+        color: var(--white);
+/*        padding: 0.6rem 1.2rem;*/
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 7px 10px 5px 9px;
+        cursor: pointer;
+    }
+
+        .delete-button-container .btn:hover {
+            background-color: var(--red);
+            color: var(--white);
+        }
+
+
+
+/* ================================
+   Styles pour la section Patients
+   ================================ */
+
+/* Conteneur global de la page Patients */
+.patients-section {
+    padding-top: 1rem;
+}
+
+/* En-tête : titre et bouton d'ajout */
+.patients-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+    .patients-header h1 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: #333;
+    }
+
+.btn-add-patient {
+    background-color: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-add-patient:hover {
+        background-color: var(--blue-hover);
+    }
+
+/* Barre de recherche */
+.patients-search {
+    margin-bottom: 1.5rem;
+}
+
+    .patients-search form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 400px;
+    }
+
+    .patients-search input[type="text"] {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+        .patients-search input[type="text"]:focus {
+            border-color: var(--blue);
+        }
+
+    .patients-search button {
+        background-color: var(--blue);
+        color: var(--white);
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1.2rem;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+        .patients-search button:hover {
+            background-color: var(--blue-hover);
+        }
+
+/* Tableau des patients */
+.patients-table-wrapper {
+    overflow-x: auto;
+}
+
+.patients-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .patients-table thead {
+        background-color: #f7f7f7;
+    }
+
+    .patients-table th,
+    .patients-table td {
+        padding: 0.9rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .patients-table tbody tr:hover {
+        background-color: #fafafa;
+    }
+
+    .patients-table td a {
+        color: var(--blue);
+        text-decoration: none;
+        margin: 0 0.25rem;
+    }
+
+        .patients-table td a:hover {
+            text-decoration: underline;
+        }
+
+/* Bouton de suppression */
+.btn-delete {
+    background-color: var(--red-light);
+    color: var(--black);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 7px 10px 5px 9px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-delete:hover {
+        background-color: var(--red);
+        color: var(--white);
+    }
+
+/* ================================
+   Styles pour la création / édition d'un Patient
+   ================================ */
+.create-patient-section,
+.edit-patient-section {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .create-patient-section h1,
+    .edit-patient-section h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .create-patient-section .form-group,
+    .edit-patient-section .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+        .create-patient-section .form-group label,
+        .edit-patient-section .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+    .create-patient-section .form-control,
+    .edit-patient-section .form-control {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.2s ease;
+    }
+
+        .create-patient-section .form-control:focus,
+        .edit-patient-section .form-control:focus {
+            border-color: var(--blue);
+        }
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+    .btn-primary:hover {
+        background-color: var(--blue-hover);
+    }

@@ -25,4 +25,19 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Controllers\Appointment\" />
+    <Folder Include="Controllers\Doctor\" />
+    <Folder Include="Controllers\Notification\" />
+    <Folder Include="Controllers\Patient\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Appointments\" />
+    <Folder Include="Views\Doctors\" />
+    <Folder Include="Views\Notifications\" />
+    <Folder Include="Views\Patients\" />
+  </ItemGroup>
+
 </Project>

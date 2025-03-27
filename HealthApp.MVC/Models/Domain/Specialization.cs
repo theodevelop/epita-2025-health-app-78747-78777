@@ -28,10 +28,14 @@ namespace HealthApp.MVC.Models.Domain
         InfectiousDiseases,
         InternalMedicine
     }
+
     public class Specialization
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
 
         [Required]
         public SpecializationType Type { get; set; }

@@ -26,8 +26,11 @@ namespace HealthApp.MVC.Models.Entities
         //public string Phone { get; set; }
 
         [Required]
-        public ICollection<Specialization> Specializations { get; set; }
+        public ICollection<Specialization> Specializations { get; set; } = new List<Specialization>();
 
-        public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+
+        public string IdentityUserId { get; set; }
+        public ApplicationUser IdentityUser { get; set; }
     }
 }

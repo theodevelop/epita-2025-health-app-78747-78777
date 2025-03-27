@@ -21,5 +21,13 @@ namespace HealthApp.MVC.Areas.Admin.ViewModels.Doctors
 
         // Liste des IDs des spécialisations sélectionnées
         public int[] SelectedSpecializationIds { get; set; }
+
+        // Par exemple une liste de structures (jour + heure début + heure fin).
+        public List<AvailabilityInputModel> Availabilities { get; set; }
+            = new List<AvailabilityInputModel>();
+
+        // --- NOUVEAU : Pour configurer les absences ponctuelles ---
+        public List<UnavailabilityInputModel> Unavailabilities { get; set; }
+            = new List<UnavailabilityInputModel>();
     }
 }

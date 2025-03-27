@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using HealthApp.MVC.Areas.Admin.ViewModels.Doctors;
 using HealthApp.MVC.Models.Domain;
 using HealthApp.MVC.Models.Entities;
 
@@ -35,8 +36,12 @@ namespace HealthApp.MVC.Areas.Admin.ViewModels
 
         // Les IDs des spécialisations sélectionnées dans le formulaire
         public int[]? SelectedSpecializationIds { get; set; }
-
-        // La liste complète des spécialisations à afficher (pour les checkbox)
         public IEnumerable<Specialization>? AllSpecializations { get; set; }
+
+        public List<AvailabilityInputModel> Availabilities { get; set; }
+        = new List<AvailabilityInputModel>();
+
+        public List<UnavailabilityInputModel> Unavailabilities { get; set; }
+            = new List<UnavailabilityInputModel>();
     }
 }

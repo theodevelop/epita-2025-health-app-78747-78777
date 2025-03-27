@@ -60,83 +60,70 @@
         </ul>
     </div>
 
-    <!-- Recent Appointments Example -->
-    <div class="recent-orders" style="margin-top: 2rem;">
-        <h3>Recent Appointments</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Patient</th>
-                    <th>Doctor</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.RecentAppointments != null && Model.RecentAppointments.Any())
-                {
-                    foreach (var appt in Model.RecentAppointments)
-                    {
-                        <tr>
-                            <td>#@appt.Id</td>
-                            <td>@appt.Patient.FirstName @appt.Patient.LastName</td>
-                            <td>@appt.Doctor.FirstName @appt.Doctor.LastName</td>
-                            <td>@appt.Date.ToString("yyyy-MM-dd HH:mm")</td>
-                            <td>@appt.Status</td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="5">No recent appointments</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-
-    <!-- Another section for recent notifications or charts -->
-    @* <div class="recent-activity" style="margin-top:2rem;"> *@
-    @*     <h3>Recent Notifications</h3> *@
-    @*     <ul> *@
-    @*         @foreach (var notification in Model.Notifications) *@
-    @*         { *@
-    @*             <li> *@
-    @*                 <strong>@notification.Title</strong> - @notification.Content *@
-    @*                 <span>(@notification.DateSent.ToString("dd/MM/yyyy HH:mm"))</span> *@
-    @*             </li> *@
-    @*         } *@
-    @*     </ul> *@
-    @* </div> *@
 </section>
 
+@section AdminSummary {
+    <aside class="summary-panel">
+        <h3>Quick Actions</h3>
+        <div class="summary-section">
+            <ul>
+                <li>
+                    <a href="@Url.Action("Create", "Doctors", new { area = "Admin" })">
+                        <i class="fas fa-user-md"></i> Add a doctor
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Patients", new { area = "Admin" })">
+                        <i class="fas fa-user-injured"></i> Manage patients
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Appointments", new { area = "Admin" })">
+                        <i class="fas fa-calendar-check"></i> Manage appointments
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Create", "Notifications", new { area = "Admin" })">
+                        <i class="fas fa-calendar-check"></i> Create a notification
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="summary-section">
+            <h3>Recent Notifications</h3>
+            <ul>
+                @* 
+                @foreach (var notif in Model.Notifications.Take(5))
+            {
+                <li>
+                    <strong>@notif.Title</strong>
+                    <span>— @notif.DateSent.ToShortDateString()</span>
+                </li>
+            }
+            *@
+            </ul>
+            <!-- Ajoutez un lien "Voir toutes" si vous le souhaitez -->
+        </div>
+
+        <div class="summary-section">
+            @*
+            <h3>Rendez-vous Urgents</h3>
+        <ul>
+            @foreach (var appt in Model.UpcomingAppointments.Take(5))
+            {
+                <li>
+                    @appt.Date.ToShortDateString()
+                    (Dr. @appt.Doctor.LastName - @appt.Patient.FirstName)
+                </li>
+            }
+
+        </ul>
+        *@
+
+            <!-- Même idée : un lien "Voir tous" si besoin -->
+        </div>
+    </aside>
+}
 
 <!-- Scripts Section: Chart.js Example -->
-@section Scripts {
-    <!-- Make sure Chart.js is referenced. You can also serve it locally if preferred. -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Example chart using appointments data by month
-        var ctx = document.getElementById('appointmentsChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar', // or 'line'
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Appointments',
-                    // Replace these sample values with dynamic data from your ViewModel
-                    data: [@Model.JanCount, @Model.FebCount, @Model.MarCount, @Model.AprCount],
-                    backgroundColor: '#4070f4'
-                }]
-            },
-            options: {
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
-        });
-    </script>
-}

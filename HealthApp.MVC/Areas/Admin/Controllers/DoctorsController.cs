@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using HealthApp.MVC.Areas.Admin.ViewModels.Doctors;
 using HealthApp.MVC.Areas.Admin.ViewModels;
+using HealthApp.MVC.Models.Domain;
 
 
 namespace HealthApp.MVC.Areas.Admin.Controllers

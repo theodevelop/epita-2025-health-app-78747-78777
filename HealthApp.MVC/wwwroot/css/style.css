@@ -956,16 +956,6 @@ html, body {
         background-color: #fafafa;
     }
 
-    .doctors-section .doctors-table td a {
-        color: var(--blue);
-        text-decoration: none;
-        margin: 0 0.25rem;
-    }
-
-        .doctors-section .doctors-table td a:hover {
-            text-decoration: underline;
-        }
-
 
 /* =========================
    Doctors Create Page
@@ -1077,11 +1067,27 @@ html, body {
             color: var(--white);
         }
 
+    .edit-button-container .btn {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        padding: 7px 10px 5px 9px;
+        margin-right: 0.7rem;
+    }
+
+        .edit-button-container .btn:hover {
+            background-color: var(--blue-hover);
+            color: var(--white);
+        }
+
     .delete-button-container .btn {
         width: 35px;
         height: 35px;
         background-color: var(--red-light);
-        color: var(--black);
+        color: var(--white);
 /*        padding: 0.6rem 1.2rem;*/
         border-radius: var(--border-radius);
         text-decoration: none;
@@ -1094,3 +1100,203 @@ html, body {
             background-color: var(--red);
             color: var(--white);
         }
+
+
+
+/* ================================
+   Styles pour la section Patients
+   ================================ */
+
+/* Conteneur global de la page Patients */
+.patients-section {
+    padding-top: 1rem;
+}
+
+/* En-tête : titre et bouton d'ajout */
+.patients-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+    .patients-header h1 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: #333;
+    }
+
+.btn-add-patient {
+    background-color: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-add-patient:hover {
+        background-color: var(--blue-hover);
+    }
+
+/* Barre de recherche */
+.patients-search {
+    margin-bottom: 1.5rem;
+}
+
+    .patients-search form {
+        display: flex;
+        gap: 0.5rem;
+        max-width: 400px;
+    }
+
+    .patients-search input[type="text"] {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.2s ease;
+    }
+
+        .patients-search input[type="text"]:focus {
+            border-color: var(--blue);
+        }
+
+    .patients-search button {
+        background-color: var(--blue);
+        color: var(--white);
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1.2rem;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+    }
+
+        .patients-search button:hover {
+            background-color: var(--blue-hover);
+        }
+
+/* Tableau des patients */
+.patients-table-wrapper {
+    overflow-x: auto;
+}
+
+.patients-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .patients-table thead {
+        background-color: #f7f7f7;
+    }
+
+    .patients-table th,
+    .patients-table td {
+        padding: 0.9rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .patients-table tbody tr:hover {
+        background-color: #fafafa;
+    }
+
+    .patients-table td a {
+        color: var(--blue);
+        text-decoration: none;
+        margin: 0 0.25rem;
+    }
+
+        .patients-table td a:hover {
+            text-decoration: underline;
+        }
+
+/* Bouton de suppression */
+.btn-delete {
+    background-color: var(--red-light);
+    color: var(--black);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 7px 10px 5px 9px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-delete:hover {
+        background-color: var(--red);
+        color: var(--white);
+    }
+
+/* ================================
+   Styles pour la création / édition d'un Patient
+   ================================ */
+.create-patient-section,
+.edit-patient-section {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .create-patient-section h1,
+    .edit-patient-section h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .create-patient-section .form-group,
+    .edit-patient-section .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+        .create-patient-section .form-group label,
+        .edit-patient-section .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+    .create-patient-section .form-control,
+    .edit-patient-section .form-control {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        transition: border-color 0.2s ease;
+    }
+
+        .create-patient-section .form-control:focus,
+        .edit-patient-section .form-control:focus {
+            border-color: var(--blue);
+        }
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+    .btn-primary:hover {
+        background-color: var(--blue-hover);
+    }

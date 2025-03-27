@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-area="Admin" asp-controller="Patients" asp-action="Index">
+                        <a asp-area="Admin" asp-controller="Patients" asp-action="Index" class="@(ViewContext.RouteData.Values["Area"].ToString() == "Admin" && ViewContext.RouteData.Values["controller"].ToString() == "Patients" ? "active" : "")">
                             <i class=" fi-sr-user-injured"></i>
                             <span>Patients</span>
                         </a>

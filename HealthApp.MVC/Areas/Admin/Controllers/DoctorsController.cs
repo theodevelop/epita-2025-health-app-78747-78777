@@ -37,7 +37,7 @@ namespace HealthApp.MVC.Areas.Admin.Controllers
                 doctors = doctors.Where(d => d.FirstName.Contains(searchTerm)
                                             || d.LastName.Contains(searchTerm)
                                             || d.Specializations.Any(s => s.Name.Contains(searchTerm)
-                                                                       || s.Type.ToString().Contains(searchTerm)));
+                                                                       || s.Name.Contains(searchTerm)));
             }
 
             return View(await doctors.ToListAsync());

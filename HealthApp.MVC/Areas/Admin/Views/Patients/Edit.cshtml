@@ -1,0 +1,68 @@
+﻿@model HealthApp.MVC.Areas.Admin.ViewModels.Patients.PatientEditViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="edit-patient-section">
+    <h1>Edit Patient</h1>
+    <form asp-area="Admin" asp-controller="Patients" asp-action="Edit" method="post">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="validation-errors">
+                @foreach (var state in ViewData.ModelState.Values)
+                {
+                    foreach (var error in state.Errors)
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                }
+            </div>
+        }
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="FirstName">First Name</label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Birthdate"></label>
+            <input asp-for="Birthdate" class="form-control" type="date" />
+            <span asp-validation-for="Birthdate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NewPassword">New Password</label>
+            <input asp-for="NewPassword" class="form-control" type="password" />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ConfirmPassword">Confirm Password</label>
+            <input asp-for="ConfirmPassword" class="form-control" type="password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

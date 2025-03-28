@@ -13,16 +13,24 @@
         firstName = currentUser?.FirstName ?? "";
         lastName = currentUser?.LastName ?? "";
     }
+
+    var title = "Hospital Plus";
+    if (ViewData["Title"] != null)
+    {
+        title += " - " + ViewData["Title"];
+    }
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Admin Dashboard</title>
+    <title>@title</title>
     <link rel="stylesheet" href="~/css/style.css" />
     <link rel="stylesheet" href="~/css/uicons-solid-rounded.css" />
+    <link rel="icon" type="image/x-icon" href="/images/logo.ico" />
     @RenderSection("Styles", required: false)
+
 </head>
 <body>
     <div class="dashboard-container">

@@ -94,6 +94,7 @@ html, body {
                 color: var(--blue);
                 text-decoration: none;
                 margin-right: 1rem;
+                display: flex;
             }
 
             /* Navigation List */

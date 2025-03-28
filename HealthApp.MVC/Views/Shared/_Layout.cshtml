@@ -1,9 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var title = "Hospital Plus";
+    if (ViewData["Title"] != null)
+    {
+        title += " - " + ViewData["Title"];
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Hospital Plus</title>
+    <title>@title</title>
+    <link rel="icon" type="image/x-icon" href="/images/logo.ico" />
 
     <!-- Font Awesome 6 (icônes) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />

@@ -39,26 +39,38 @@
         <canvas id="appointmentsChart"></canvas>
     </div>
 
-    <!-- Recent Notifications -->
-    <div class="recent-activity" style="margin-top: 2rem;">
-        <h3>Recent Notifications</h3>
-        <ul>
-            @if (Model.Notifications != null && Model.Notifications.Any())
-            {
-                foreach (var notification in Model.Notifications)
-                {
-                    <li>
-                        <strong>@notification.Title</strong> - @notification.Content
-                        <span>(@notification.DateSent.ToString("dd/MM/yyyy HH:mm"))</span>
-                    </li>
-                }
-            }
-            else
-            {
-                <li>No recent notifications</li>
-            }
-        </ul>
+    <div class="recent-items">
+        <h3>Upcoming Appointments</h3>
+        @if (Model.RecentAppointments == null || !Model.RecentAppointments.Any())
+        {
+            <p>No upcoming appointments.</p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Médecin</th>
+                        <th>Patient</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appt in Model.RecentAppointments)
+                    {
+                        <tr>
+                            <td>@appt.Date.ToShortDateString()</td>
+                            <td>@appt.Doctor?.LastName</td>
+                            <td>@appt.Patient?.LastName</td>
+                            <td>@appt.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
+
 
 </section>
 
@@ -93,7 +105,7 @@
         <div class="summary-section">
             <h3>Recent Notifications</h3>
             <ul>
-                @* 
+
                 @foreach (var notif in Model.Notifications.Take(5))
             {
                 <li>
@@ -101,29 +113,49 @@
                     <span>— @notif.DateSent.ToShortDateString()</span>
                 </li>
             }
-            *@
             </ul>
             <!-- Ajoutez un lien "Voir toutes" si vous le souhaitez -->
         </div>
 
         <div class="summary-section">
-            @*
-            <h3>Rendez-vous Urgents</h3>
-        <ul>
-            @foreach (var appt in Model.UpcomingAppointments.Take(5))
-            {
-                <li>
-                    @appt.Date.ToShortDateString()
-                    (Dr. @appt.Doctor.LastName - @appt.Patient.FirstName)
-                </li>
-            }
-
-        </ul>
-        *@
-
+            
+            <h3>Urgent Appointments</h3>
+            <ul>
+                @if (Model.RecentAppointments == null || !Model.RecentAppointments.Any())
+                {
+                    <li>No upcoming appointments.</li>
+                }
+                else
+                {
+                    @foreach (var appt in Model.RecentAppointments.Take(5))
+                    {
+                        <li>
+                            @appt.Date.ToShortDateString()
+                            (Dr. @appt.Doctor.LastName - @appt.Patient.FirstName)
+                        </li>
+                    }
+                }
+            </ul>
             <!-- Même idée : un lien "Voir tous" si besoin -->
         </div>
     </aside>
 }
 
 <!-- Scripts Section: Chart.js Example -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('appointmentsChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [@string.Join(",", Model.ChartLabels.Select(x => $"'{x}'"))],
+                datasets: [{
+                    label: "Appointments",
+                    data: [@string.Join(",", Model.ChartData)],
+                    backgroundColor: "#4070f4"
+                }]
+            }
+        });
+    </script>
+}

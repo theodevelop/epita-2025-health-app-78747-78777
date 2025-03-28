@@ -1,7 +1,11 @@
-﻿/* ===== Google Font Import - Poformsins ===== */
+﻿/* ==========================================================================
+   1. Google Font Import & CSS Variables
+   ========================================================================== */
+
+/* Import Google Font: Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* Variables */
+/* Define global CSS variables for colors, typography, and layout */
 :root {
     --blue: #4070f4;
     --blue-hover: #265df2;
@@ -14,22 +18,32 @@
     --white: #fff;
     --black: #000;
     --black-light: #131313;
-    /* Typographie et autres variables */
+
+    /* Typography and other settings */
     --font-base: 'Poppins', sans-serif;
     --border-radius: 6px;
     --box-shadow-default: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
+
+
+/* ==========================================================================
+   2. Global Styles & Base Settings
+   ========================================================================== */
+
+/* Apply base font to all elements */
 * {
     font-family: "Poppins";
 }
 
+/* Reset margin and padding for HTML and body */
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
 }
 
+/* Container for general content */
 .container {
     position: relative;
     max-width: 430px;
@@ -42,7 +56,12 @@ html, body {
 }
 
 
-/* Header personnalisé */
+
+/* ==========================================================================
+   3. Header & Navbar
+   ========================================================================== */
+
+/* Header Styles */
 .header {
     background-color: #fff;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
@@ -51,100 +70,102 @@ html, body {
     z-index: 1;
 }
 
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-    .navbar .container {
-        box-shadow: none;
-        max-width: 700px;
+/* Navbar Container */
+    .header .navbar {
         display: flex;
         align-items: center;
-        justify-content: normal;
-        padding-left: .75rem;
-        padding-right: .75rem;
+        justify-content: space-between;
     }
 
-    .navbar .navbar-brand {
-        font-size: 24px;
-        font-weight: 600;
-        color: var(--blue);
-        text-decoration: none;
-        margin-right: 1rem;
-    }
-
-.nav {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
-    .nav .nav-item {
-        margin-right: 15px;
-    }
-
-    .nav .nav-link {
-        font-size: 16px;
-        color: #333;
-        text-decoration: none;
-        transition: color 0.3s ease;
-        display: block;
-        padding: .5rem 1rem;
-    }
-
-        .nav .nav-link:hover {
-            color: var(--blue-hover);
-        }
-
-.navbar-login {
-    display: flex;
-    padding-right: 20px;
-}
-
-    .navbar-login ul {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-evenly;
-        list-style: none
-    }
-
-        .navbar-login ul li {
-            padding: 10px;
-            transition: color 0.3s ease;
-        }
-
-    .navbar-login .nav-link {
-        font-size: 16px;
-        color: #333;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-        .navbar-login .nav-link:hover {
-            color: var(--blue-hover);
-        }
-
-        .navbar-login .nav-link {
-            background: none;
+        .header .navbar .container {
             box-shadow: none;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
+            max-width: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: normal;
+            padding-left: .75rem;
+            padding-right: .75rem;
         }
 
-.login-signup .custom-text .nav-link {
-    padding: 0;
-    display: inline-flex;
-}
+            /* Brand Link */
+            .header .navbar .container .navbar-brand {
+                font-size: 24px;
+                font-weight: 600;
+                color: var(--blue);
+                text-decoration: none;
+                margin-right: 1rem;
+            }
+
+            /* Navigation List */
+            .header .navbar .container .nav {
+                list-style: none;
+                display: flex;
+                flex-wrap: wrap;
+                padding-left: 0;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+
+                .header .navbar .container .nav .nav-item {
+                    margin-right: 15px;
+                }
+
+                    .header .navbar .container .nav .nav-item .nav-link {
+                        font-size: 16px;
+                        color: #333;
+                        text-decoration: none;
+                        transition: color 0.3s ease;
+                        display: block;
+                        padding: .5rem 1rem;
+                    }
+
+                        .header .navbar .container .nav .nav-item .nav-link:hover {
+                            color: var(--blue-hover);
+                        }
+
+        /* Navbar Login Section */
+        .header .navbar .navbar-login {
+            display: flex;
+            padding-right: 20px;
+        }
+
+            .header .navbar .navbar-login ul {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-evenly;
+                list-style: none
+            }
+
+                .header .navbar .navbar-login ul li {
+                    padding: 10px;
+                    transition: color 0.3s ease;
+                }
+
+                    .header .navbar .navbar-login ul li .nav-link {
+                        font-size: 16px;
+                        color: #333;
+                        text-decoration: none;
+                        transition: color 0.3s ease;
+                        background: none;
+                        box-shadow: none;
+                        border: none;
+                        cursor: pointer;
+                        text-decoration: none;
+                    }
+
+                        .header .navbar .navbar-login ul li .nav-link:hover {
+                            color: var(--blue-hover);
+                        }
 
 
 
+/* ==========================================================================
+   4. Footer
+   ========================================================================== */
+
+
+/* Footer container */
 .footer {
     background-color: #1b1b1b;
     color: #f1f1f1;
@@ -155,71 +176,65 @@ html, body {
 
     .footer .container {
         max-width: 1200px;
+        margin: 0;
         margin: 0 auto;
         padding: 0 20px;
         background: transparent;
     }
 
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.footer-section {
-    flex: 1;
-    margin: 10px;
-    min-width: 200px;
-}
-
-    .footer-section h2,
-    .footer-section h3 {
-        margin-bottom: 15px;
-    }
-
-    .footer-section p {
-        line-height: 1.6;
-    }
-
-    .footer-section ul {
-        list-style: none;
-        padding: 0;
-    }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
+        .footer .container .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
-            .footer-section ul li a {
-                color: #f1f1f1;
-                text-decoration: none;
-                transition: color 0.3s ease;
+            .footer .container .footer-content .footer-section {
+                flex: 1;
+                margin: 10px;
+                min-width: 200px;
             }
 
-                .footer-section ul li a:hover {
-                    color: #1b6ec2;
+                .footer .container .footer-content .footer-section h2,
+                .footer .container .footer-content .footer-section h3 {
+                    margin-bottom: 15px;
                 }
 
-.footer-bottom {
-    border-top: 1px solid #444;
-    padding-top: 10px;
-    text-align: center;
-    font-size: 0.9rem;
-}
+                .footer .container .footer-content .footer-section p {
+                    line-height: 1.6;
+                }
 
-/* Responsive pour les petits écrans */
-@media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
+        .footer .container .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+            .footer .container .footer-section ul li {
+                margin-bottom: 10px;
+            }
+
+                .footer .container .footer-section ul li a {
+                    color: #f1f1f1;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                }
+
+                    .footer .container .footer-section ul li a:hover {
+                        color: #1b6ec2;
+                    }
+
+    .footer .footer-bottom {
+        border-top: 1px solid #444;
+        padding-top: 10px;
         text-align: center;
+        font-size: 0.9rem;
     }
-}
 
 
-/* =========================
-   Section Hero (Bannière)
-   ========================= */
+/* ==========================================================================
+   5. Hero Section (Banner)
+   ========================================================================== */
+
 .hero-section {
     background: url('/images/background.jpg') no-repeat top center;
     background-size: cover;
@@ -264,9 +279,12 @@ html, body {
         background-color: var(--blue-hover);
     }
 
-/* =========================
-   Section des fonctionnalités
-   ========================= */
+
+
+/* ==========================================================================
+   6. Features Section
+   ========================================================================== */
+
 .features-section {
     background-color: #f9f9f9;
     padding: 60px 0;
@@ -277,6 +295,7 @@ html, body {
         max-width: none;
         box-shadow: none;
         background-color: transparent;
+        margin: 0;
     }
 
     .features-section h2 {
@@ -289,7 +308,7 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px; /* espace entre les .feature */
+    gap: 30px; /* Space between feature cards */
 }
 
 .feature {
@@ -311,9 +330,12 @@ html, body {
         color: #666;
     }
 
-/* =========================
-   Section CTA
-   ========================= */
+
+
+/* ==========================================================================
+   7. Call-to-Action (CTA) Section
+   ========================================================================== */
+
 .cta-section {
     background: #4070f4;
     color: #fff;
@@ -325,6 +347,7 @@ html, body {
         background-color: transparent;
         box-shadow: none;
         max-width: none;
+        margin: 0;
     }
 
     .cta-section h2 {
@@ -353,29 +376,13 @@ html, body {
         background-color: #f0f0f0;
     }
 
-/* =========================
-   Responsive
-   ========================= */
-@media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .features {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .feature {
-        width: 80%;
-        margin-bottom: 20px;
-    }
-}
 
 
+/* ==========================================================================
+   9. Login / Register Page Styles
+   ========================================================================== */
 
-
-/* LOGIN / REGISTER CONTENT */
+/* Container for login/register forms */
 .div-body {
     display: flex;
     justify-content: center;
@@ -392,63 +399,66 @@ html, body {
     background-color: #4070f4;
 }
 
-.validation-summary {
-    margin-top: 10px; /* Espace au-dessus de la liste d'erreurs */
-    margin-bottom: -28px; /* Espace en dessous */
-    padding: 5px;
-    font-size: 14px;
-    color: #d9534f; /* Couleur typique pour les erreurs */
-}
-
-    .validation-summary ul {
-        list-style: none; /* Supprime les puces */
-        padding: 0;
-        margin: 0;
+    /* Validation message styling */
+    .div-body .validation-summary {
+        margin-top: 10px; /* Space above error list */
+        margin-bottom: -28px; /* Space below */
+        padding: 5px;
+        font-size: 14px;
+        color: #d9534f; /* Error color */
     }
 
-.div-body .container .forms {
-    display: flex;
-    align-items: center;
-    height: 460px;
-    width: 200%;
-    transition: height 0.2s ease;
-}
+        .div-body .validation-summary ul {
+            list-style: none; /* Remove bullet points */
+            padding: 0;
+            margin: 0;
+        }
 
-.div-body .container .forms-register {
-    display: flex;
-    align-items: center;
-    height: 720px;
-    width: 200%;
-    transition: height 0.2s ease;
-}
+    /* Form container and transitions */
+    .div-body .container .forms {
+        display: flex;
+        align-items: center;
+        height: 460px;
+        width: 200%;
+        transition: height 0.2s ease;
+    }
 
-.div-body .container .form {
-    width: 50%;
-    padding: 30px;
-    background-color: #fff;
-    transition: margin-left 0.18s ease;
-}
+    .div-body .container .forms-register {
+        display: flex;
+        align-items: center;
+        height: 720px;
+        width: 200%;
+        transition: height 0.2s ease;
+    }
 
-.div-body .container.active .login {
-    margin-left: -50%;
-    opacity: 0;
-    transition: margin-left 0.18s ease, opacity 0.15s ease;
-}
+    .div-body .container .form {
+        width: 50%;
+        padding: 30px;
+        background-color: #fff;
+        transition: margin-left 0.18s ease;
+    }
 
-.div-body .container.active .signup {
-    opacity: 1;
-    transition: opacity 0.2s ease;
-}
+    .div-body .container.active .login {
+        margin-left: -50%;
+        opacity: 0;
+        transition: margin-left 0.18s ease, opacity 0.15s ease;
+    }
 
-.div-body .container.active .forms {
-    height: 600px;
-}
+    .div-body .container.active .signup {
+        opacity: 1;
+        transition: opacity 0.2s ease;
+    }
 
-.div-body .container .form .title {
-    position: relative;
-    font-size: 27px;
-    font-weight: 600;
-}
+    .div-body .container.active .forms {
+        height: 600px;
+    }
+
+/* Form Titles and Underline Indicator */
+    .div-body .container .form .title {
+        position: relative;
+        font-size: 27px;
+        font-weight: 600;
+    }
 
 .form .title::before {
     content: '';
@@ -461,6 +471,7 @@ html, body {
     border-radius: 25px;
 }
 
+/* Input Field Styles */
 .form .input-field {
     position: relative;
     height: 50px;
@@ -508,6 +519,7 @@ html, body {
     padding: 10px;
 }
 
+/* Checkbox and Link Styles */
 .form .checkbox-text {
     display: flex;
     align-items: center;
@@ -539,6 +551,7 @@ html, body {
     text-decoration: underline;
 }
 
+/* Button Styles */
 .form .button {
     margin-top: 35px;
 }
@@ -566,13 +579,17 @@ html, body {
 
 
 
-/* ============== Dashboard Container ============== */
+/* ==========================================================================
+   10. Dashboard Layout
+   ========================================================================== */
+
+/* Dashboard Container */
 .dashboard-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* ============== Sidebar ============== */
+    /* Sidebar Styles */
     .dashboard-sidebar {
         width: 220px;
         background-color: #1b1b1b;
@@ -660,7 +677,7 @@ html, body {
                     }
 
 
-                    /* ============== Dashboard Wrapper ============== */
+                    /* Dashboard Wrapper */
                     .dashboard-wrapper {
                         flex: 1;
                         display: flex;
@@ -668,11 +685,11 @@ html, body {
                     }
 
 
-/* ============== Main Content & Summary ============== */
+/* Main Content and Summary Panel */
 .dashboard-content {
     display: flex;
     flex: 1;
-    overflow: hidden; /* ensures the layout doesn't break if content overflows */
+    overflow: hidden; /* Prevent overflow issues */
     background-color: #f1f1fb;
 }
 
@@ -694,7 +711,7 @@ html, body {
             margin-bottom: 1rem;
         }
 
-/* ============== Summary Card ============== */
+    /* Summary Card Styles */
     .dashboard-content .summary-card {
         background-color: #4070f4;
         color: #fff;
@@ -716,7 +733,7 @@ html, body {
         font-weight: 600;
     }
 
-/* ============== Summary Sections ============== */
+    /* Summary Section Lists */
     .dashboard-content .summary-section {
         margin-bottom: 1.5rem;
     }
@@ -736,8 +753,7 @@ html, body {
                 color: #666;
             }
 
-/* ============== Cards / Stats Example (Optional) ============== */
-/* If you have stats cards in your main content, you can style them here */
+     /* Dashboard Stats Cards */
     .dashboard-content .stats-cards {
         display: flex;
         gap: 1rem;
@@ -799,38 +815,9 @@ html, body {
         }
 
 
-/* ============== Responsive Layout ============== */
-@media (max-width: 992px) {
-    .dashboard-sidebar {
-        position: fixed;
-        left: -220px;
-        transition: left 0.3s ease;
-    }
-
-        .dashboard-sidebar.sidebar-open {
-            left: 0;
-        }
-
-    .dashboard-header {
-        padding: 1rem;
-    }
-
-    .dashboard-content {
-        flex-direction: column;
-    }
-
-        .dashboard-content .main-content, .summary-panel {
-            width: 100%;
-            flex: none;
-            border-left: none;
-            border-top: 1px solid #eee;
-        }
-
-        .dashboard-content .summary-panel {
-            padding: 1rem;
-        }
-}
-
+/* ==========================================================================
+   11. Table Styles
+   ========================================================================== */
 
 .table-users {
     width: 100%;
@@ -849,17 +836,15 @@ html, body {
 
 
 
-/* =========================
-   Doctors Page
-   ========================= */
+/* ==========================================================================
+   12. Doctors Page Styles
+   ========================================================================== */
 
-/* Conteneur global de la page Doctors */
-
-/* En-tête de la page (titre + bouton) */
 .doctors-section {
     padding-top: 1rem;
 }
 
+    /* Header (Title & Add Doctor Button) */
 .doctors-section .doctors-header {
     display: flex;
     align-items: center;
@@ -887,7 +872,7 @@ html, body {
         background-color: var(--blue-hover);
     }
 
-/* Barre de recherche */
+/* Search Bar */
 .doctors-section .doctors-search {
     margin-bottom: 1.5rem;
 }
@@ -926,9 +911,9 @@ html, body {
             background-color: var(--blue-hover);
         }
 
-/* Tableau */
+/* Doctors Table */
 .doctors-section .doctors-table-wrapper {
-    overflow-x: auto; /* utile si le tableau est large */
+    overflow-x: auto;
 }
 
 .doctors-section .doctors-table {
@@ -957,9 +942,10 @@ html, body {
     }
 
 
-/* =========================
-   Doctors Create Page
-   ========================= */
+
+/* ==========================================================================
+   13. Doctors Create/Edit Page Styles
+   ========================================================================== */
 
 .create-doctor-section, .edit-doctor-section {
     max-width: 600px;
@@ -1041,6 +1027,11 @@ html, body {
         }
 
 
+
+/* ==========================================================================
+   14. Menu Buttons (Back, Edit, Delete)
+   ========================================================================== */
+
 .menu-buttons {
     display: flex;
     justify-content: space-between;
@@ -1049,7 +1040,6 @@ html, body {
 
 .back-button-container {
     margin: 1.5rem;
-/*    text-align: center;*/
 }
 
     .back-button-container .btn {
@@ -1088,7 +1078,6 @@ html, body {
         height: 35px;
         background-color: var(--red-light);
         color: var(--white);
-/*        padding: 0.6rem 1.2rem;*/
         border-radius: var(--border-radius);
         text-decoration: none;
         transition: background-color 0.3s ease;
@@ -1103,16 +1092,15 @@ html, body {
 
 
 
-/* ================================
-   Styles pour la section Patients
-   ================================ */
+/* ==========================================================================
+   15. Patients Section
+   ========================================================================== */
 
-/* Conteneur global de la page Patients */
 .patients-section {
     padding-top: 1rem;
 }
 
-/* En-tête : titre et bouton d'ajout */
+/* Header: Title & Add Patient Button */
 .patients-header {
     display: flex;
     align-items: center;
@@ -1140,7 +1128,7 @@ html, body {
         background-color: var(--blue-hover);
     }
 
-/* Barre de recherche */
+/* Patients Search Bar */
 .patients-search {
     margin-bottom: 1.5rem;
 }
@@ -1179,7 +1167,7 @@ html, body {
             background-color: var(--blue-hover);
         }
 
-/* Tableau des patients */
+/* Patients Table */
 .patients-table-wrapper {
     overflow-x: auto;
 }
@@ -1220,7 +1208,7 @@ html, body {
             text-decoration: underline;
         }
 
-/* Bouton de suppression */
+/* Delete Button for Patients Table */
 .btn-delete {
     background-color: var(--red-light);
     color: var(--black);
@@ -1236,9 +1224,12 @@ html, body {
         color: var(--white);
     }
 
-/* ================================
-   Styles pour la création / édition d'un Patient
-   ================================ */
+
+
+/* ==========================================================================
+   16. Create/Edit Patient Page Styles
+   ========================================================================== */
+
 .create-patient-section,
 .edit-patient-section {
     max-width: 600px;
@@ -1283,6 +1274,7 @@ html, body {
             border-color: var(--blue);
         }
 
+/* Primary Button */
 .btn-primary {
     display: block;
     width: 100%;
@@ -1300,3 +1292,61 @@ html, body {
     .btn-primary:hover {
         background-color: var(--blue-hover);
     }
+
+
+
+/* ==========================================================================
+      Responsive Adjustments (Small Screens)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-sidebar {
+        position: fixed;
+        left: -220px;
+        transition: left 0.3s ease;
+    }
+
+        .dashboard-sidebar.sidebar-open {
+            left: 0;
+        }
+
+    .dashboard-header {
+        padding: 1rem;
+    }
+
+    .dashboard-content {
+        flex-direction: column;
+    }
+
+        .dashboard-content .main-content, .summary-panel {
+            width: 100%;
+            flex: none;
+            border-left: none;
+            border-top: 1px solid #eee;
+        }
+
+        .dashboard-content .summary-panel {
+            padding: 1rem;
+        }
+}

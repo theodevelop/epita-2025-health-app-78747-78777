@@ -1,6 +1,6 @@
 ﻿<header class="header">
         <nav class="navbar">
-        <div class="container">
+            <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     Hospital Plus
                 </a>
@@ -14,7 +14,7 @@
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link"  asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
+                            <a class="nav-link"  asp-area="Admin" asp-controller="Admin" asp-action="Index">Dashboard</a>
                         </li>
                     }
                 </ul>

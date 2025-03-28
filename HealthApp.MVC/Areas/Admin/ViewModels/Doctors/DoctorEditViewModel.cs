@@ -37,11 +37,5 @@ namespace HealthApp.MVC.Areas.Admin.ViewModels
         // Les IDs des spécialisations sélectionnées dans le formulaire
         public int[]? SelectedSpecializationIds { get; set; }
         public IEnumerable<Specialization>? AllSpecializations { get; set; }
-
-        public List<AvailabilityInputModel> Availabilities { get; set; }
-        = new List<AvailabilityInputModel>();
-
-        public List<UnavailabilityInputModel> Unavailabilities { get; set; }
-            = new List<UnavailabilityInputModel>();
     }
 }

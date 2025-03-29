@@ -1297,6 +1297,33 @@ html, body {
 
 
 /* ==========================================================================
+      DOCTORS AREA
+   ========================================================================== */
+
+.dashboard-content .stats-cards .upcoming {
+    background: url("/images/appointments-background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dashboard-content .stats-cards .completed {
+    background: url("/images/appointments_completed-background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dashboard-content .stats-cards .cancelled {
+    background: url("/images/appointments_cancelled-background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+/* ==========================================================================
       Responsive Adjustments (Small Screens)
    ========================================================================== */
 

@@ -32,5 +32,7 @@ namespace HealthApp.MVC.Models.Entities
 
         public string IdentityUserId { get; set; }
         public ApplicationUser IdentityUser { get; set; }
+
+        public ICollection<DoctorAvailability> Availabilities { get; set; } = new List<DoctorAvailability>();
     }
 }

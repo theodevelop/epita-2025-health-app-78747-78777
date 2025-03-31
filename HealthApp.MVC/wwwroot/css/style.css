@@ -795,21 +795,21 @@ html, body {
                 }
 
         .dashboard-content .stats-cards .patients {
-            background: url("/images/patients-background.png");
+            background: url("/images/patients_background.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
 
         .dashboard-content .stats-cards .doctors {
-            background: url("/images/doctors-background.png");
+            background: url("/images/doctors_background.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
 
         .dashboard-content .stats-cards .appointments {
-            background: url("/images/appointments-background.png");
+            background: url("/images/appointments_background.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -1301,25 +1301,182 @@ html, body {
    ========================================================================== */
 
 .dashboard-content .stats-cards .upcoming {
-    background: url("/images/appointments-background.png");
+    background: url("/images/appointments_background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .dashboard-content .stats-cards .completed {
-    background: url("/images/appointments_completed-background.png");
+    background: url("/images/appointments_completed_background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.dashboard-content .stats-cards .cancelled {
-    background: url("/images/appointments_cancelled-background.png");
+.dashboard-content .stats-cards .pending {
+    background: url("/images/appointments_pending_background.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.dashboard .table-stats {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+/*    align-items: center;*/
+}
+
+.dashboard .table-stats .appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .dashboard .table-stats .appointments-table thead {
+        background-color: #f7f7f7;
+        height: 75px;
+    }
+
+    .dashboard .table-stats .appointments-table th, .dashboard .table-stats .appointments-table td {
+        padding: 0.9rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .dashboard .table-stats .appointments-table tbody tr:hover {
+        background-color: #fafafa;
+    }
+
+    #appointmentsChart {
+        width: 300px;
+    }
+
+/****************************************************
+ * Grille de disponibilités hebdomadaires
+ ****************************************************/
+.availability-grid {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 100%; /* Prend toute la largeur disponible */
+    max-width: 1000px; /* Ajustez cette valeur selon vos besoins */
+    margin: auto;
+}
+
+    .availability-grid .row {
+        display: flex;
+    }
+
+        /* ----- En-tête (jours) ----- */
+        .availability-grid .row.header {
+            background-color: #333;
+            color: #fff;
+            font-weight: 600;
+            padding: 0px;
+        }
+
+            .availability-grid .row.header .cell {
+                border-right: 1px solid #444;
+            }
+
+                .availability-grid .row.header .cell:last-child {
+                    border-right: none;
+                }
+
+    /* ----- Cellules ----- */
+    .availability-grid .cell {
+        flex: 1;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+    }
+
+        .availability-grid .cell:last-child {
+            border-right: none;
+        }
+
+/* ----- Cellules d'heure (colonne de gauche) ----- */
+.hour-label {
+    width: 80px;
+    background-color: #f7f7f7;
+    color: #333;
+    text-align: center;
+    font-weight: normal;
+    font-size: 0.95rem;
+    border-right: 1px solid #ccc;
+}
+
+/* ----- Cellules de jour (ligne du haut) ----- */
+.day-label {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 0 5px;
+}
+
+/* ----- Slots cochables ----- */
+.slot-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Le label recouvre toute la cellule */
+.slot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+    /* Au survol, on change légèrement */
+    .slot:hover {
+        background-color: #e0e0e0;
+    }
+
+/* Si la checkbox est cochée, la case se colore */
+input[type="checkbox"]:checked + .slot {
+    background-color: var(--blue);
+}
+
+/****************************************************
+ * Bouton d'enregistrement
+ ****************************************************/
+.save-button {
+    margin: 20px;
+    padding: 0.8rem 2rem;
+    background-color: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: block;
+}
+
+    .save-button:hover {
+        background-color: var(--blue-hover);
+    }
+
 
 
 

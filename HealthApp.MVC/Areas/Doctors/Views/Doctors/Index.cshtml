@@ -1,0 +1,79 @@
+﻿@model HealthApp.MVC.Areas.Doctors.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Doctor Dashboard";
+    Layout = "~/Areas/Doctors/Views/Shared/_Layout.cshtml";
+}
+
+<section class="dashboard">
+    <h1>Dashboard</h1>
+
+    <!-- Row of Stats Cards -->
+    <div class="stats-cards">
+        <div class="card upcoming">
+            <div class="card-text">
+                <h3>UPCOMING</h3>
+                <p>@Model.UpcomingAppointmentsCount</p>
+            </div>
+        </div>
+        <div class="card pending">
+            <div class="card-text">
+                <h3>PENDING</h3>
+                <p>@Model.PendingAppointmentsCount</p>
+            </div>
+        </div>
+        <div class="card completed">
+            <div class="card-text">
+                <h3>FINISHED</h3>
+                <p>@Model.FinishedAppointmentsCount</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-stats">
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Patient</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.WeeklyAppointments == null || !Model.WeeklyAppointments.Any())
+                {
+                    <tr>
+                        <td colspan="4">No appointments this week.</td>
+                    </tr>
+                }
+                else foreach (var appointment in Model.WeeklyAppointments)
+                {
+                    <tr>
+                        <td>@appointment.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@(appointment.Patient?.FirstName + " " + appointment.Patient?.LastName)</td>
+                        <td>@appointment.Reason</td>
+                        <td>@appointment.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            <div class="stats-graph">
+                <canvas id="appointmentsChart"></canvas> 
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+            <script> 
+                var ctx = document.getElementById('appointmentsChart').getContext('2d'); 
+                var appointmentsChart = new Chart(ctx, 
+                    { type: 'doughnut', data: { labels: ['Upcoming', 'Finished', 'Pending'], datasets: [{ 
+                        data: [
+                            @Model.UpcomingAppointmentsCount, 
+                            @Model.FinishedAppointmentsCount, 
+                            @Model.PendingAppointmentsCount], 
+                            backgroundColor: ['#50C878', '#1b6ec2', '#ffd607'] }]
+                    }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } } }); 
+            </script>
+        </div>
+    </div>
+</section>

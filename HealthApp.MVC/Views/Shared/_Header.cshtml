@@ -18,6 +18,12 @@
                             <a class="nav-link"  asp-area="Admin" asp-controller="Admin" asp-action="Index">Dashboard</a>
                         </li>
                     }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Doctors" asp-controller="Doctors" asp-action="Index">Dashboard</a>
+                        </li>
+                    }
                 </ul>
             </div>
             <div class="navbar-login">

@@ -1,0 +1,72 @@
+﻿@model HealthApp.MVC.Areas.Doctors.ViewModels.WeeklyAvailabilityViewModel
+
+@{
+    ViewData["Title"] = "Working Hours";
+    Layout = "~/Areas/Doctors/Views/Shared/_Layout.cshtml";
+    string[] dayNames = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+    int startHour = Model.StartHour;
+    int endHour = Model.EndHour;
+}
+
+<section class="dashboard">
+    <h1>Working Hours</h1>
+
+    <form method="post">
+        <div class="availability-grid">
+            <div class="row header">
+                <div class="cell day-label"></div>
+                @for (int d = 0; d < 7; d++)
+                {
+                    <div class="cell day-label">@dayNames[d]</div>
+                }
+            </div>
+
+            @for (int hour = startHour; hour < endHour; hour++)
+            {
+                <div class="row">
+                    <div class="cell hour-label">
+                        @($"{hour}:00")
+                    </div>
+                    @for (int d = 0; d < 7; d++)
+                    {
+                        int colIndex = hour - startHour;
+
+                        string checkboxId = $"chk_{d}_{colIndex}";
+                        bool isChecked = Model.Availability[d][colIndex];
+                        <div class="cell slot-container">
+                            <input type="checkbox"
+                                   hidden
+                                   id="@checkboxId"
+                                   name="Availability[@d][@colIndex]"
+                                   value="true"
+                            @(isChecked ? "checked" : "") />
+
+                            <label for="@checkboxId" class="slot"></label>
+
+                            <input type="hidden" name="Availability[@d][@colIndex]" value="false" />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="save-button">Save</button>
+    </form>
+</section>
+
+@section TimetableException {
+    <aside class="summary-panel">
+        <h1>Exceptional timetables</h1>
+        <a asp-area="Doctors" asp-controller="Timetable" asp-action="CreateException">
+            Create
+        </a>
+        <table>
+            <thead>
+
+            </thead>
+            <tbody>
+            
+            </tbody>
+        </table>
+    </aside>
+}

@@ -1,0 +1,55 @@
+﻿@model HealthApp.MVC.Areas.Patients.Models.FinalizeBookingViewModel
+@{
+    ViewData["Title"] = "Finaliser la Réservation";
+}
+
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
+
+    <div class="card shadow-sm mx-auto mb-4" style="max-width: 600px;">
+        <div class="card-header">
+            <h5 class="mb-0">Détails du rendez-vous</h5>
+        </div>
+        <div class="card-body text-left">
+            <p><strong>Médecin :</strong> @Model.DoctorName</p>
+            <p><strong>Créneau sélectionné :</strong> @Model.SelectedDate.ToString("g")</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+        <div class="card-header">
+            <h5 class="mb-0">Finaliser la réservation</h5>
+        </div>
+        <div class="card-body text-left">
+            <form asp-action="FinalizeBooking" method="post">
+                @Html.AntiForgeryToken()
+                <!-- Champs cachés pour transmettre les données requises -->
+                <input type="hidden" asp-for="DoctorId" />
+                <input type="hidden" asp-for="DoctorName" />
+                <input type="hidden" name="SelectedDate" value="@Model.SelectedDate.ToString("yyyy-MM-ddTHH:mm:ss")" />
+
+                <div class="form-group">
+                    <label asp-for="Reason"></label>
+                    <textarea asp-for="Reason" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Valider la réservation</button>
+            </form>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mt-3">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

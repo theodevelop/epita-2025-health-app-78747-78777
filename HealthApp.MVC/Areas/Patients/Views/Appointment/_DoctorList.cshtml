@@ -1,0 +1,49 @@
+﻿@model IEnumerable<HealthApp.MVC.Models.Entities.Doctor>
+
+<div class="card shadow-sm mx-auto" style="max-width: 800px;">
+    <div class="card-header text-center">
+        <h5 class="mb-0">Résultats de la recherche</h5>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="p-3 text-center">
+                <p class="mb-0">Aucun médecin trouvé.</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-striped mb-0 text-center">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Spécialités</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doctor in Model)
+                    {
+                        <tr>
+                            <td>@doctor.FirstName @doctor.LastName</td>
+                            <td>
+                                @if (doctor.Specializations != null && doctor.Specializations.Any())
+                                {
+                                    foreach (var spec in doctor.Specializations)
+                                    {
+                                        <span class="badge badge-info mr-1">@spec.Name</span>
+                                    }
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="DoctorSchedule" asp-route-doctorId="@doctor.Id" class="btn btn-primary btn-sm">
+                                    Voir planning
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

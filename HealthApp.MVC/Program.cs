@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+
 // Add Identity with roles
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     options.SignIn.RequireConfirmedAccount = true;
@@ -131,6 +132,10 @@ app.MapAreaControllerRoute(
 	name: "Admin",
 	areaName: "Admin",
 	pattern: "Admin/{controller=Admin}/{action=Index}/{id?}");
+app.MapAreaControllerRoute(
+    name: "Patients",
+    areaName: "Patients",
+    pattern: "Patients/{controller=Appointment}/{action=List}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

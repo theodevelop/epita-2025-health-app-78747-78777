@@ -1,0 +1,10 @@
+﻿@model HealthApp.MVC.Models.Domain.Appointment
+@{
+    ViewData["Title"] = "Confirmation de Réservation";
+}
+<h2>@ViewData["Title"]</h2>
+
+<p>Votre rendez-vous a bien été réservé.</p>
+<p>Médecin : @Model.Doctor.FirstName @Model.Doctor.LastName</p>
+<p>Date et Heure : @Model.Date.ToString("g")</p>
+<p>Motif : @Model.Reason</p>

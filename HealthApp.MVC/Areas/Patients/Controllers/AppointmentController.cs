@@ -24,7 +24,6 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
         }
 
         // GET: Patients/Appointment/Book
-        // Affiche la barre de recherche et la liste des médecins filtrés
         public IActionResult Book(string query, string searchMode)
         {
             var doctors = _context.Doctors
@@ -37,7 +36,7 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
                 {
                     doctors = doctors.Where(d => d.Specializations.Any(s => s.Name.Contains(query)));
                 }
-                else  // Par défaut, recherche par nom/prénom
+                else
                 {
                     doctors = doctors.Where(d => d.FirstName.Contains(query) || d.LastName.Contains(query));
                 }
@@ -45,19 +44,14 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
 
             var doctorList = doctors.ToList();
 
-            // Si la requête est AJAX, renvoyer la vue partielle
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 return PartialView("_DoctorList", doctorList);
             }
-
-            // Sinon, renvoyer la vue complète
             return View(doctorList);
         }
 
-
         // GET: Patients/Appointment/DoctorSchedule?doctorId=1
-        // Affiche le planning du médecin (créneaux disponibles)
         public IActionResult DoctorSchedule(int doctorId)
         {
             var doctor = _context.Doctors
@@ -77,8 +71,7 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
             return View(viewModel);
         }
 
-        // GET: Patients/Appointment/FinalizeBooking?doctorId=1&selectedDate=2025-04-01T09:00:00
-        // Affiche le formulaire pour finaliser la réservation
+        // GET: Patients/Appointment/FinalizeBooking?doctorId=1&selectedDate=...
         public IActionResult FinalizeBooking(int doctorId, DateTime selectedDate)
         {
             var doctor = _context.Doctors.Find(doctorId);
@@ -95,13 +88,11 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
         }
 
         // POST: Patients/Appointment/FinalizeBooking
-        // Enregistre le rendez-vous après validation du formulaire
         [HttpPost]
         public IActionResult FinalizeBooking(FinalizeBookingViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                // Re-remplir le nom du médecin pour réafficher la vue correctement
                 var doctor = _context.Doctors.Find(model.DoctorId);
                 if (doctor != null)
                 {
@@ -110,7 +101,6 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
                 return View(model);
             }
 
-            // Vérifier que le créneau est toujours disponible
             bool exists = _context.Appointments.Any(a =>
                 a.DoctorId == model.DoctorId &&
                 a.Date == model.SelectedDate &&
@@ -127,7 +117,6 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
                 return View(model);
             }
 
-            // Récupérer l'ID du patient connecté
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var patient = _context.Patients.FirstOrDefault(p => p.IdentityUserId == userId);
             if (patient == null)
@@ -159,13 +148,10 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
                 }
                 return View(model);
             }
-
-            // Après enregistrement, rediriger vers l'action List qui affiche tous les rendez-vous du patient
-            return RedirectToAction("List");
+            return RedirectToAction("Confirmation", new { id = appointment.Id });
         }
 
         // GET: Patients/Appointment/Confirmation/5
-        // Affiche le récapitulatif du rendez-vous
         public IActionResult Confirmation(int id)
         {
             var appointment = _context.Appointments
@@ -178,46 +164,130 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
         }
 
         // GET: Patients/Appointment/List
-        // Affiche la liste des rendez-vous du patient connecté
-        public IActionResult List(int? year, int? month)
+        public IActionResult List(AppointmentStatus? status)
         {
-            DateTime now = DateTime.Now;
-            // Si aucune valeur n'est fournie, on utilise l'année et le mois en cours
-            int selectedYear = year ?? now.Year;
-            int selectedMonth = month ?? now.Month;
-
-            var firstDayOfMonth = new DateTime(selectedYear, selectedMonth, 1);
-            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-
-            // Récupérer le patient connecté
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var patient = _context.Patients.FirstOrDefault(p => p.IdentityUserId == userId);
             if (patient == null)
-            {
                 return NotFound("Patient non trouvé.");
+
+            var appointmentsQuery = _context.Appointments
+                .Include(a => a.Doctor)
+                .Where(a => a.PatientId == patient.Id);
+
+            if (status.HasValue)
+            {
+                appointmentsQuery = appointmentsQuery.Where(a => a.Status == status.Value);
             }
 
-            // Récupérer les rendez-vous du mois sélectionné
-            var appointments = _context.Appointments
-                .Include(a => a.Doctor)
-                .Where(a => a.PatientId == patient.Id
-                            && a.Date >= firstDayOfMonth
-                            && a.Date <= lastDayOfMonth)
-                .ToList();
-
-            // Passer les paramètres sélectionnés à la vue
-            ViewBag.Year = selectedYear;
-            ViewBag.Month = selectedMonth;
+            ViewBag.FilterStatus = status?.ToString();
+            var appointments = appointmentsQuery.OrderBy(a => a.Date).ToList();
 
             return View(appointments);
         }
 
 
-        // Méthode privée pour générer les créneaux disponibles pour les 7 prochains jours
+        // GET: Patients/Appointment/Details/5
+        public IActionResult Details(int id)
+        {
+            var appointment = _context.Appointments
+                .Include(a => a.Doctor)
+                .FirstOrDefault(a => a.Id == id);
+            if (appointment == null)
+                return NotFound();
+
+            return View(appointment);
+        }
+
+        // GET: Patients/Appointment/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var appointment = _context.Appointments
+                .Include(a => a.Doctor)
+                .FirstOrDefault(a => a.Id == id);
+            if (appointment == null)
+                return NotFound();
+
+            if (appointment.Date <= DateTime.Now.AddHours(48))
+            {
+                TempData["Error"] = "Modification impossible moins de 48 heures avant le rendez-vous.";
+                return RedirectToAction("Details", new { id = id });
+            }
+
+            var model = new EditAppointmentViewModel
+            {
+                Id = appointment.Id,
+                DoctorId = appointment.DoctorId,
+                DoctorName = appointment.Doctor.FirstName + " " + appointment.Doctor.LastName,
+                SelectedDate = appointment.Date,
+                Reason = appointment.Reason
+            };
+
+            ViewBag.Doctors = _context.Doctors.ToList();
+            return View(model);
+        }
+
+        // POST: Patients/Appointment/Edit/5
+        [HttpPost]
+        public IActionResult Edit(EditAppointmentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Doctors = _context.Doctors.ToList();
+                return View(model);
+            }
+
+            // Sécurité : s'assurer que l'ID est bien reçu
+            if (model.Id == 0)
+            {
+                ModelState.AddModelError("", "ID du rendez-vous introuvable.");
+                ViewBag.Doctors = _context.Doctors.ToList();
+                return View(model);
+            }
+
+            var appointment = _context.Appointments.FirstOrDefault(a => a.Id == model.Id);
+            if (appointment == null)
+                return NotFound();
+
+            // 48h avant vérif
+            if (appointment.Date <= DateTime.Now.AddHours(48))
+            {
+                ModelState.AddModelError("", "Modification impossible moins de 48 heures avant le rendez-vous.");
+                ViewBag.Doctors = _context.Doctors.ToList();
+                return View(model);
+            }
+
+            appointment.DoctorId = model.DoctorId;
+            appointment.Date = model.SelectedDate;
+            appointment.Reason = model.Reason;
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = appointment.Id });
+        }
+
+        // GET: Patients/Appointment/Cancel/5
+        public IActionResult Cancel(int id)
+        {
+            var appointment = _context.Appointments.FirstOrDefault(a => a.Id == id);
+            if (appointment == null)
+                return NotFound();
+
+            if (appointment.Date <= DateTime.Now.AddHours(48))
+            {
+                TempData["Error"] = "Annulation impossible moins de 48 heures avant le rendez-vous.";
+                return RedirectToAction("Details", new { id = id });
+            }
+
+            appointment.Status = AppointmentStatus.Cancelled;
+            _context.Appointments.Update(appointment);
+            _context.SaveChanges();
+
+            return RedirectToAction("List");
+        }
+
         private List<DateTime> GetAvailableSlots(int doctorId)
         {
             List<DateTime> slots = new List<DateTime>();
-            // Exemple : horaires de travail de 9h à 17h avec des créneaux de 30 minutes
             for (int day = 0; day < 7; day++)
             {
                 DateTime dayStart = DateTime.Today.AddDays(day).AddHours(9);
@@ -230,7 +300,6 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
                             a.DoctorId == doctorId &&
                             a.Date == slot &&
                             a.Status != AppointmentStatus.Cancelled);
-
                         if (!slotBooked)
                         {
                             slots.Add(slot);
@@ -242,3 +311,5 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
         }
     }
 }
+
+        

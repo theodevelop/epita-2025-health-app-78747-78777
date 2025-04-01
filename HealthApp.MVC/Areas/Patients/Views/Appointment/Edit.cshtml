@@ -1,0 +1,55 @@
+﻿@model HealthApp.MVC.Areas.Patients.Models.EditAppointmentViewModel
+@{
+    ViewBag.Title = "Modifier le Rendez-vous";
+    var doctorList = ViewBag.Doctors as List<HealthApp.MVC.Models.Entities.Doctor>;
+}
+
+<h2 class="mb-4">Modifier le Rendez-vous</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!-- ✅ Id caché pour que le contrôleur sache quel rendez-vous modifier -->
+    @Html.HiddenFor(m => m.Id)
+
+    <!-- ✅ Affichage des erreurs -->
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <!-- Médecin -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.DoctorId, "Médecin")
+        @Html.DropDownListFor(m => m.DoctorId,
+                new SelectList(
+                doctorList.Select(d => new
+                {
+                    Id = d.Id,
+                    FullName = d.FirstName + " " + d.LastName
+                }),
+                "Id", "FullName", Model.DoctorId),
+                "Sélectionner un médecin",
+                new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.DoctorId, null, new { @class = "text-danger" })
+    </div>
+
+    <!-- Date -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedDate, "Date et Heure")
+        @Html.TextBoxFor(m => m.SelectedDate, "{0:yyyy-MM-ddTHH:mm}", new
+            {
+                @class = "form-control",
+                type = "datetime-local"
+            })
+        @Html.ValidationMessageFor(m => m.SelectedDate, null, new { @class = "text-danger" })
+    </div>
+
+    <!-- Raison -->
+    <div class="form-group">
+        @Html.LabelFor(m => m.Reason, "Motif")
+        @Html.TextAreaFor(m => m.Reason, new { @class = "form-control", rows = 4 })
+        @Html.ValidationMessageFor(m => m.Reason, null, new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
+    <a href="@Url.Action("Details", "Appointment", new { id = Model.Id })" class="btn btn-secondary ml-2">Annuler</a>
+}

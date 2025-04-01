@@ -1,10 +1,30 @@
 ﻿@model HealthApp.MVC.Models.Domain.Appointment
 @{
-    ViewData["Title"] = "Confirmation de Réservation";
+    ViewBag.Title = "Confirmation du rendez-vous";
 }
-<h2>@ViewData["Title"]</h2>
 
-<p>Votre rendez-vous a bien été réservé.</p>
-<p>Médecin : @Model.Doctor.FirstName @Model.Doctor.LastName</p>
-<p>Date et Heure : @Model.Date.ToString("g")</p>
-<p>Motif : @Model.Reason</p>
+<div class="container mt-5">
+    <div class="card shadow text-center">
+        <div class="card-body">
+            <h2 class="card-title text-success mb-4">
+                ✅ Rendez-vous confirmé !
+            </h2>
+
+            <p class="card-text lead">
+                Votre rendez-vous avec
+                <strong>Dr. @Model.Doctor.FirstName @Model.Doctor.LastName</strong><br />
+                est bien programmé le <strong>@Model.Date.ToString("dddd dd MMMM yyyy 'à' HH:mm")</strong>.
+            </p>
+
+            <p class="mt-3">
+                <strong>Motif :</strong> @Model.Reason
+            </p>
+
+            <div class="mt-4">
+                <a href="@Url.Action("List", "Appointment")" class="btn btn-primary">
+                    Voir mes rendez-vous
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

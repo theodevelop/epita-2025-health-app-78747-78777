@@ -1,107 +1,77 @@
-﻿@model IEnumerable<HealthApp.MVC.Models.Domain.Appointment>
-@using HealthApp.MVC.Models.Domain
+﻿@model List<HealthApp.MVC.Models.Domain.Appointment>
 @{
-    ViewData["Title"] = "Mon Planning Mensuel";
-
-    // Récupérer l'année et le mois via ViewBag ou utiliser la date actuelle
-    int selectedYear = ViewBag.Year != null ? (int)ViewBag.Year : DateTime.Now.Year;
-    int selectedMonth = ViewBag.Month != null ? (int)ViewBag.Month : DateTime.Now.Month;
-    DateTime currentMonth = new DateTime(selectedYear, selectedMonth, 1);
-    int daysInMonth = DateTime.DaysInMonth(selectedYear, selectedMonth);
-
-    // Pour un calendrier commençant le lundi :
-    // En .NET, Sunday = 0, Monday = 1, ... Saturday = 6.
-    // On souhaite que lundi = 0, donc :
-    int dayOfWeek = (int)currentMonth.DayOfWeek;
-    int startOffset = (dayOfWeek == 0) ? 6 : dayOfWeek - 1;
-
-    // Calculer les mois précédent et suivant
-    DateTime prevMonth = currentMonth.AddMonths(-1);
-    DateTime nextMonth = currentMonth.AddMonths(1);
+    ViewBag.Title = "Mes Rendez-vous";
+    string selectedStatus = ViewBag.FilterStatus as string;
 }
 
-<div class="container mt-5 text-center">
-    <h2 class="mb-4">@ViewData["Title"]</h2>
+<h2 class="mb-4">Mes Rendez-vous</h2>
 
-    <!-- Navigation entre mois -->
-    <div class="d-flex justify-content-between align-items-center mb-3 mx-auto" style="max-width:900px;">
-        <a asp-action="List" asp-route-year="@prevMonth.Year" asp-route-month="@prevMonth.Month" class="btn btn-secondary">&larr; Mois précédent</a>
-        <span class="font-weight-bold">@currentMonth.ToString("MMMM yyyy")</span>
-        <a asp-action="List" asp-route-year="@nextMonth.Year" asp-route-month="@nextMonth.Month" class="btn btn-secondary">Mois suivant &rarr;</a>
+<!-- Filtres -->
+<form method="get" class="mb-4">
+    <div class="form-inline">
+        <label for="status" class="mr-2">Filtrer :</label>
+        <select name="status" id="status" class="form-control" onchange="this.form.submit()">
+            <option value="">Tous</option>
+
+            @if (selectedStatus == "Pending")
+            {
+                <option value="Pending" selected>En attente</option>
+            }
+            else
+            {
+                <option value="Pending">En attente</option>
+            }
+
+            @if (selectedStatus == "Cancelled")
+            {
+                <option value="Cancelled" selected>Annulé</option>
+            }
+            else
+            {
+                <option value="Cancelled">Annulé</option>
+            }
+
+            @if (selectedStatus == "Completed")
+            {
+                <option value="Completed" selected>Complété</option>
+            }
+            else
+            {
+                <option value="Completed">Complété</option>
+            }
+        </select>
     </div>
+</form>
 
-    <!-- Calendrier -->
-    <div class="card shadow-sm mx-auto" style="max-width:900px;">
-        <div class="card-header">
-            <h5 class="mb-0">Planning du mois : @currentMonth.ToString("MMMM yyyy")</h5>
-        </div>
-        <div class="card-body p-0">
-            <table class="table table-bordered mb-0 text-center">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Lundi</th>
-                        <th>Mardi</th>
-                        <th>Mercredi</th>
-                        <th>Jeudi</th>
-                        <th>Vendredi</th>
-                        <th>Samedi</th>
-                        <th>Dimanche</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int row = 0; row < 6; row++)
-                    {
-                        <tr>
-                            @for (int col = 0; col < 7; col++)
-                            {
-                                int cellIndex = row * 7 + col;
-                                int currentDay = cellIndex - startOffset + 1;
-                                if (currentDay < 1 || currentDay > daysInMonth)
-                                {
-                                    <td class="bg-light"></td>
-                                }
-                                else
-                                {
-                                    var date = new DateTime(selectedYear, selectedMonth, currentDay);
-                                    var dayAppointments = Model.Where(a => a.Date.Date == date.Date).ToList();
-                                    if (dayAppointments.Any())
-                                    {
-                                        // Construire le contenu du popover avec le détail du rendez-vous
-                                        string content = "";
-                                        foreach (var appt in dayAppointments)
-                                        {
-                                            content += $"<strong>{appt.Date.ToString("HH:mm")}</strong> avec {appt.Doctor.FirstName} {appt.Doctor.LastName}<br/>";
-                                        }
-                                        <td class="bg-success text-white appointment-cell" data-toggle="popover" data-trigger="hover" data-html="true" data-content="@Html.Raw(content)">
-                                            <div class="font-weight-bold">@currentDay</div>
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            <div class="font-weight-bold">@currentDay</div>
-                                        </td>
-                                    }
-                                }
-                            }
-                        </tr>
-                        if ((row + 1) * 7 - startOffset >= daysInMonth) { break; }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="~/lib/popper.js/popper.min.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script>
-        $(function () {
-            $('[data-toggle="popover"]').popover({
-                placement: 'top'
-            });
-        });
-    </script>
+<!-- Liste des rendez-vous -->
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Aucun rendez-vous trouvé.</div>
 }
+else
+{
+    <div class="row">
+        @foreach (var appointment in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            @(appointment.Doctor != null
+                                ? $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}"
+                                : "Médecin inconnu")
+                        </h5>
+                        <p class="card-text">
+                            <strong>Date :</strong> @appointment.Date.ToString("dd/MM/yyyy HH:mm")<br />
+                            <strong>Statut :</strong> @appointment.Status
+                        </p>
+                        <a href="@Url.Action("Details", "Appointment", new { id = appointment.Id })" class="btn btn-primary">
+                            Voir les détails
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+

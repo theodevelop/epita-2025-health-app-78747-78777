@@ -1,0 +1,32 @@
+﻿@model HealthApp.MVC.Models.Domain.Appointment
+@{
+    ViewBag.Title = "Détails du Rendez-vous";
+    var canModify = Model.Date > DateTime.Now.AddHours(48);
+}
+
+<h2>Détails du Rendez-vous</h2>
+
+<div class="card shadow mt-4">
+    <div class="card-body">
+        <h4 class="card-title">Dr. @Model.Doctor.FirstName @Model.Doctor.LastName</h4>
+        <p class="card-text">
+            <strong>Date :</strong> @Model.Date.ToString("dd/MM/yyyy HH:mm")<br />
+            <strong>Statut :</strong> @Model.Status<br />
+            <strong>Motif :</strong> @Model.Reason
+        </p>
+
+        @if (canModify)
+        {
+            <a href="@Url.Action("Edit", "Appointment", new { id = Model.Id })" class="btn btn-warning mr-2">Modifier</a>
+            <a href="@Url.Action("Cancel", "Appointment", new { id = Model.Id })" class="btn btn-danger">Annuler</a>
+        }
+        else
+        {
+            <div class="alert alert-info mt-3">
+                Modification/annulation impossible à moins de 48h du rendez-vous.
+            </div>
+        }
+    </div>
+</div>
+
+<a href="@Url.Action("List", "Appointment")" class="btn btn-secondary mt-4">Retour à la liste</a>

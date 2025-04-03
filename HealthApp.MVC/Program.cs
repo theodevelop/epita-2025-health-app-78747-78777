@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using HealthApp.MVC.Data;
 using HealthApp.MVC.Models.Entities;
 using HealthApp.MVC.Models.Domain;
+using HealthApp.MVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));   
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddScoped<NotificationManager>();
+builder.Services.AddHostedService<AppointmentReminderService>();
+
 
 
 // Add Identity with roles
@@ -135,7 +139,7 @@ app.MapAreaControllerRoute(
 app.MapAreaControllerRoute(
     name: "Patients",
     areaName: "Patients",
-    pattern: "Patients/{controller=Appointment}/{action=List}/{id?}");
+    pattern: "Patients/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

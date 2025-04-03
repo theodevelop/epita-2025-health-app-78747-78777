@@ -1,4 +1,5 @@
 ﻿@model HealthApp.MVC.Areas.Patients.Models.EditAppointmentViewModel
+
 @{
     ViewBag.Title = "Modifier le Rendez-vous";
     var doctorList = ViewBag.Doctors as List<HealthApp.MVC.Models.Entities.Doctor>;
@@ -6,17 +7,20 @@
 
 <h2 class="mb-4">Modifier le Rendez-vous</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Appointment", FormMethod.Post, new { area = "Patients" }))
 {
     @Html.AntiForgeryToken()
 
-    <!-- ✅ Id caché pour que le contrôleur sache quel rendez-vous modifier -->
+    <!-- ID caché pour identifier le rendez-vous -->
     @Html.HiddenFor(m => m.Id)
 
-    <!-- ✅ Affichage des erreurs -->
+    <!-- DoctorName requis dans le ViewModel → caché -->
+    @Html.HiddenFor(m => m.DoctorName)
+
+    <!-- Affichage global des erreurs -->
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <!-- Médecin -->
+    <!-- Sélection du médecin -->
     <div class="form-group">
         @Html.LabelFor(m => m.DoctorId, "Médecin")
         @Html.DropDownListFor(m => m.DoctorId,
@@ -32,24 +36,36 @@
         @Html.ValidationMessageFor(m => m.DoctorId, null, new { @class = "text-danger" })
     </div>
 
-    <!-- Date -->
+    <!-- Sélection de la date et de l'heure -->
     <div class="form-group">
         @Html.LabelFor(m => m.SelectedDate, "Date et Heure")
-        @Html.TextBoxFor(m => m.SelectedDate, "{0:yyyy-MM-ddTHH:mm}", new
-            {
-                @class = "form-control",
-                type = "datetime-local"
-            })
+        <input type="datetime-local" name="SelectedDate" id="SelectedDate" class="form-control"
+               value="@Model.SelectedDate.ToString("yyyy-MM-ddTHH:mm")" />
         @Html.ValidationMessageFor(m => m.SelectedDate, null, new { @class = "text-danger" })
     </div>
 
-    <!-- Raison -->
+    <!-- Motif -->
     <div class="form-group">
-        @Html.LabelFor(m => m.Reason, "Motif")
+        @Html.LabelFor(m => m.Reason, "Motif du rendez-vous")
         @Html.TextAreaFor(m => m.Reason, new { @class = "form-control", rows = 4 })
         @Html.ValidationMessageFor(m => m.Reason, null, new { @class = "text-danger" })
     </div>
 
+    <!-- Boutons -->
     <button type="submit" class="btn btn-success">Enregistrer les modifications</button>
-    <a href="@Url.Action("Details", "Appointment", new { id = Model.Id })" class="btn btn-secondary ml-2">Annuler</a>
+    <a href="@Url.Action("Details", "Appointment", new { area = "Patients", id = Model.Id })" class="btn btn-secondary ml-2">Annuler</a>
+}
+
+@section Scripts {
+    <!-- Validation côté client -->
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Script debug pour vérifier que le formulaire est soumis -->
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            console.log("✅ Formulaire soumis !");
+        });
+    </script>
 }

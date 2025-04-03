@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Appointment Policies";
+}
+
+<h2 class="mb-4">Appointment Policies</h2>
+
+<div class="card p-4 shadow-sm">
+    <p>
+        🔒 <strong>Cancellation or modification is only allowed at least 48 hours in advance.</strong>
+    </p>
+    <p>
+        ❌ If you try to cancel or reschedule within 48 hours of your appointment, the system will block the action.
+    </p>
+    <p>
+        📞 In case of an emergency, please contact the hospital directly by phone.
+    </p>
+    <hr />
+    <p class="text-muted">
+        These rules help us ensure that all patients have fair access to appointment slots.
+    </p>
+</div>
+
+<a href="@Url.Action("Index", "Appointment", new { area = "Patients" })" class="btn btn-secondary mt-3">Back to Appointments</a>

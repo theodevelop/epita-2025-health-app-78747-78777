@@ -1,0 +1,23 @@
+﻿@model List<HealthApp.MVC.Models.Domain.Notification>
+
+<h2>My Notifications</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var n in Model)
+        {
+            <tr>
+                <td>@n.Title</td>
+                <td>@n.DateSent.ToString("g")</td>
+                <td>@n.Content</td>
+            </tr>
+        }
+    </tbody>
+</table>

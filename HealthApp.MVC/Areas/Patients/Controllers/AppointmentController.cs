@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using HealthApp.MVC.Services;
 
 namespace HealthApp.MVC.Areas.Patients.Controllers
 {
@@ -49,6 +50,35 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
                 return PartialView("_DoctorList", doctorList);
             }
             return View(doctorList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Book(Appointment model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Appointments.Add(model);
+                await _context.SaveChangesAsync();
+
+                // Récupérer les infos patient et médecin
+                var patient = await _context.Patients.FindAsync(model.PatientId);
+                var doctor = await _context.Doctors.FindAsync(model.DoctorId);
+
+                // Créer le contenu de l’e-mail
+                string subject = "Confirmation de votre rendez-vous";
+                string body = $"Bonjour {patient.FirstName},<br/><br/>" +
+                              $"Votre rendez-vous avec le Dr. {doctor.FirstName} {doctor.LastName} est confirmé pour le {model.Date:dd/MM/yyyy à HH:mm}.<br/><br/>" +
+                              $"Motif : {model.Reason}<br/><br/>" +
+                              $"Merci de votre confiance.<br/>L'équipe Health App";
+
+                // Envoyer l'e-mail
+                var emailService = new EmailService();
+                await emailService.SendEmailAsync(patient.Email, subject, body);
+
+                return RedirectToAction("Confirmation"); // ou autre vue
+            }
+
+            return View(model);
         }
 
         // GET: Patients/Appointment/DoctorSchedule?doctorId=1
@@ -229,7 +259,7 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
 
         // POST: Patients/Appointment/Edit/5
         [HttpPost]
-        public IActionResult Edit(EditAppointmentViewModel model)
+        public async Task<IActionResult> Edit(EditAppointmentViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -260,13 +290,54 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
             appointment.DoctorId = model.DoctorId;
             appointment.Date = model.SelectedDate;
             appointment.Reason = model.Reason;
+
+            // Vérifier que le créneau n'est pas déjà réservé
+            bool exists = _context.Appointments.Any(a =>
+                a.Id != model.Id &&
+                a.DoctorId == model.DoctorId &&
+                a.Date == model.SelectedDate &&
+                a.Status != AppointmentStatus.Cancelled);
+
+            if (exists)
+            {
+                ModelState.AddModelError("", "Ce créneau est déjà réservé pour ce médecin.");
+                ViewBag.Doctors = _context.Doctors.ToList();
+                return View(model);
+            }
+
             _context.SaveChanges();
+            var patient = _context.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+            var doctor = _context.Doctors.FirstOrDefault(d => d.Id == appointment.DoctorId);
+
+            // Contenu de l’e-mail
+            string subject = "Modification de votre rendez-vous";
+            string body = $"Bonjour {patient.FirstName},<br/><br/>" +
+                          $"Votre rendez-vous avec le Dr. {doctor.FirstName} {doctor.LastName} a été modifié.<br/><br/>" +
+                          $"📅 Nouvelle date : <strong>{appointment.Date:dd/MM/yyyy à HH:mm}</strong><br/>" +
+                          $"📝 Motif : {appointment.Reason}<br/><br/>" +
+                          $"Merci de votre compréhension.<br/><em>L'équipe Health App</em>";
+
+            // Envoi de l’e-mail
+            var emailService = new EmailService();
+            await emailService.SendEmailAsync(patient.Email, subject, body);
+
+            // ✅ Notification en base
+            var notification = new Notification
+            {
+                Title = "Rendez-vous modifié",
+                Content = $"Votre rendez-vous avec le Dr. {doctor.FirstName} {doctor.LastName} a été mis à jour au {appointment.Date:dd/MM/yyyy à HH:mm}.",
+                DateSent = DateTime.Now,
+                IsSent = true
+            };
+
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Details", new { id = appointment.Id });
         }
 
         // GET: Patients/Appointment/Cancel/5
-        public IActionResult Cancel(int id)
+        public async Task<IActionResult> Cancel(int id)
         {
             var appointment = _context.Appointments.FirstOrDefault(a => a.Id == id);
             if (appointment == null)
@@ -279,6 +350,31 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
             }
 
             appointment.Status = AppointmentStatus.Cancelled;
+            var patient = _context.Patients.FirstOrDefault(p => p.Id == appointment.PatientId);
+            var doctor = _context.Doctors.FirstOrDefault(d => d.Id == appointment.DoctorId);
+            var notificationManager = new NotificationManager(_context);
+
+            string subject = "Your Appointment Has Been Cancelled";
+            string body = $"Dear {patient.FirstName},<br/><br/>" +
+                          $"Your appointment with Dr. {doctor.FirstName} {doctor.LastName} " +
+                          $"on <strong>{appointment.Date:dddd, MMMM dd, yyyy at HH:mm}</strong> has been cancelled.<br/><br/>" +
+                          $"Please book a new appointment if needed.<br/><br/>" +
+                          $"<em>Health App Team</em>";
+
+            try
+            {
+                await notificationManager.SendAndLogAsync(
+                    patient.Email,
+                    subject,
+                    body,
+                    $"AppointmentId:{appointment.Id}"
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur envoi notification annulation : " + ex.Message);
+            }
+
             _context.Appointments.Update(appointment);
             _context.SaveChanges();
 
@@ -309,7 +405,14 @@ namespace HealthApp.MVC.Areas.Patients.Controllers
             }
             return slots;
         }
+
+
+        [HttpGet]
+        public IActionResult Policies()
+        {
+            return View();
+        }
+
     }
 }
 
-        

@@ -93,6 +93,28 @@ namespace HealthApp.MVC.Areas.Admin.Controllers
                     _context.Doctors.Add(doctor);
                     await _context.SaveChangesAsync();
 
+                    int startHour = 9;
+                    int endHour = 17;
+
+                    // En .NET, DayOfWeek.Monday = 1 et DayOfWeek.Friday = 5
+                    for (int day = 1; day <= 5; day++)
+                    {
+                        for (int hour = startHour; hour < endHour; hour++)
+                        {
+                            var availability = new DoctorAvailability
+                            {
+                                DoctorId = doctor.Id,
+                                SpecificDate = null,
+                                DayOfWeek = (DayOfWeek)day,
+                                StartTime = TimeSpan.FromHours(hour),
+                                EndTime = TimeSpan.FromHours(hour + 1)
+                            };
+                            _context.DoctorAvailabilities.Add(availability);
+                        }
+                    }
+
+                    await _context.SaveChangesAsync();
+
                     return RedirectToAction(nameof(Index));
                 }
                 else
@@ -202,10 +224,41 @@ namespace HealthApp.MVC.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id); if (doctor == null) { return NotFound(); }
-            _context.Doctors.Remove(doctor); _context.SaveChanges(); return RedirectToAction("Index");
+            var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            // Récupérer l'ApplicationUser associé
+            var user = await _userManager.FindByIdAsync(doctor.IdentityUserId);
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", "La suppression de l'utilisateur associé a échoué.");
+                    return View("Error");
+                }
+            }
+
+            _context.Doctors.Remove(doctor);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // L'entité n'existe probablement plus en base,
+                // on peut loguer le problème et rediriger sans lever d'exception.
+                // Vous pouvez aussi recharger l'entité pour vérifier.
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
         }
+
     }
 }

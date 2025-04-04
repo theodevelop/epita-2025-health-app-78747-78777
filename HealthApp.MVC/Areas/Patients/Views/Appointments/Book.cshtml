@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HealthApp.MVC.Models.Entities.Doctor>
+
+@{
+    ViewData["Title"] = "Book an appointment";
+    Layout = "~/Areas/Patients/Views/Shared/_Layout.cshtml";
+}
+
+<section class="dashboard">
+    <div class="dashboard-header">
+        <div class="back-button-container">
+            <a asp-area="Patients" asp-controller="Appointments" asp-action="Index" class="btn btn-secondary"><i class="fi fi-sr-angle-small-left"></i></a>
+        </div>
+        <h1>Book an Appointment</h1>
+    </div>
+
+    <div class="search-filter-section">
+        <form method="get" id="searchForm">
+            <input type="text" id="queryInput" name="query" placeholder="Search by name, specialization, etc." class="search-input" />
+        </form>
+    </div>
+
+    <div id="doctorListContainer" class="doctor-list">
+        @Html.Partial("_DoctorList", Model)
+    </div>
+
+</section>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#queryInput").on("keyup", function() {
+                var query = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("Book", "Appointments", new { area = "Patients" })',
+                    data: { query: query },
+                    success: function(data) {
+                        $("#doctorListContainer").html(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Erreur AJAX: ", error, xhr.responseText);
+                        $("#doctorListContainer").html("<div class='alert alert-danger'>Erreur lors de la recherche.</div>");
+                    }
+                });
+            });
+        });
+    </script>
+}

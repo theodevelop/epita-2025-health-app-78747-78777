@@ -37,7 +37,7 @@
         <!-- Sidebar (Left Navigation) -->
         <aside class="dashboard-sidebar">
             <div class="sidebar-brand">
-                <h2>Dr. @lastName @firstName</h2>
+                <h2>@lastName @firstName</h2>
             </div>
             <nav class="sidebar-menu">
                 <ul>
@@ -48,31 +48,25 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-area="Doctors" asp-controller="Doctors" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Doctors" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
+                        <a asp-area="Patients" asp-controller="Patient" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Patient" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
                             <i class="fi fi-sr-dashboard-panel"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a asp-area="Doctors" asp-controller="Appointments" asp-action="Index">
+                        <a asp-area="Patients" asp-controller="Appointments" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Appointments" ? "active" : "")">
                             <i class="fi fi-sr-calendar-lines"></i>
                             <span>Appointments</span>
                         </a>
                     </li>
                     <li>
-                        <a asp-area="Doctors" asp-controller="Availability" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"].ToString() == "Availability" ? "active" : "")">
-                            <i class="fi fi-sr-calendar-days"></i>
-                            <span>Timetable</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area="Doctors" asp-controller="Messaging" asp-action="Index">
+                        <a asp-area="Patients" asp-controller="Messaging" asp-action="Index">
                             <i class="fi fi-sr-bell-notification-social-media"></i>
                             <span>Notifications</span>
                         </a>
                     </li>
                     <li>
-                        <a asp-area="Doctors" asp-controller="Profile" asp-action="Index">
+                        <a asp-area="Patients" asp-controller="Profile" asp-action="Index">
                             <i class="fi fi-sr-user"></i>
                             <span>Profile</span>
                         </a>

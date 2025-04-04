@@ -1,0 +1,25 @@
+﻿@model List<DateTime>
+
+@if (!Model.Any())
+{
+    <p>No available slots for this day.</p>
+}
+else
+{
+    <ul class="booking-slots">
+        @foreach (var slot in Model)
+        {
+            <li>
+                <span>@slot.ToString("dd/MM/yyyy HH:mm")</span>
+                <a class="btn btn-book" 
+                   asp-controller="Appointments" 
+                   asp-action="FinalizeBooking" 
+                   asp-area="Patients" 
+                   asp-route-doctorId="@ViewBag.DoctorId" 
+                   asp-route-selectedDate="@slot.ToString("s")">
+                    Reserve
+                </a>
+            </li>
+        }
+    </ul>
+}

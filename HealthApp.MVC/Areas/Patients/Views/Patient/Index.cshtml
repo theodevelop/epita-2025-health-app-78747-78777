@@ -1,0 +1,64 @@
+﻿@model HealthApp.MVC.Areas.Patients.ViewModels.PatientDashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Patients/Views/Shared/_Layout.cshtml";
+}
+
+<section class="dashboard">
+    <h1>Welcome to your Dashboard!</h1>
+
+    <!-- Row of Stats Cards -->
+    <div class="stats-cards">
+        <div class="card pending">
+            <div class="card-text">
+                <h3>UPCOMING</h3>
+                <p>@Model.UpcomingAppointments.Count</p>
+            </div>
+        </div>
+        <div class="card completed">
+            <div class="card-text">
+                <h3>FINISHED</h3>
+                <p>@Model.PastAppointments.Count</p>
+            </div>
+        </div>
+        <div class="card cancelled">
+            <div class="card-text">
+                <h3>CANCELLED</h3>
+                <p>@Model.CancelledAppointments.Count</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Upcoming Appointment</h3>
+    <table class="table-users">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.UpcomingAppointments.Any())
+            {
+                foreach (var appointment in Model.UpcomingAppointments)
+                {
+                    <tr>
+                        <td>@appointment.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@appointment.Doctor.FirstName @appointment.Doctor.LastName</td>
+                        <td>@appointment.Reason</td>
+                        <td>@appointment.Status</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No upcoming appointment.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>

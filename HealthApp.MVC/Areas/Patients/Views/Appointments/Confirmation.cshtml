@@ -1,0 +1,24 @@
+﻿@model HealthApp.MVC.Models.Domain.Appointment
+
+@{
+    ViewData["Title"] = "Appointment Confirmation";
+}
+
+<div class="confirmation-container">
+    <h2>Appointment Confirmed</h2>
+    <div class="confirmation-card">
+        <h3>Appointment Reference: @Model.Id</h3>
+        <p><strong>Date:</strong> @Model.Date.ToString("dddd, dd MMMM yyyy HH:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US")).ToUpper()</p>
+        <p><strong>Doctor:</strong> @Model.Doctor.FirstName @Model.Doctor.LastName</p>
+        <p><strong>Reason:</strong> @Model.Reason</p>
+        <p><strong>Status:</strong> @Model.Status</p>
+    </div>
+    <div class="confirmation-actions">
+        <a class="btn btn-primary" asp-area="Patients" asp-controller="Patient" asp-action="Index">
+            Return to Dashboard
+        </a>
+        <a class="btn btn-secondary" asp-area="Patients" asp-controller="Appointments" asp-action="Index">
+            View My Appointments
+        </a>
+    </div>
+</div>

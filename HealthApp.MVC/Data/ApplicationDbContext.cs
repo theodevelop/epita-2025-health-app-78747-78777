@@ -20,6 +20,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<DoctorAvailability> DoctorAvailabilities { get; set; }
 
+    public DbSet<ExceptionAvailability> DoctorExceptionAvailabilities { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

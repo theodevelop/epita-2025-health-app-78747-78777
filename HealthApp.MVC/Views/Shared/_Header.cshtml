@@ -1,33 +1,36 @@
 ﻿<header class="header">
-        <nav class="navbar">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    @* Hospital Plus *@
-                    <img src="~/images/logo.png" alt="Hospital Plus" style="width: 50px;"/>
-                </a>
-                <ul class="nav">
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                @* Hospital Plus *@
+                <img src="~/images/logo.png" alt="Hospital Plus" style="width: 50px;"/>
+            </a>
+            <ul class="nav">
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Index">Dashboard</a>
+                    </li>
+                }
+                else if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Doctors" asp-controller="Doctors" asp-action="Index">Dashboard</a>
+                    </li>
+                }
+                else if (User.Identity.IsAuthenticated && User.IsInRole("Patient"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Patients" asp-controller="Patient" asp-action="Index">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link" asp-area="Patients" asp-controller="Appointments" asp-action="Index">Appointments</a>
                     </li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link"  asp-area="Admin" asp-controller="Admin" asp-action="Index">Dashboard</a>
-                        </li>
-                    }
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Doctors" asp-controller="Doctors" asp-action="Index">Dashboard</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <div class="navbar-login">
-                <partial name="_LoginPartial" />
-            </div>
-        </nav>
+                }
+            </ul>
+        </div>
+        <div class="navbar-login">
+            <partial name="_LoginPartial" />
+        </div>
+    </nav>
 </header>

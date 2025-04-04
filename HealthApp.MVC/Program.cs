@@ -63,7 +63,7 @@ using (var scope = app.Services.CreateScope())
             Email = adminEmail,
             EmailConfirmed = true,
             FirstName = "Admin",
-            LastName = "Admin",
+            LastName = "Hospital",
             RoleType = "Admin"
         };
 
@@ -135,6 +135,10 @@ app.MapAreaControllerRoute(
     name: "Doctors",
     areaName: "Doctors",
     pattern: "Doctors/{controller=Doctors}/{action=Index}/{id?}");
+app.MapAreaControllerRoute(
+    name: "Patients",
+    areaName: "Patients",
+    pattern: "Patients/{controller=Patient}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,0 +1,211 @@
+﻿@model IEnumerable<HealthApp.MVC.Models.Domain.Appointment>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "My Appointments";
+    Layout = "~/Areas/Patients/Views/Shared/_Layout.cshtml";
+    // string selectedStatus = ViewBag.FilterStatus as string;
+    var Request = HttpContextAccessor.HttpContext.Request;
+}
+
+<section class="dashboard">
+    <div class="appointments-header">
+        <h1>My Appointments</h1>
+        <a class="btn-book" asp-controller="Appointments" asp-action="Book">Book Appointment</a>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="queryInput" placeholder="Search by reference, doctor's name, specialization, status" />
+        <!-- Vous pouvez ajouter ici les inputs radio ou hidden pour le mode de recherche si nécessaire -->
+        <button id="filterButton" class="btn-filter">
+            <i class="fi fi-sr-filter"></i>
+        </button>
+    </div>
+
+    <!-- Conteneur pour la liste des docteurs (résultat de la recherche) -->
+    <div id="doctorListContainer">
+        @* Ici le contenu partiel sera chargé via Ajax *@
+    </div>
+
+    <!-- Popup de filtre -->
+    <div id="filterPopup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <h3>Filter Options</h3>
+            <div class="form-group">
+                <label for="filterDate">Date :</label>
+                <input type="date" id="filterDate" />
+            </div>
+            <div class="form-group">
+                <label for="filterSpecialization">Specialization :</label>
+                <select id="filterSpecialization">
+                    <option value="">All Specializations</option>
+                    @{
+                        var specializations = new List<string> {
+                            "GeneralPractice",
+                            "Cardiology",
+                            "Dermatology",
+                            "Neurology",
+                            "Pediatrics",
+                            "Gynecology",
+                            "Orthopedics",
+                            "Ophthalmology",
+                            "Gastroenterology",
+                            "Pulmonology",
+                            "Endocrinology",
+                            "Oncology",
+                            "Urology",
+                            "Psychiatry",
+                            "GeneralSurgery",
+                            "Radiology",
+                            "Rheumatology",
+                            "Nephrology",
+                            "Anesthesiology",
+                            "InfectiousDiseases",
+                            "InternalMedicine"
+                        };
+                        foreach (var spec in specializations)
+                        {
+                            <option value="@spec">@spec</option>
+                            ;
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="filterStatus">Status :</label>
+                <select id="filterStatus">
+                    <option value="">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="popup-buttons">
+                <button id="applyFilter" class="btn"><i class="fi fi-sr-filters"></i> Apply Filter</button>
+                <button id="clearFilter" class="btn">
+                    <i class="fi fi-sr-clear-alt"></i> Clear Filter
+                </button>
+                <button id="closeFilter" class="btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="appointments-table">
+        <thead>
+            <tr>
+                <th>Reference</th>
+                <th>Doctor</th>
+                <th>Specialization</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6">No appointment found.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var appointment in Model.OrderBy(a => a.Date))
+                {
+                    <tr>
+                        <td>@appointment.Id</td>
+                        <td>
+                            @if (appointment.Doctor != null)
+                            {
+                                @appointment.Doctor.FirstName @appointment.Doctor.LastName
+                            }
+                            else
+                            {
+                                <em>Unknown</em>
+                            }
+                        </td>
+                        <td>
+                            @if (appointment.Doctor != null && appointment.Doctor.Specializations.Any())
+                            {
+                                @string.Join(", ", appointment.Doctor.Specializations.Select(s => s.Type))
+                            }
+                            else
+                            {
+                                <em>Unspecified</em>
+                            }
+                        </td>
+                        <td>@appointment.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@appointment.Status</td>
+                        <td>
+                            <a asp-area="Patients" asp-controller="Appointments" asp-action="Details" asp-route-id="@appointment.Id" class="btn btn-details">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</section>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Recherche live : déclenchée à chaque frappe dans le champ de recherche ou changement des inputs (si vous en avez)
+            $("#queryInput").on("keyup", function () {
+                var query = $("#queryInput").val();
+                // Vous pouvez aussi récupérer d'autres paramètres si nécessaire
+                $.ajax({
+                    url: '@Url.Action("Book", "Appointment", new { area = "Patients" })',
+                    data: { query: query },
+                    success: function (data) {
+                        $("#doctorListContainer").html(data);
+                    },
+                    error: function () {
+                        $("#doctorListContainer").html("<div class='alert alert-danger'>Erreur lors de la recherche.</div>");
+                    }
+                });
+            });
+
+            // Ouvrir le popup de filtre
+            $("#filterButton").on("click", function () {
+                $("#filterPopup").fadeIn();
+            });
+
+            // Fermer le popup
+            $("#closeFilter").on("click", function () {
+                $("#filterPopup").fadeOut();
+            });
+
+            // Appliquer le filtre
+            $("#applyFilter").on("click", function () {
+                var filterDate = $("#filterDate").val();
+                var filterSpecialization = $("#filterSpecialization").val();
+                var filterStatus = $("#filterStatus").val();
+                var query = $("#queryInput").val();
+                // Vous pouvez construire un objet data avec tous les filtres
+                $.ajax({
+                    url: '@Url.Action("Book", "Appointment", new { area = "Patients" })',
+                    data: { query: query, date: filterDate, specialization: filterSpecialization, status: filterStatus },
+                    success: function (data) {
+                        $("#doctorListContainer").html(data);
+                        $("#filterPopup").fadeOut();
+                    },
+                    error: function () {
+                        $("#doctorListContainer").html("<div class='alert alert-danger'>Erreur lors de la recherche.</div>");
+                    }
+                });
+            });
+
+            // Clear filter
+            $("#clearFilter").on("click", function () {
+                $("#filterDate").val("");
+                $("#filterSpecialization").val("");
+                $("#filterStatus").val("");
+            });
+        });
+    </script>
+}

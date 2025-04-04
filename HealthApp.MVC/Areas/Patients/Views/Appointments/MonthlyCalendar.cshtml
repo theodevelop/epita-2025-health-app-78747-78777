@@ -1,0 +1,135 @@
+﻿@model HealthApp.MVC.Areas.Patients.ViewModels.MonthlyCalendarViewModel
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Monthly Calendar";
+    Layout = "~/Areas/Patients/Views/Shared/_Layout.cshtml";
+    string monthHeader = Model.Month.ToString("MMMM yyyy", CultureInfo.GetCultureInfo("en-US")).ToUpper();
+    DateTime previousMonth = Model.Month.AddMonths(-1);
+    DateTime nextMonth = Model.Month.AddMonths(1);
+}
+
+<section class="dashboard">
+    <div class="appointments-header">
+        <h1>My Appointments</h1>
+        <div class="back-button-container">
+            <a asp-area="Patients" asp-controller="Appointments" asp-action="Book" class="btn btn-secondary"><i class="fi fi-sr-angle-small-left"></i></a>
+        </div>
+    </div>
+    
+
+    <div class="calendar-container">
+        <div class="calendar-navigation">
+            <a class="nav-arrow prev-arrow" asp-action="MonthlyCalendar" asp-controller="Appointments" asp-area="Patients" asp-route-doctorId="@Model.DoctorId" asp-route-month="@previousMonth.ToString("yyyy-MM-dd")">
+                <i class="fi fi-sr-angle-small-left"></i>
+            </a>
+            <span class="current-month">@monthHeader</span>
+            <a class="nav-arrow next-arrow" asp-action="MonthlyCalendar" asp-controller="Appointments" asp-area="Patients" asp-route-doctorId="@Model.DoctorId" asp-route-month="@nextMonth.ToString("yyyy-MM-dd")">
+                <i class="fi fi-sr-angle-small-right"></i>
+            </a>
+        </div>
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var week in Model.Weeks)
+                {
+                    <tr>
+                        @foreach (var day in week)
+                        {
+                            if (day == null)
+                            {
+                                <td class="empty-cell"></td>
+                            }
+                            else
+                            {
+                                bool clickable = day.HasAvailability && day.Date >= DateTime.Today;
+                                string cellClass = clickable ? "available-day" : "disabled-day";
+                                string todayClass = day.IsToday ? "today" : "";
+                                <td class="calendar-day @cellClass @todayClass" data-date="@day.Date.ToString("yyyy-MM-dd")">
+                                    <span class="day-number">@day.Date.Day</span>
+                                    @if (clickable)
+                                    {
+                                        <span class="availability-indicator"></span>
+                                    }
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal de réservation -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Reserve an Appointment</h3>
+            <div id="bookingContent">
+                <!-- Le contenu (créneaux disponibles et boutons de réservation) sera chargé ici via Ajax -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Récupérer l'ID du docteur depuis ViewBag (assurez-vous de l'assigner dans votre action)
+            var doctorId = '@ViewBag.DoctorId';
+            console.log("DoctorId:", doctorId);
+
+            // Lors du clic sur une cellule du calendrier
+            $(".calendar-day").on("click", function () {
+                // Si la cellule est non cliquable, on ne fait rien
+                if ($(this).hasClass("disabled-day")) return;
+
+                // Récupérer la date sélectionnée
+                var selectedDate = $(this).data("date"); // Format "yyyy-MM-dd"
+                $.ajax({
+                    url: '@Url.Action("DayDetails", "Appointments", new { area = "Patients" })',
+                    type: 'GET',
+                    data: { date: selectedDate, doctorId: doctorId },
+                    success: function (result) {
+                        $("#bookingContent").html(result);
+                        $("#bookingModal").fadeIn();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("AJAX error:", error, xhr.responseText);
+                        $("#bookingContent").html("<p class='error'>Error loading available slots.</p>");
+                        $("#bookingModal").fadeIn();
+                    }
+                });
+            });
+
+            // Fermer le modal
+            $(".close-button").on("click", function () {
+                $("#bookingModal").fadeOut();
+            });
+
+            // Fermer le modal en cliquant en dehors du contenu
+            $(window).on("click", function (event) {
+                if ($(event.target).is("#bookingModal")) {
+                    $("#bookingModal").fadeOut();
+                }
+            });
+        });
+    </script>
+}
+
+
+
+

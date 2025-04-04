@@ -1,0 +1,158 @@
+﻿@model HealthApp.MVC.Areas.Patients.ViewModels.ChangeAppointmentSlotViewModel
+@using System.Globalization
+
+<section class="dashboard">
+    <div class="dashboard-header">
+        <div class="back-button-container">
+            <a asp-area="Patients" asp-controller="Appointments" asp-action="Details" asp-route-id="@Model.AppointmentId">
+                <i class="fi fi-sr-angle-small-left"></i>
+            </a>
+        </div>
+        <h1>Change Appointment Slot</h1>
+    </div>
+    <div class="dashboard-content">
+        <!-- Calendrier mensuel -->
+        <div class="calendar-container">
+            <div class="calendar-navigation">
+                @{
+                    string currentMonth = Model.Calendar.Month.ToString("MMMM yyyy", CultureInfo.GetCultureInfo("en-US")).ToUpper();
+                    DateTime previousMonth = Model.Calendar.Month.AddMonths(-1);
+                    DateTime nextMonth = Model.Calendar.Month.AddMonths(1);
+                }
+                <a class="nav-arrow prev-arrow" asp-action="ChangeSlot" asp-controller="Appointments" asp-area="Patients"
+                   asp-route-doctorId="@Model.DoctorId" asp-route-appointmentId="@Model.AppointmentId"
+                   asp-route-month="@previousMonth.ToString("yyyy-MM-dd")">
+                    <i class="fa fa-chevron-left"></i>
+                </a>
+                <span class="current-month">@currentMonth</span>
+                <a class="nav-arrow next-arrow" asp-action="ChangeSlot" asp-controller="Appointments" asp-area="Patients"
+                   asp-route-doctorId="@Model.DoctorId" asp-route-appointmentId="@Model.AppointmentId"
+                   asp-route-month="@nextMonth.ToString("yyyy-MM-dd")">
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var week in Model.Calendar.Weeks)
+                    {
+                        <tr>
+                            @foreach (var day in week)
+                            {
+                                if (day == null)
+                                {
+                                    <td class="empty-cell"></td>
+                                }
+                                else
+                                {
+                                    bool clickable = day.HasAvailability && day.Date >= DateTime.Today;
+                                    string cellClass = clickable ? "available-day" : "disabled-day";
+                                    <td class="calendar-day @cellClass" data-date="@day.Date.ToString("yyyy-MM-dd")">
+                                        <span class="day-number">@day.Date.Day</span>
+                                        @if (clickable)
+                                        {
+                                            <span class="availability-indicator"></span>
+                                        }
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sélecteur de créneau horaire -->
+        <div class="form-group">
+            <label for="timeSlotSelect">Available Hours</label>
+            <select id="timeSlotSelect" class="form-control">
+                <option value="">Select a time slot</option>
+            </select>
+        </div>
+
+        <!-- Affichage du créneau choisi -->
+        <p id="newSlotDisplay">New Slot: @Model.NewSlot.ToString("dddd, dd MMMM yyyy HH:mm", CultureInfo.GetCultureInfo("en-US")).ToUpper()</p>
+
+        <!-- Formulaire pour changer la raison et confirmer le nouveau créneau -->
+        <div class="booking-finalize-card">
+            <form asp-action="ChangeSlot" method="post">
+                <input type="hidden" asp-for="AppointmentId" />
+                <input type="hidden" asp-for="DoctorId" />
+                <input type="hidden" asp-for="DoctorName" />
+                <input type="hidden" asp-for="NewSlot" id="NewSlot" value="@Model.NewSlot.ToString("s")" />
+                <div class="form-group">
+                    <label asp-for="Reason"></label>
+                    <textarea asp-for="Reason" class="form-control"></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <button type="submit" class="btn btn-booking">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            // Lorsqu'un jour cliquable est sélectionné dans le calendrier
+            $(".calendar-day.available-day").on("click", function(){
+                var selectedDate = $(this).data("date"); // Format "yyyy-MM-dd"
+                var doctorId = '@Model.DoctorId';
+
+                // Mettre à jour l'affichage temporaire du nouveau créneau (on attend le choix d'une heure)
+                $("#newSlotDisplay").text("New Slot: " + selectedDate);
+
+                // Faire une requête Ajax pour récupérer les heures disponibles pour ce jour
+                $.ajax({
+                    url: '@Url.Action("GetAvailableSlotsForDay", "Appointments", new { area = "Patients" })',
+                    type: 'GET',
+                    data: { date: selectedDate, doctorId: doctorId },
+                    success: function(hours) {
+                        var $select = $("#timeSlotSelect");
+                        $select.empty();
+                        $select.append($("<option>").val("").text("Select a time slot"));
+                        $.each(hours, function(index, hour){
+                            // hour devrait être une chaîne format "HH:mm"
+                            $select.append($("<option>").val(hour).text(hour));
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("AJAX error:", error, xhr.responseText);
+                        $("#timeSlotSelect").html("<option>Error loading time slots</option>");
+                    }
+                });
+
+                // Mettre à jour la sélection visuelle
+                $(".calendar-day").removeClass("selected");
+                $(this).addClass("selected");
+            });
+
+            // Lorsqu'un créneau horaire est sélectionné dans le dropdown
+            $("#timeSlotSelect").on("change", function(){
+                var selectedDate = $(".calendar-day.selected").data("date");
+                var selectedTime = $(this).val(); // Format "HH:mm"
+                if(selectedDate && selectedTime) {
+                    var newSlot = selectedDate + "T" + selectedTime + ":00";
+                    $("#NewSlot").val(newSlot);
+                    // Mettre à jour l'affichage du nouveau créneau
+                    var formatted = new Date(newSlot).toLocaleString("en-US", {
+                        weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                    }).toUpperCase();
+                    $("#newSlotDisplay").text("New Slot: " + formatted);
+                }
+            });
+        });
+    </script>
+}

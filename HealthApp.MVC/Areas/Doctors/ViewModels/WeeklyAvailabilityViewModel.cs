@@ -1,4 +1,6 @@
-﻿namespace HealthApp.MVC.Areas.Doctors.ViewModels
+﻿using HealthApp.MVC.Models.Domain;
+
+namespace HealthApp.MVC.Areas.Doctors.ViewModels
 {
     public class WeeklyAvailabilityViewModel
     {
@@ -17,5 +19,8 @@
                 Availability[i] = new bool[columns];
             }
         }
+
+        public IEnumerable<ExceptionAvailability> Exceptions { get; set; }
+
     }
 }

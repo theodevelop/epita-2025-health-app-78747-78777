@@ -1,0 +1,33 @@
+﻿@model IEnumerable<HealthApp.MVC.Models.Entities.Doctor>
+
+
+        @if (!Model.Any())
+        {
+            <p>No doctors found.</p>
+        }
+        else
+        {
+            @foreach (var doctor in Model)
+            {
+                <div class="doctor-card">
+                    <div class="doctor-info">
+                        <h3>@doctor.FirstName @doctor.LastName</h3>
+                        <p>
+                            @if (doctor.Specializations != null && doctor.Specializations.Any())
+                            {
+                                @string.Join(", ", doctor.Specializations.Select(s => s.Name))
+                            }
+                            else
+                            {
+                                <em>No specialization</em>
+                            }
+                        </p>
+                    </div>
+                    <div class="doctor-action">
+                        <a class="btn btn-book" asp-controller="Appointments" asp-action="MonthlyCalendar" asp-route-doctorId="@doctor.Id">
+                            View Schedule
+                        </a>
+                    </div>
+                </div>
+            }
+        }

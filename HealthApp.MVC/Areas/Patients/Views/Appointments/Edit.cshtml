@@ -1,0 +1,51 @@
+﻿@model HealthApp.MVC.Areas.Patients.ViewModels.EditAppointmentViewModel
+
+@{
+    ViewData["Title"] = "Edit Appointment";
+}
+
+<section class="dashboard">
+    <div class="dashboard-header">
+        <div class="back-button-container">
+            <a asp-area="Patients" asp-controller="Appointments" asp-action="Details" asp-route-id="@Model.Id">
+                <i class="fi fi-sr-angle-small-left"></i>
+            </a>
+        </div>
+        <h1>Edit Appointment</h1>
+    </div>
+    <div class="dashboard-content">
+        <div class="booking-finalize-card">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="DoctorName">Doctor</label>
+                    <!-- Affichage en lecture seule du nom du docteur -->
+                    <input asp-for="DoctorName" class="form-control" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="selectedDateInput">Select Date</label>
+                    <input type="date" id="selectedDateInput" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="timeSlotSelect">Available Time Slot</label>
+                    <select id="timeSlotSelect" class="form-control">
+                        <option value="">Select a time slot</option>
+                    </select>
+                </div>
+                <!-- Champ caché qui stocke la date et l'heure combinées pour le modèle -->
+                <input type="hidden" asp-for="SelectedDate" id="combinedDateTime" />
+
+
+                <div class="form-group">
+                    <label asp-for="Reason">Reason</label>
+                    <textarea asp-for="Reason" class="form-control"></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-booking">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</section>

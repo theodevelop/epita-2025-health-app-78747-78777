@@ -12,18 +12,22 @@
     <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Areas\Doctors\Data\**" />
     <Compile Remove="Areas\Doctors\Models\**" />
+    <Compile Remove="Controllers\Appointment\**" />
     <Content Remove="Areas\Admin\Data\**" />
     <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="Areas\Doctors\Data\**" />
     <Content Remove="Areas\Doctors\Models\**" />
+    <Content Remove="Controllers\Appointment\**" />
     <EmbeddedResource Remove="Areas\Admin\Data\**" />
     <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Areas\Doctors\Data\**" />
     <EmbeddedResource Remove="Areas\Doctors\Models\**" />
+    <EmbeddedResource Remove="Controllers\Appointment\**" />
     <None Remove="Areas\Admin\Data\**" />
     <None Remove="Areas\Admin\Models\**" />
     <None Remove="Areas\Doctors\Data\**" />
     <None Remove="Areas\Doctors\Models\**" />
+    <None Remove="Controllers\Appointment\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,10 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Appointments\" />
     <Folder Include="Areas\Doctors\Views\Appointments\" />
     <Folder Include="Areas\Doctors\Views\Messaging\" />
     <Folder Include="Areas\Doctors\Views\Profile\" />
-    <Folder Include="Controllers\Appointment\" />
     <Folder Include="Controllers\Doctor\" />
     <Folder Include="Controllers\Notification\" />
     <Folder Include="Controllers\Patient\" />

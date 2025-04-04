@@ -1,0 +1,60 @@
+﻿@model HealthApp.MVC.Models.Domain.Appointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div class="back-button-container">
+    <a asp-area="Patients" asp-controller="Appointments" asp-action="Details" asp-route-id="@Model.Id">
+        <i class="fi fi-sr-angle-small-left"></i>
+    </a>
+</div>
+
+
+<div class="appointment-details-container">
+    <h2>Appointment Details</h2>
+    <div class="appointment-details-card">
+        <p><strong>Reference:</strong> @Model.Id</p>
+        <p><strong>Date:</strong> @Model.Date.ToString("dd/MM/yyyy HH:mm")</p>
+        <p>
+            <strong>Doctor:</strong>
+            @if (Model.Doctor != null)
+            {
+                @Model.Doctor.FirstName @Model.Doctor.LastName
+            }
+            else
+            {
+                <em>Unknown</em>
+            }
+        </p>
+        <p>
+            <strong>Specialization:</strong>
+            @if (Model.Doctor != null && Model.Doctor.Specializations.Any())
+            {
+                @string.Join(", ", Model.Doctor.Specializations.Select(s => s.Type))
+            }
+            else
+            {
+                <em>Not specified</em>
+            }
+        </p>
+        <p><strong>Reason:</strong> @Model.Reason</p>
+        <p><strong>Status:</strong> @Model.Status</p>
+    </div>
+    <div class="appointment-actions">
+        <a class="btn btn-primary"
+           asp-area="Patients"
+           asp-controller="Appointments"
+           asp-action="ChangeSlot"
+           asp-route-appointmentId="@Model.Id"
+           asp-route-doctorId="@Model.DoctorId">
+            Change Appointment Slot
+        </a>
+        <form asp-action="Cancel" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?');">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-secondary">Cancel Appointment</button>
+        </form>
+
+    </div>
+</div>

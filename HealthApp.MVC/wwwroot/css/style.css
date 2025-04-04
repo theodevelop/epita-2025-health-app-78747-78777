@@ -18,6 +18,24 @@
     --white: #fff;
     --black: #000;
     --black-light: #131313;
+    --text-dark: #333;
+    --footer-bg: #1b1b1b;
+    --footer-text: #f1f1f1;
+    --footer-link-hover: #1b6ec2;
+    --error: #d9534f;
+    --icon: #999;
+    --table-header-bg: #f0f0f0;
+    --table-subheader-bg: #f7f7f7;
+    --table-hover-bg: #fafafa;
+    --table-border: #ddd;
+    --exception-header-bg: #f3f3f3;
+    --exception-border: #eee;
+    --date-text: #222; 
+    --availability-border: #444;
+    --slot-hover: #e0e0e0;
+    --today-bg: #e6f7ff;
+    --today-border: #91d5ff;
+    --sidebar-text: #ccc;
 
     /* Typography and other settings */
     --font-base: 'Poppins', sans-serif;
@@ -63,7 +81,7 @@ html, body {
 
 /* Header Styles */
 .header {
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     padding: 10px 0;
     position: relative;
@@ -113,7 +131,7 @@ html, body {
 
                     .header .navbar .container .nav .nav-item .nav-link {
                         font-size: 16px;
-                        color: #333;
+                        color: var(--text-dark);
                         text-decoration: none;
                         transition: color 0.3s ease;
                         display: block;
@@ -168,8 +186,8 @@ html, body {
 
 /* Footer container */
 .footer {
-    background-color: #1b1b1b;
-    color: #f1f1f1;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
     padding: 40px 0;
     font-family: 'Poppins', sans-serif;
     border-radius: 0;
@@ -215,13 +233,13 @@ html, body {
             }
 
                 .footer .container .footer-section ul li a {
-                    color: #f1f1f1;
+                    color: var(--footer-text);
                     text-decoration: none;
                     transition: color 0.3s ease;
                 }
 
                     .footer .container .footer-section ul li a:hover {
-                        color: #1b6ec2;
+                        color: var(--footer-link-hover);
                     }
 
     .footer .footer-bottom {
@@ -239,7 +257,7 @@ html, body {
 .hero-section {
     background: url('/images/background.jpg') no-repeat top center;
     background-size: cover;
-    color: #fff;
+    color: var(--white);
     padding: 100px 0;
     text-align: center;
 }
@@ -338,7 +356,7 @@ html, body {
    ========================================================================== */
 
 .cta-section {
-    background: #4070f4;
+    background: var(--blue);
     color: #fff;
     padding: 60px 0;
     text-align: center;
@@ -363,8 +381,8 @@ html, body {
 
 .cta-btn {
     display: inline-block;
-    background-color: #fff;
-    color: #4070f4;
+    background-color: var(--white);
+    color: var(--blue);
     padding: 15px 30px;
     font-size: 1rem;
     font-weight: 600;
@@ -389,7 +407,7 @@ html, body {
     justify-content: center;
     align-items: center;
     height: 84vh;
-    background-color: #4070f4;
+    background-color: var(--blue);
 }
 
 .div-body-register {
@@ -397,7 +415,7 @@ html, body {
     justify-content: center;
     align-items: center;
     height: 123vh;
-    background-color: #4070f4;
+    background-color: var(--blue);
 }
 
     /* Validation message styling */
@@ -591,13 +609,15 @@ html, body {
 }
 
     /* Sidebar Styles */
-    .dashboard-sidebar {
-        width: 220px;
-        background-color: #1b1b1b;
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-    }
+.dashboard-sidebar {
+    width: 220px;
+    background-color: #1b1b1b;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+   }
 
         .dashboard-sidebar .sidebar-brand {
             text-align: center;
@@ -698,6 +718,7 @@ html, body {
         flex: 3;
         padding: 1.3rem 2rem 2rem 2rem;
         overflow-y: auto;
+        margin-left: 220px;
     }
 
     .dashboard-content .summary-panel {
@@ -1457,9 +1478,6 @@ input[type="checkbox"]:checked + .slot {
     background-color: var(--blue);
 }
 
-/****************************************************
- * Bouton d'enregistrement
- ****************************************************/
 .save-button {
     margin: 20px;
     padding: 0.8rem 2rem;
@@ -1477,13 +1495,856 @@ input[type="checkbox"]:checked + .slot {
         background-color: var(--blue-hover);
     }
 
+/* Table container */
+.exception-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+    /* Table header */
+    .exception-table thead tr {
+        background-color: #f3f3f3;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .exception-table thead th {
+        padding: 12px 8px;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    /* Table body */
+    .exception-table tbody tr {
+        border-bottom: 1px solid #eee;
+    }
+
+    .exception-table tbody td {
+        padding: 10px 8px;
+        vertical-align: middle;
+        font-size: 14px;
+    }
+
+/* DateTime display */
+    .exception-table .datetime-cell {
+        display: flex;
+        flex-direction: column; /* On empile la date puis l'heure */
+    }
+
+        .exception-table .datetime-cell .date-part {
+            font-weight: 500;
+            color: #222;
+        }
+
+        .exception-table .datetime-cell .time-part {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+/* Actions */
+    .exception-table .action-buttons {
+        display: flex;
+        gap: 0.5rem; /* Espace entre les boutons */
+        align-items: center;
+    }
+
+    .exception-table .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+        color: #fff; /* Couleur de l'icône si vous utilisez des icônes noires, ajustez selon besoin */
+    }
+
+    .exception-table .btn-edit {
+        background-color: var(--blue); /* Vert */
+    }
+
+        .exception-table .btn-edit:hover {
+            background-color: var(--blue-hover);
+        }
+
+    .exception-table .btn-delete {
+        background-color: var(--red-light); /* Rouge */
+    }
+
+        .exception-table .btn-delete:hover {
+            background-color: var(--red);
+        }
+
+.summary-panel .btn-create {
+    background-color: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Conteneur global pour la page Create */
+.form-container {
+    max-width: 400px; /* Largeur maximale du bloc */
+    margin: 40px auto; /* Centre horizontalement et ajoute de l'espace vertical */
+    background-color: #fff; /* Fond blanc */
+    border-radius: 8px; /* Bords arrondis */
+    padding: 20px; /* Espacement intérieur */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Ombre légère */
+    font-family: 'Poppins', sans-serif;
+}
+
+    /* Titre du formulaire */
+    .form-container h2 {
+        margin-top: 0;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+    }
+
+/* Le formulaire */
+.exception-form {
+    display: flex;
+    flex-direction: column; /* Empile verticalement */
+    gap: 16px; /* Espace entre les .form-group */
+}
+
+/* Groupement d'un label et d'un input */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+    /* Label */
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    /* Input de type date/time */
+    .form-group input[type="date"],
+    .form-group input[type="time"] {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        color: #333;
+    }
+
+    /* Messages de validation */
+    .form-group span.field-validation-error {
+        color: #d9534f; /* Couleur rouge */
+        font-size: 0.85rem;
+        margin-top: 3px;
+    }
+
+/* Bouton de soumission */
+.btn-submit {
+    align-self: center; /* Centre le bouton horizontalement */
+    background-color: #4070f4;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    /* Effet hover sur le bouton */
+    .btn-submit:hover {
+        background-color: #265df2;
+    }
+
+.text-danger {
+    list-style: none;
+    color: var(--red-light);
+}
+
+
+/* Barre de recherche */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#queryInput {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Bouton de filtre */
+.btn-filter {
+    background-color: #4070f4;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-filter:hover {
+        background-color: #265df2;
+    }
+
+/* Popup de filtre */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+    .popup-content h3 {
+        margin-top: 0;
+        text-align: center;
+    }
+
+.popup-overlay .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+    .popup-overlay  .form-group label {
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .popup-overlay .form-group input,
+    .popup-overlay .form-group select {
+        padding: 6px 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+/* Boutons dans le popup */
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .popup-buttons .btn {
+        background-color: #4070f4;
+        color: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .popup-buttons .btn:hover {
+            background-color: #265df2;
+        }
+
+.btn-book {
+    background-color: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.appointments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+/* Table des rendez-vous */
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+    .appointments-table thead {
+        background-color: #f3f3f3;
+        border-bottom: 2px solid #ccc;
+    }
+
+        .appointments-table thead th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+    .appointments-table tbody tr {
+        border-bottom: 1px solid #ddd;
+        transition: background-color 0.3s ease;
+    }
+
+        .appointments-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+    .appointments-table tbody td {
+        padding: 12px;
+        vertical-align: middle;
+    }
+
+/* Bouton Détails */
+.btn-details {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4070f4;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-details:hover {
+        background-color: #265df2;
+    }
+
+/* Header */
+.booking-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .booking-header h1 {
+        font-size: 2rem;
+        color: #4070f4;
+    }
+
+/* Section de recherche et filtrage */
+.search-filter-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .search-filter-section .search-input {
+        width: 60%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+    .search-filter-section .btn-search {
+        padding: 10px 20px;
+        background-color: #4070f4;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        margin-left: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .search-filter-section .btn-search:hover {
+            background-color: #265df2;
+        }
+
+/* Liste des médecins */
+.doctor-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.doctor-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.doctor-info h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.doctor-info p {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.btn-view-schedule {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    background-color: var(--blue);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-view-schedule:hover {
+        background-color: #265df2;
+    }
+
+.dashboard-header {
+    display: flex;
+}
+
+.dashboard-header h1 {
+    margin: 1.5rem auto;
+    position: relative;
+    left: -35px;
+}
+
+
+.calendar-container {
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+    .calendar-container h2 {
+        margin-bottom: 20px;
+    }
+
+/* Table de calendrier */
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+    .calendar-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        width: 14.28%; /* 100/7 */
+        vertical-align: top;
+        position: relative;
+        height: 80px; /* ajustez selon vos besoins */
+    }
+
+    .calendar-table th {
+        border: 1px solid #ddd;
+        padding: 10px;
+        width: 14.28%;
+        vertical-align: top;
+        position: relative;
+        background: var(--black-light);
+        color:  var(--white);
+    }
+
+    /* Cellules vides */
+    .empty-cell {
+        background-color: var(--grey-light);
+    }
+
+/* Cellules du calendrier */
+.calendar-day {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 6px;
+}
+
+    .calendar-day:hover {
+        background-color: #f0f0f0;
+    }
+
+/* Jour cliquable (disponible) */
+.available-day {
+    background-color: #fff;
+}
+
+/* Jour non cliquable (pas de disponibilités ou passé) */
+.disabled-day {
+    background-color: #f9f9f9;
+    pointer-events: none;
+    color: #999;
+}
+
+/* Mise en évidence du jour courant */
+.calendar-day.today {
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+}
+
+/* Numéro du jour */
+.day-number {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Indicateur de disponibilité : petit point vert */
+.availability-indicator {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #50C878;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-top: 2px;
+}
+
+.calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .calendar-navigation .nav-arrow {
+        display: inline-block;
+        padding: 4px 6px;
+        background-color: var(--black-light);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        transition: background-color 0.3s ease;
+        margin: 0 10px;
+    }
+
+        .calendar-navigation .nav-arrow:hover {
+            background-color: var(--grey);
+        }
+
+    .calendar-navigation .current-month {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--black);
+    }
+
+/* Modal */
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    z-index: 9999; /* Très haut pour apparaître en premier plan */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond noir semi-transparent */
+}
+
+/* Contenu du modal */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; /* Centré verticalement et horizontalement */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Bouton de fermeture */
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+    }
+
+/* Liste des créneaux disponibles */
+.booking-slots {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+    .booking-slots li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+    }
+
+        .booking-slots li:last-child {
+            border-bottom: none;
+        }
+
+/* Bouton de réservation */
+.btn-book {
+    background-color: #4070f4;
+    color: #fff;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-book:hover {
+        background-color: #265df2;
+    }
+
+
+.booking-finalize-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow-default);
+}
+
+.booking-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .booking-header h3 {
+        margin: 0;
+        color: var(--blue);
+        font-size: 1.5rem;
+    }
+
+    .booking-header p {
+        margin: 5px 0 0 0;
+        color: #555;
+        font-size: 1rem;
+    }
+
+.booking-finalize-card .form-group {
+    margin-bottom: 20px;
+}
+
+    .booking-finalize-card .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #333;
+    }
+
+.booking-finalize-card .form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.btn-booking {
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    font-size: 1rem;
+}
+
+    .btn-booking:hover {
+        background-color: var(--blue-hover);
+    }
+
+
+.confirmation-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+    .confirmation-container h2 {
+        color: #4070f4;
+        margin-bottom: 20px;
+    }
+
+.confirmation-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: var(--box-shadow-default);
+    margin-bottom: 20px;
+}
+
+    .confirmation-card h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .confirmation-card p {
+        margin: 10px 0;
+        font-size: 1rem;
+        color: #555;
+    }
+
+.confirmation-actions a.btn {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4070f4;
+    color: #fff;
+}
+
+    .btn-primary:hover {
+        background-color: #265df2;
+    }
+
+.btn-secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+    .btn-secondary:hover {
+        background-color: #aaa;
+    }
+
+
+.appointment-details-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow-default);
+    font-family: 'Poppins', sans-serif;
+}
+
+    .appointment-details-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #4070f4;
+    }
+
+.appointment-details-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+    .appointment-details-card p {
+        margin: 10px 0;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .appointment-details-card strong {
+        color: #4070f4;
+    }
+
+.appointment-actions {
+    text-align: center;
+}
+
+    .appointment-actions .btn {
+        display: inline-block;
+        margin: 0 10px;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+        font-size: 1rem;
+    }
+
+.btn-primary {
+    background-color: #4070f4;
+    color: #fff;
+}
+
+    .btn-primary:hover {
+        background-color: #265df2;
+    }
+
+.btn-secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+    .btn-secondary:hover {
+        background-color: #aaa;
+    }
+
+.calendar-day.selected {
+    border: 2px solid var(--blue);
+}
 
 
 
 /* ==========================================================================
       Responsive Adjustments (Small Screens)
    ========================================================================== */
-
 @media (max-width: 768px) {
     .footer-content {
         flex-direction: column;

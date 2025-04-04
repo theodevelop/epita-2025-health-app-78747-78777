@@ -1,0 +1,33 @@
+﻿@model HealthApp.MVC.Areas.Patients.ViewModels.FinalizeBookingViewModel
+
+@{
+    ViewData["Title"] = "Finalize Booking";
+}
+
+<section class="dashboard">
+    <div class="dashboard-header">
+        <div class="back-button-container">
+            <a asp-area="Patients" asp-controller="Appointments" asp-action="MonthlyCalendar" asp-route-doctorId="@Model.DoctorId"><i class="fi fi-sr-angle-small-left"></i></a>
+        </div>
+        <h1>Finalize Booking</h1>
+    </div>
+    <div class="dashboard-content">
+        <div class="booking-finalize-card">
+            <div class="booking-header">
+                <h3>@Model.DoctorName</h3>
+                <p>@Model.SelectedDate.ToString("dddd, dd MMMM yyyy HH:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US")).ToUpper()</p>
+            </div>
+            <form asp-action="FinalizeBooking" method="post">
+                <input type="hidden" asp-for="DoctorId" />
+                <input type="hidden" asp-for="DoctorName" />
+                <input type="hidden" asp-for="SelectedDate" />
+                <div class="form-group">
+                    <label asp-for="Reason"></label>
+                    <textarea asp-for="Reason" class="form-control"></textarea>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <button type="submit" class="btn btn-booking">Confirm Booking</button>
+            </form>
+        </div>
+</section>

@@ -3,7 +3,23 @@
     <div class="hero-content container">
         <h1>Welcome to Hospital Plus</h1>
         <p>Your solution for easily booking medical appointments online.</p>
-        <a asp-area="Identity" asp-page="/Account/Login" class="btn hero-btn">Make an appointment</a>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <a asp-area="Admin" asp-controller="Appointments" asp-action="Index" class="btn hero-btn">See appointments</a>
+        }
+        else if (User.Identity.IsAuthenticated && User.IsInRole("Doctor"))
+        {
+            <a asp-area="Doctors" asp-controller="Appointments" asp-action="Index" class="btn hero-btn">See my appointments</a>
+        }
+        else if (User.Identity.IsAuthenticated && User.IsInRole("Patient"))
+        {
+            <a asp-area="Patients" asp-controller="Appointments" asp-action="Book" class="btn hero-btn">Book an appointment</a>
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn hero-btn">Make an appointment</a>
+        }
+
     </div>
 </div>
 
